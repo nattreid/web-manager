@@ -1,0 +1,21 @@
+<?php
+
+namespace NAttreid\WebManager\Model;
+
+use NAttreid\AppManager\AppManager;
+
+/**
+ * @property-read ContentsRepository $contents
+ * @property-read PagesRepository $pages
+ * 
+ * @author Attreid <attreid@gmail.com>
+ */
+class Orm extends \Nextras\Orm\Model\Model {
+
+    public function setAppManager(AppManager $app) {
+        $app->onInvalidateCache[] = function() {
+            $this->pages->cleanCache();
+        };
+    }
+
+}
