@@ -1,0 +1,22 @@
+{
+    "name": "web-manager",
+    "description": "Analytics for CRM",
+    "license": ["Unlicense"],
+    "authors": [
+        {
+            "name": "Attreid",
+            "email": "attreid@gmail.com"
+        }
+    ],
+    "ignore": [
+        "src",
+        "*.json"
+    ],
+    "dependencies": {
+        "crm": "git@git.newtravel.cz:nattreid/crm.git#latest",
+        "cookiepolicy": "git@git.newtravel.cz:nattreid/cookiepolicy.git#~1.0"
+    },
+    "resolutions": {
+        "nette.ajax.js": "~2.1"
+    }
+}
