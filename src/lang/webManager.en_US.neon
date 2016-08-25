@@ -34,8 +34,8 @@ web:
         content: "Content"
         constantExists: "Constant exists"
     setting:
-        cookiePolicy: "Zobrazit potvrzeni používání cookies"
-        cookiePolicyLink: "Link pro informace o používání cookies"
-        keywords: "Klíčová slova"
-        description: "Popisek"
+        cookiePolicy: "Show cookie policy bar"
+        cookiePolicyLink: "Link for cookie policy information"
+        keywords: "Key words"
+        description: "Description"
         saved: "Settings saved"
