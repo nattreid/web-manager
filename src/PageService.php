@@ -39,7 +39,7 @@ class PageService extends \Nette\Application\UI\Control {
      * @param string $flag
      */
     public function createRoute(IRouter $routes, $url, $flag) {
-        $routes[] = new Routing\PageRoute($url, $flag, $this->orm);
+        $routes[] = new Routing\PageRoute($url, $flag, $this->pageLink, $this->orm);
 
         $routes[] = new Route($url, $this->defaultLink, $flag);
         $routes[] = new Route($url . 'index.php', $this->pageLink, Route::ONE_WAY);

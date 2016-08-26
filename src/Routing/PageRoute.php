@@ -15,9 +15,9 @@ class PageRoute extends \NAttreid\Routing\Route {
     /** @var Orm */
     private $orm;
 
-    public function __construct($url, $flag, Model $orm) {
+    public function __construct($url, $flag, $pageLink, Model $orm) {
         $this->orm = $orm;
-        parent::__construct($url . '[<url>]', 'WebManagerExt:Page:default', $flag);
+        parent::__construct($url . '[<url>]', $pageLink, $flag);
     }
 
     public function in($url) {
