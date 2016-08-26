@@ -31,6 +31,7 @@ class SettingsPresenter extends BasePresenter {
 
         $form->addCheckbox('cookiePolicy', 'webManager.web.setting.cookiePolicy');
         $form->addText('cookiePolicyLink', 'webManager.web.setting.cookiePolicyLink');
+        $form->addText('title', 'webManager.web.setting.title');
         $form->addTextArea('keywords', 'webManager.web.setting.keywords');
         $form->addTextArea('description', 'webManager.web.setting.description');
 

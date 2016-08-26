@@ -36,6 +36,7 @@ web:
     setting:
         cookiePolicy: "Zobrazit potvrzeni používání cookies"
         cookiePolicyLink: "Link pro informace o používání cookies"
+        title: "Název stránek"
         keywords: "Klíčová slova"
         description: "Popisek"
         saved: "Nastavení uloženo"

@@ -36,6 +36,7 @@ web:
     setting:
         cookiePolicy: "Show cookie policy bar"
         cookiePolicyLink: "Link for cookie policy information"
+        title: "Pages title"
         keywords: "Key words"
         description: "Description"
         saved: "Settings saved"
