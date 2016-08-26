@@ -7,7 +7,7 @@ extensions:
     webManager: NAttreid\WebManager\DI\WebManagerExtension
 
 webManager:
-    homepage: 'Homepage:'
+    homepage: 'Homepage:default'
     page: 'Homepage:page'
 ```
 
