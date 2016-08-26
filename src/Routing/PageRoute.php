@@ -16,8 +16,8 @@ class PageRoute extends \NAttreid\Routing\Route {
     private $orm;
 
     public function __construct($url, $flag, $pageLink, Model $orm) {
-        $this->orm = $orm;
         parent::__construct($url . '[<url>]', $pageLink, $flag);
+        $this->orm = $orm;
     }
 
     public function in($url) {
