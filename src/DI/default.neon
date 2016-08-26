@@ -1,6 +1,9 @@
 link: 'Homepage:'
 position: 1
 
+homepage: NULL
+page: NULL
+
 menu:
     web:
         settings:

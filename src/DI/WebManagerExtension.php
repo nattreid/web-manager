@@ -19,9 +19,18 @@ class WebManagerExtension extends \NAttreid\Crm\DI\ModuleExtension {
 
     public function loadConfiguration() {
         $builder = $this->getContainerBuilder();
+        $config = $this->validateConfig($this->loadFromFile($this->dir . '/default.neon'), $this->config);
 
-        $builder->addDefinition($this->prefix('routeFactory'))
-                ->setClass(\NAttreid\WebManager\Routing\RouteFactory::class);
+        if ($config['homepage'] === NULL) {
+            throw new \Nette\InvalidStateException("WebManager: 'homepage' does not set in config.neon");
+        }
+        if ($config['page'] === NULL) {
+            throw new \Nette\InvalidStateException("WebManager: 'page' does not set in config.neon");
+        }
+
+        $builder->addDefinition($this->prefix('pageService'))
+                ->setClass(\NAttreid\WebManager\PageService::class)
+                ->setArguments([$config['homepage'], $config['page']]);
     }
 
     public function beforeCompile() {
@@ -31,11 +40,6 @@ class WebManagerExtension extends \NAttreid\Crm\DI\ModuleExtension {
         $app = $builder->getByType(AppManager::class);
         $builder->getDefinition($app)
                 ->addSetup(new Statement('$app->onInvalidateCache[] = function() {?->pages->cleanCache();}', ['@' . Model::class]));
-
-        $builder->getDefinition('application.presenterFactory')
-                ->addSetup('setMapping', [
-                    ['WebManagerExt' => 'NAttreid\WebManager\Front\*Presenter']
-        ]);
     }
 
 }
