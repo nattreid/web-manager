@@ -7,6 +7,6 @@ namespace NAttreid\WebManager\Presenters;
  * 
  * @author Attreid <attreid@gmail.com>
  */
-abstract class BasePresenter extends \NAttreid\Crm\Control\ModulePresenter {
+abstract class BasePresenter extends \NAttreid\Crm\Control\ExtensionPresenter {
     
 }
