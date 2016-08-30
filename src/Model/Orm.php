@@ -5,7 +5,7 @@ namespace NAttreid\WebManager\Model;
 use NAttreid\AppManager\AppManager;
 
 /**
- * @property-read ContentsRepository $content
+ * @property-read ContentRepository $content
  * @property-read PagesRepository $pages
  * 
  * @author Attreid <attreid@gmail.com>
