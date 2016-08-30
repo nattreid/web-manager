@@ -29,11 +29,11 @@ class SettingsPresenter extends BasePresenter {
     protected function createComponentSettingsForm() {
         $form = $this->formFactory->create();
 
-        $form->addCheckbox('cookiePolicy', 'webManager.web.setting.cookiePolicy');
-        $form->addText('cookiePolicyLink', 'webManager.web.setting.cookiePolicyLink');
-        $form->addText('title', 'webManager.web.setting.title');
-        $form->addTextArea('keywords', 'webManager.web.setting.keywords');
-        $form->addTextArea('description', 'webManager.web.setting.description');
+        $form->addCheckbox('cookiePolicy', 'webManager.web.settings.cookiePolicy');
+        $form->addText('cookiePolicyLink', 'webManager.web.settings.cookiePolicyLink');
+        $form->addText('title', 'webManager.web.settings.title');
+        $form->addTextArea('keywords', 'webManager.web.settings.keywords');
+        $form->addTextArea('description', 'webManager.web.settings.description');
 
         $form->addSubmit('save', 'form.save');
 
@@ -52,7 +52,7 @@ class SettingsPresenter extends BasePresenter {
         foreach ($values as $name => $value) {
             $this->configurator->$name = $value;
         }
-        $this->flashNotifier->success('webManager.web.setting.saved');
+        $this->flashNotifier->success('webManager.web.settings.saved');
 
         if ($this->isAjax()) {
             $this->redrawControl('settings');

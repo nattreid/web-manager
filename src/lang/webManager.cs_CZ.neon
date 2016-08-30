@@ -2,10 +2,8 @@ title: "Správa webu"
 
 web:
     title: "Web"
-    pages: "Stránky"
-    contents: "Obsah"
-    settings: "Nastavení"
-    page:
+    pages:
+        title: "Stránky"
         name: "Stránka"
         add: "Přidat stránku"
         edit: "Editovat"
@@ -20,6 +18,7 @@ web:
         url: "URL"
         urlExists: "URL již existuje"
     content:
+        title: "Obsah"
         add: "Přidat obsah"
         edit: "Editovat"
         delete: "Smazat"
@@ -33,7 +32,8 @@ web:
         const: "Konstanta"
         content: "Obsah"
         constantExists: "Konstanta již existuje"
-    setting:
+    settings:
+        title: "Nastavení"
         cookiePolicy: "Zobrazit potvrzeni používání cookies"
         cookiePolicyLink: "Link pro informace o používání cookies"
         title: "Název stránek"

@@ -2,10 +2,8 @@ title: "Web Management"
 
 web:
     title: "Web"
-    pages: "Pages"
-    contents: "Contents"
-    settings: "Settings"
-    page:
+    pages:
+        title: "Pages"
         name: "Page"
         add: "Add page"
         edit: "Edit"
@@ -20,6 +18,7 @@ web:
         url: "URL"
         urlExists: "URL exists"
     content:
+        title: "Content"
         add: "Add Content"
         edit: "Edit"
         delete: "Delete"
@@ -33,7 +32,8 @@ web:
         const: "Constant"
         content: "Content"
         constantExists: "Constant exists"
-    setting:
+    settings:
+        title: "Settings"
         cookiePolicy: "Show cookie policy bar"
         cookiePolicyLink: "Link for cookie policy information"
         title: "Pages title"

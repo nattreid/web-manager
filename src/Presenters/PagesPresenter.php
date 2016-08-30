@@ -116,23 +116,23 @@ class PagesPresenter extends BasePresenter {
     protected function createComponentEditForm() {
         $form = $this->formFactory->create();
 
-        $form->addText('name', 'webManager.web.page.name')
+        $form->addText('name', 'webManager.web.pages.name')
                 ->setRequired();
 
-        $form->addText('url', 'webManager.web.page.url');
+        $form->addText('url', 'webManager.web.pages.url');
 
-        $form->addText('title', 'webManager.web.page.title')
+        $form->addText('title', 'webManager.web.pages.title')
                 ->setRequired();
 
-        $form->addTextArea('keywords', 'webManager.web.page.keywords');
+        $form->addTextArea('keywords', 'webManager.web.pages.keywords');
 
-        $form->addImageUpload('image', 'webManager.web.page.photo', 'webManager.web.page.photoDelete')
+        $form->addImageUpload('image', 'webManager.web.pages.photo', 'webManager.web.pages.photoDelete')
                 ->setNamespace('pages')
                 ->setPreview();
 
-        $form->addTextArea('description', 'webManager.web.page.description');
+        $form->addTextArea('description', 'webManager.web.pages.description');
 
-        $form->addTextEditor('content', 'webManager.web.page.content');
+        $form->addTextEditor('content', 'webManager.web.pages.content');
 
         $form->addSubmit('save', 'form.save');
 
@@ -165,7 +165,7 @@ class PagesPresenter extends BasePresenter {
             $this->orm->persistAndFlush($page);
             $this->restoreBacklink();
         } catch (\Nextras\Dbal\UniqueConstraintViolationException $ex) {
-            $form->addError('webManager.web.page.urlExists');
+            $form->addError('webManager.web.pages.urlExists');
         }
     }
 
@@ -180,12 +180,12 @@ class PagesPresenter extends BasePresenter {
 
         $grid->setSortable();
 
-        $grid->addToolbarButton('add', 'webManager.web.page.add');
+        $grid->addToolbarButton('add', 'webManager.web.pages.add');
 
-        $grid->addColumnText('name', 'webManager.web.page.name')
+        $grid->addColumnText('name', 'webManager.web.pages.name')
                 ->setFilterText();
 
-        $grid->addColumnText('url', 'webManager.web.page.url')
+        $grid->addColumnText('url', 'webManager.web.pages.url')
                 ->setFilterText();
 
         $grid->addAction('edit', NULL)
