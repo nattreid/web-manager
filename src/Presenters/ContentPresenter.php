@@ -102,7 +102,7 @@ class ContentPresenter extends BasePresenter {
     protected function createComponentEditForm() {
         $form = $this->formFactory->create();
 
-        $form->addText('name', 'webManager.web.content.name')
+        $form->addText('name', 'default.name')
                 ->setRequired();
 
         $form->addText('const', 'webManager.web.content.const')
@@ -168,7 +168,7 @@ class ContentPresenter extends BasePresenter {
 
         $grid->addToolbarButton('add', 'webManager.web.content.add');
 
-        $grid->addColumnText('name', 'webManager.web.content.name')
+        $grid->addColumnText('name', 'default.name')
                 ->setSortable()
                 ->setFilterText();
 
@@ -178,17 +178,17 @@ class ContentPresenter extends BasePresenter {
 
         $grid->addAction('edit', NULL)
                 ->setIcon('pencil')
-                ->setTitle('webManager.web.content.edit');
+                ->setTitle('default.edit');
 
         $grid->addAction('delete', NULL, 'delete!')
                 ->setIcon('trash')
-                ->setTitle('webManager.web.content.delete')
+                ->setTitle('default.delete')
                 ->setClass('btn btn-xs btn-danger ajax')
                 ->setConfirm(function(Content $content) {
-                    return $this->translate('webManager.web.content.confirmDelete', 1, ['name' => $content->name]);
+                    return $this->translate('default.confirmDelete', 1, ['name' => $content->name]);
                 });
 
-        $grid->addGroupAction('webManager.web.content.delete')->onSelect[] = [$this, 'deletePages'];
+        $grid->addGroupAction('default.delete')->onSelect[] = [$this, 'deletePages'];
 
         return $grid;
     }

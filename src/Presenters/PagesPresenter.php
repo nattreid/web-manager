@@ -118,7 +118,7 @@ class PagesPresenter extends BasePresenter {
         $form->addText('name', 'webManager.web.pages.name')
                 ->setRequired();
 
-        $form->addText('url', 'webManager.web.pages.url');
+        $form->addText('url', 'default.url');
 
         $form->addText('title', 'webManager.web.pages.pageTitle')
                 ->setRequired();
@@ -184,22 +184,22 @@ class PagesPresenter extends BasePresenter {
         $grid->addColumnText('name', 'webManager.web.pages.name')
                 ->setFilterText();
 
-        $grid->addColumnText('url', 'webManager.web.pages.url')
+        $grid->addColumnText('url', 'default.url')
                 ->setFilterText();
 
         $grid->addAction('edit', NULL)
                 ->setIcon('pencil')
-                ->setTitle('webManager.web.content.edit');
+                ->setTitle('default.edit');
 
         $grid->addAction('delete', NULL, 'delete!')
                 ->setIcon('trash')
-                ->setTitle('webManager.web.content.delete')
+                ->setTitle('default.delete')
                 ->setClass('btn btn-xs btn-danger ajax')
                 ->setConfirm(function(Page $page) {
-                    return $this->translate('webManager.web.content.confirmDelete', 1, ['name' => $page->name]);
+                    return $this->translate('default.confirmDelete', 1, ['name' => $page->name]);
                 });
 
-        $grid->addGroupAction('webManager.web.content.delete')->onSelect[] = [$this, 'deletePages'];
+        $grid->addGroupAction('default.delete')->onSelect[] = [$this, 'deletePages'];
 
         return $grid;
     }
