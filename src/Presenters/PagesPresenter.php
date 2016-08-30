@@ -80,7 +80,11 @@ class PagesPresenter extends BasePresenter {
      * @param type $next_id
      */
     public function handleSort($item_id, $prev_id, $next_id) {
-        $this->orm->pages->changeSort($item_id, $prev_id, $next_id);
+        if ($this->isAjax()) {
+            $this->orm->pages->changeSort($item_id, $prev_id, $next_id);
+        } else {
+            $this->terminate();
+        }
     }
 
     /**
