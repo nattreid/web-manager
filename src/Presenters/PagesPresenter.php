@@ -121,7 +121,7 @@ class PagesPresenter extends BasePresenter {
 
         $form->addText('url', 'webManager.web.pages.url');
 
-        $form->addText('title', 'webManager.web.pages.title')
+        $form->addText('title', 'webManager.web.pages.pageTitle')
                 ->setRequired();
 
         $form->addTextArea('keywords', 'webManager.web.pages.keywords');

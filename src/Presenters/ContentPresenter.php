@@ -13,7 +13,7 @@ use NAttreid\Form\Form,
  *
  * @author Attreid <attreid@gmail.com>
  */
-class ContentsPresenter extends BasePresenter {
+class ContentPresenter extends BasePresenter {
 
     /** @var Orm */
     private $orm;
@@ -112,7 +112,7 @@ class ContentsPresenter extends BasePresenter {
         $form->addText('const', 'webManager.web.content.const')
                 ->setRequired();
 
-        $form->addText('title', 'webManager.web.content.title');
+        $form->addText('title', 'webManager.web.content.contentTitle');
 
         $form->addTextArea('keywords', 'webManager.web.content.keywords');
 
