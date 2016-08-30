@@ -7,7 +7,7 @@ namespace NAttreid\WebManager\Model;
  *
  * @author Attreid <attreid@gmail.com>
  */
-class ContentsMapper extends Mapper {
+class ContentMapper extends Mapper {
 
     protected function createTable(\NAttreid\Orm\Structure\Table $table) {
         $table->addPrimaryKey('id')

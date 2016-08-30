@@ -15,9 +15,7 @@ class SettingsPresenter extends BasePresenter {
      * Zobrazeni nastaveni
      */
     public function renderDefault() {
-        /** @var $form Form */
-        $form = $this['settingsForm'];
-
+        $form = $this['settingsForm'];/** @var $form Form */
         $this->addBreadcrumbLink('webManager.web.settings');
         $form->setDefaults($this->configurator->fetchConfigurations());
     }

@@ -62,8 +62,7 @@ class PagesMapper extends Mapper {
             $rows = $this->cache->save($key, function() {
                 $result = [];
                 foreach ($this->getRepository()->findAll() as $page) {
-                    /* @var $page Page */
-                    $result[$page->url] = TRUE;
+                    $result[$page->url] = TRUE; /* @var $page Page */
                 }
                 return $result;
             }, [

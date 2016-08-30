@@ -45,12 +45,10 @@ class ContentPresenter extends BasePresenter {
      * @secured
      */
     public function handleDelete($id) {
-        /* @var $grid Datagrid */
-        $grid = $this['list'];
-
+        $grid = $this['list']; /* @var $grid DataGrid */
         if ($this->isAjax()) {
-            $content = $this->orm->contents->getById($id);
-            $this->orm->contents->removeAndFlush($content);
+            $content = $this->orm->content->getById($id);
+            $this->orm->content->removeAndFlush($content);
             $grid->reload();
         } else {
             $this->terminate();
@@ -62,13 +60,11 @@ class ContentPresenter extends BasePresenter {
      * @param array $ids
      */
     public function deleteContent(array $ids) {
-        /* @var $grid Datagrid */
-        $grid = $this['list'];
-
+        $grid = $this['list']; /* @var $grid DataGrid */
         if ($this->isAjax()) {
-            $pages = $this->orm->contents->findById($ids);
+            $pages = $this->orm->content->findById($ids);
             foreach ($pages as $page) {
-                $this->orm->contents->remove($page);
+                $this->orm->content->remove($page);
             }
             $this->orm->flush();
             $grid->reload();
@@ -90,7 +86,7 @@ class ContentPresenter extends BasePresenter {
      * @param int $id
      */
     public function actionEdit($id) {
-        $this->content = $this->orm->contents->getById($id);
+        $this->content = $this->orm->content->getById($id);
         if (!$this->content) {
             $this->error();
         }
@@ -141,7 +137,7 @@ class ContentPresenter extends BasePresenter {
     public function editFormSucceeded(Form $form, $values) {
         $content = $this->content;
         if (!$content->isAttached()) {
-            $this->orm->contents->attach($content);
+            $this->orm->content->attach($content);
         }
         try {
             $content->name = $values->name;
@@ -166,7 +162,7 @@ class ContentPresenter extends BasePresenter {
     protected function createComponentList() {
         $grid = $this->dataGridFactory->create();
 
-        $grid->setDataSource($this->orm->contents->findAll());
+        $grid->setDataSource($this->orm->content->findAll());
 
         $grid->setDefaultSort(['name' => 'ASC']);
 

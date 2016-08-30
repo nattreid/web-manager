@@ -7,7 +7,7 @@ namespace NAttreid\WebManager\Model;
  *
  * @author Attreid <attreid@gmail.com>
  */
-class ContentsRepository extends \NAttreid\Orm\Repository {
+class ContentRepository extends \NAttreid\Orm\Repository {
 
     public static function getEntityClassNames() {
         return [Content::class];
