@@ -1,29 +1,39 @@
 {
-    "name": "nattreid/web-manager",
-    "description": "Web Manager for CRM",
-    "type": "library",
-    "license": ["Unlicense"],
-    "authors": [
-        {
-            "name": "Attreid",
-            "email": "attreid@gmail.com"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.newtravel.cz"
-        }
-    ],
-    "require": {
-        "php": ">= 5.6",
-        "nattreid/crm": "dev-master",
-        "nattreid/cookiepolicy": "~1.0"
-    },
-    "require-dev": {
-        "nette/tester": "~1.7"
-    },
-    "autoload": {
-        "classmap": ["src/"]
+  "name": "nattreid/web-manager",
+  "description": "Web Manager for CRM",
+  "type": "library",
+  "license": [
+    "Unlicense"
+  ],
+  "authors": [
+    {
+      "name": "Attreid",
+      "email": "attreid@gmail.com"
     }
+  ],
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.newtravel.cz"
+    }
+  ],
+  "require": {
+    "php": ">= 5.6",
+    "nattreid/crm": "dev-master",
+    "nattreid/cookiepolicy": "~1.0"
+  },
+  "require-dev": {
+    "nette/tester": "~1.7",
+    "nattreid/form": "dev-master",
+    "attreid/datagrid": "dev-master",
+    "nattreid/filemanager": "dev-master",
+    "kdyby/forms-replicator": "dev-master",
+    "kdyby/translation": "dev-master",
+    "nextras/forms": "dev-master"
+  },
+  "autoload": {
+    "classmap": [
+      "src/"
+    ]
+  }
 }
