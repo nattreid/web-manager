@@ -52,8 +52,8 @@ class PagesPresenter extends BasePresenter
 	 */
 	public function handleDelete($id)
 	{
-		$grid = $this['list'];
 		/* @var $grid Datagrid */
+		$grid = $this['list'];
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($id);
 			$this->orm->pages->removeAndFlush($page);
@@ -69,8 +69,8 @@ class PagesPresenter extends BasePresenter
 	 */
 	public function deletePages(array $ids)
 	{
-		$grid = $this['list'];
 		/* @var $grid Datagrid */
+		$grid = $this['list'];
 		if ($this->isAjax()) {
 			$pages = $this->orm->pages->findById($ids);
 			foreach ($pages as $page) {
@@ -117,8 +117,8 @@ class PagesPresenter extends BasePresenter
 		if (!$this->page) {
 			$this->error();
 		}
-		$form = $this['editForm'];
 		/* @var $form Form */
+		$form = $this['editForm'];
 		$form->setDefaults($this->page->toArray());
 	}
 

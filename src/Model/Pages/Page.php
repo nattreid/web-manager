@@ -36,8 +36,8 @@ class Page extends \Nextras\Orm\Entity\Entity
 			throw new InvalidArgumentException('URL contains invalid characters');
 		}
 
-		$repository = $this->getRepository();
 		/* @var $repository PagesRepository */
+		$repository = $this->getRepository();
 		$page = $repository->getByUrl($url);
 		if ($page !== NULL && $page !== $this) {
 			throw new UniqueConstraintViolationException("Page with '$url' exists");
@@ -48,8 +48,8 @@ class Page extends \Nextras\Orm\Entity\Entity
 	protected function onBeforeInsert()
 	{
 		if ($this->position === NULL) {
-			$repo = $this->getRepository();
 			/* @var $repo PagesRepository */
+			$repo = $this->getRepository();
 			$this->position = $repo->getMaxPosition() + 1;
 		}
 	}

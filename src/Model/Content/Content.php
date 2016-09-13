@@ -35,8 +35,8 @@ class Content extends \Nextras\Orm\Entity\Entity
 			throw new InvalidArgumentException('Constant contains invalid characters');
 		}
 
-		$repository = $this->getRepository();
 		/* @var $repository ContentRepository */
+		$repository = $this->getRepository();
 		$content = $repository->getByConst($const);
 		if ($content !== NULL && $content !== $this) {
 			throw new UniqueConstraintViolationException("Content with '$const' exists");

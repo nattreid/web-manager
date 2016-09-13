@@ -52,8 +52,8 @@ class ContentPresenter extends BasePresenter
 	 */
 	public function handleDelete($id)
 	{
-		$grid = $this['list'];
 		/* @var $grid DataGrid */
+		$grid = $this['list'];
 		if ($this->isAjax()) {
 			$content = $this->orm->content->getById($id);
 			$this->orm->content->removeAndFlush($content);
@@ -69,8 +69,8 @@ class ContentPresenter extends BasePresenter
 	 */
 	public function deleteContent(array $ids)
 	{
-		$grid = $this['list'];
 		/* @var $grid DataGrid */
+		$grid = $this['list'];
 		if ($this->isAjax()) {
 			$pages = $this->orm->content->findById($ids);
 			foreach ($pages as $page) {
