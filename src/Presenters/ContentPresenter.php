@@ -32,7 +32,7 @@ class ContentPresenter extends BasePresenter
 	/**
 	 * Zobrazeni seznamu
 	 */
-	public function renderDefault()
+	public function actionDefault()
 	{
 		$this->storeBacklink();
 	}
@@ -88,7 +88,6 @@ class ContentPresenter extends BasePresenter
 	 */
 	public function actionAdd()
 	{
-		$this->content = new Content;
 		$this->setView('edit');
 	}
 
@@ -102,6 +101,7 @@ class ContentPresenter extends BasePresenter
 		if (!$this->content) {
 			$this->error();
 		}
+
 		/* @var $form Form */
 		$form = $this['editForm'];
 		$form->setDefaults($this->content->toArray());
@@ -149,10 +149,13 @@ class ContentPresenter extends BasePresenter
 	 */
 	public function editFormSucceeded(Form $form, $values)
 	{
-		$content = $this->content;
-		if (!$content->isAttached()) {
+		if ($this->content) {
+			$content = $this->content;
+		} else {
+			$content = new Content;
 			$this->orm->content->attach($content);
 		}
+
 		try {
 			$content->name = $values->name;
 			$content->setConst($values->const);

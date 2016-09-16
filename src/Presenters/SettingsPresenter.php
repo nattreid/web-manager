@@ -15,7 +15,7 @@ class SettingsPresenter extends BasePresenter
 	/**
 	 * Zobrazeni nastaveni
 	 */
-	public function renderDefault()
+	public function actionDefault()
 	{
 		/* @var $form Form */
 		$form = $this['settingsForm'];

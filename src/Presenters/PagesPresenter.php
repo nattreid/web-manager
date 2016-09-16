@@ -32,7 +32,7 @@ class PagesPresenter extends BasePresenter
 	/**
 	 * Zobrazeni seznamu
 	 */
-	public function renderDefault()
+	public function actionDefault()
 	{
 		$this->storeBacklink();
 	}
@@ -103,7 +103,6 @@ class PagesPresenter extends BasePresenter
 	 */
 	public function actionAdd()
 	{
-		$this->page = new Page;
 		$this->setView('edit');
 	}
 
@@ -117,6 +116,7 @@ class PagesPresenter extends BasePresenter
 		if (!$this->page) {
 			$this->error();
 		}
+
 		/* @var $form Form */
 		$form = $this['editForm'];
 		$form->setDefaults($this->page->toArray());
@@ -164,10 +164,13 @@ class PagesPresenter extends BasePresenter
 	 */
 	public function editFormSucceeded(Form $form, $values)
 	{
-		$page = $this->page;
-		if (!$page->isAttached()) {
+		if ($this->page) {
+			$page = $this->page;
+		} else {
+			$page = new Page;
 			$this->orm->pages->attach($page);
 		}
+
 		try {
 			$page->name = $values->name;
 			$page->setUrl($values->url);
