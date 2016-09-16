@@ -32,7 +32,7 @@ class ContentPresenter extends BasePresenter
 	/**
 	 * Zobrazeni seznamu
 	 */
-	public function actionDefault()
+	public function renderDefault()
 	{
 		$this->storeBacklink();
 	}
