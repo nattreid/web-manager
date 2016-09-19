@@ -30,6 +30,9 @@ class SettingsPresenter extends BasePresenter
 	{
 		$form = $this->formFactory->create();
 
+		$form->addImageUpload('logo', 'webManager.web.settings.logo', 'webManager.web.settings.deleteLogo')
+			->setNamespace('front')
+			->setPreview('300x100');
 		$form->addCheckbox('cookiePolicy', 'webManager.web.settings.cookiePolicy');
 		$form->addText('cookiePolicyLink', 'webManager.web.settings.cookiePolicyLink');
 		$form->addText('title', 'webManager.web.settings.pagesTitle');

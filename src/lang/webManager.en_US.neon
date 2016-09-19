@@ -32,3 +32,5 @@ web:
         keywords: "Key words"
         description: "Description"
         saved: "Settings saved"
+        logo: "Logo"
+        deleteLogo: "Delete logo"

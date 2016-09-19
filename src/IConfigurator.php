@@ -10,6 +10,7 @@ namespace NAttreid\WebManager;
  * @property string $keywords klicova slova
  * @property string $description popis
  * @property string $title nazev stranek (napr Netta.cz)
+ * @property string $logo logo
  *
  * @author Attreid <attreid@gmail.com>
  */

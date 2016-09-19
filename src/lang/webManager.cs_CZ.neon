@@ -32,3 +32,5 @@ web:
         keywords: "Klíčová slova"
         description: "Popisek"
         saved: "Nastavení uloženo"
+        logo: "Logo"
+        deleteLogo: "Smazat logo"
