@@ -35,7 +35,6 @@ class PageService
 
 	public function __construct($defaultLink, $pageLink, Model $orm, IPageMenuFactory $menuFactory)
 	{
-		parent::__construct();
 		$this->defaultLink = $defaultLink;
 		$this->pageLink = $pageLink;
 		$this->orm = $orm;
