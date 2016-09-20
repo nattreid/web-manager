@@ -7,6 +7,7 @@ use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
 use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
+use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
 
 /**
@@ -67,6 +68,15 @@ class PageService extends \Nette\Application\UI\Control
 			}
 		}
 		return $page;
+	}
+
+	/**
+	 * Vrati stranky krome Homepage
+	 * @return Page[]|ICollection
+	 */
+	public function getPages()
+	{
+		return $this->orm->pages->findPages();
 	}
 
 }
