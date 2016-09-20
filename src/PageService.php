@@ -2,7 +2,6 @@
 
 namespace NAttreid\WebManager;
 
-use NAttreid\Menu\IMenuFactory;
 use NAttreid\Menu\Menu;
 use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Orm;
@@ -30,10 +29,11 @@ class PageService
 
 	/** @var string */
 	private $pageLink;
-	/** @var IMenuFactory */
+
+	/** @var IPageMenuFactory */
 	private $menuFactory;
 
-	public function __construct($defaultLink, $pageLink, Model $orm, IMenuFactory $menuFactory)
+	public function __construct($defaultLink, $pageLink, Model $orm, IPageMenuFactory $menuFactory)
 	{
 		parent::__construct();
 		$this->defaultLink = $defaultLink;
