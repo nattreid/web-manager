@@ -2,11 +2,14 @@
 
 namespace NAttreid\WebManager;
 
+use NAttreid\Menu\IMenuFactory;
+use NAttreid\Menu\Menu;
 use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
 use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
+use Nette\SmartObject;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
 
@@ -15,8 +18,9 @@ use Nextras\Orm\Model\Model;
  *
  * @author Attreid <attreid@gmail.com>
  */
-class PageService extends \Nette\Application\UI\Control
+class PageService
 {
+	use SmartObject;
 
 	/** @var Orm */
 	private $orm;
@@ -26,13 +30,16 @@ class PageService extends \Nette\Application\UI\Control
 
 	/** @var string */
 	private $pageLink;
+	/** @var IMenuFactory */
+	private $menuFactory;
 
-	public function __construct($defaultLink, $pageLink, Model $orm)
+	public function __construct($defaultLink, $pageLink, Model $orm, IMenuFactory $menuFactory)
 	{
 		parent::__construct();
 		$this->defaultLink = $defaultLink;
 		$this->pageLink = $pageLink;
 		$this->orm = $orm;
+		$this->menuFactory = $menuFactory;
 	}
 
 	/**
@@ -77,6 +84,20 @@ class PageService extends \Nette\Application\UI\Control
 	public function getPages()
 	{
 		return $this->orm->pages->findPages();
+	}
+
+	/**
+	 * Vrati menu
+	 * @return Menu
+	 */
+	public function createMenu()
+	{
+		$menu = $this->menuFactory->create();
+		foreach ($this->getPages() as $page) {
+			$menu->addLink($page->name, $page->url);
+		}
+
+		return $menu;
 	}
 
 }

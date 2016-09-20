@@ -23,7 +23,8 @@
     "nattreid/cookiepolicy": "~1.0"
   },
   "require-dev": {
-    "nette/tester": "~1.7"
+    "nette/tester": "~1.7",
+    "kdyby/translation": "dev-master"
   },
   "autoload": {
     "classmap": [
