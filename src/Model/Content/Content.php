@@ -5,6 +5,7 @@ namespace NAttreid\WebManager\Model;
 use Nette\Utils\Strings;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Dbal\InvalidArgumentException;
+use Nextras\Orm\Entity\Entity;
 
 /**
  * Content
@@ -20,7 +21,7 @@ use Nextras\Dbal\InvalidArgumentException;
  *
  * @author Attreid <attreid@gmail.com>
  */
-class Content extends \Nextras\Orm\Entity\Entity
+class Content extends Entity
 {
 
 	/**

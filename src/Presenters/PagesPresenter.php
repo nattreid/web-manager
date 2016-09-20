@@ -6,6 +6,7 @@ use NAttreid\Form\Form;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
 use Nette\Utils\ArrayHash;
+use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Model\Model;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -142,7 +143,7 @@ class PagesPresenter extends BasePresenter
 
 		$form->addImageUpload('image', 'webManager.web.pages.photo', 'webManager.web.pages.photoDelete')
 			->setNamespace('pages')
-			->setPreview();
+			->setPreview('300x100');
 
 		$form->addTextArea('description', 'webManager.web.pages.description');
 
@@ -182,7 +183,7 @@ class PagesPresenter extends BasePresenter
 
 			$this->orm->persistAndFlush($page);
 			$this->restoreBacklink();
-		} catch (\Nextras\Dbal\UniqueConstraintViolationException $ex) {
+		} catch (UniqueConstraintViolationException $ex) {
 			$form->addError('webManager.web.pages.urlExists');
 		}
 	}

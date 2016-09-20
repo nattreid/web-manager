@@ -1,13 +1,14 @@
 <?php
 
 namespace NAttreid\WebManager\Model;
+use NAttreid\Orm\Repository;
 
 /**
  * Contents Repository
  *
  * @author Attreid <attreid@gmail.com>
  */
-class ContentRepository extends \NAttreid\Orm\Repository
+class ContentRepository extends Repository
 {
 
 	public static function getEntityClassNames()

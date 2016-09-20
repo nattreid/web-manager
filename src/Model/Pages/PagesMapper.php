@@ -2,6 +2,7 @@
 
 namespace NAttreid\WebManager\Model;
 
+use NAttreid\Orm\Structure\Table;
 use Nette\Caching\Cache;
 
 /**
@@ -14,7 +15,7 @@ class PagesMapper extends Mapper
 
 	private $tag = 'netta/pages';
 
-	protected function createTable(\NAttreid\Orm\Structure\Table $table)
+	protected function createTable(Table $table)
 	{
 		$table->addPrimaryKey('id')
 			->int()

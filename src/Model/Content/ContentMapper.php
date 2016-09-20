@@ -1,6 +1,7 @@
 <?php
 
 namespace NAttreid\WebManager\Model;
+use NAttreid\Orm\Structure\Table;
 
 /**
  * Contents Mapper
@@ -10,7 +11,7 @@ namespace NAttreid\WebManager\Model;
 class ContentMapper extends Mapper
 {
 
-	protected function createTable(\NAttreid\Orm\Structure\Table $table)
+	protected function createTable(Table $table)
 	{
 		$table->addPrimaryKey('id')
 			->int()

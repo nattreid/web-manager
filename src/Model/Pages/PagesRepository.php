@@ -2,6 +2,7 @@
 
 namespace NAttreid\WebManager\Model;
 
+use NAttreid\Orm\Repository;
 use Nextras\Orm\Collection\ICollection;
 
 /**
@@ -9,7 +10,7 @@ use Nextras\Orm\Collection\ICollection;
  *
  * @author Attreid <attreid@gmail.com>
  */
-class PagesRepository extends \NAttreid\Orm\Repository
+class PagesRepository extends Repository
 {
 
 	/** @var PagesMapper */

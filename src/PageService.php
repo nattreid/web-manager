@@ -45,7 +45,6 @@ class PageService
 	/**
 	 * Vytvori routy
 	 * @param IRouter $routes
-	 * @param string $defaultRoute
 	 * @param string $url
 	 * @param string $flag
 	 */

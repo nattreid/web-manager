@@ -2,6 +2,7 @@
 
 namespace NAttreid\WebManager\Routing;
 
+use NAttreid\Routing\Route;
 use NAttreid\WebManager\Model\Orm;
 use Nextras\Orm\Model\Model;
 
@@ -10,7 +11,7 @@ use Nextras\Orm\Model\Model;
  *
  * @author Attreid <attreid@gmail.com>
  */
-class PageRoute extends \NAttreid\Routing\Route
+class PageRoute extends Route
 {
 
 	/** @var Orm */

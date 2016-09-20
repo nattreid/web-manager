@@ -3,6 +3,7 @@
 namespace NAttreid\WebManager\Model;
 
 use NAttreid\AppManager\AppManager;
+use Nextras\Orm\Model\Model;
 
 /**
  * @property-read ContentRepository $content
@@ -10,7 +11,7 @@ use NAttreid\AppManager\AppManager;
  *
  * @author Attreid <attreid@gmail.com>
  */
-class Orm extends \Nextras\Orm\Model\Model
+class Orm extends Model
 {
 
 	public function setAppManager(AppManager $app)

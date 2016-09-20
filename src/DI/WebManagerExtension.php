@@ -3,7 +3,12 @@
 namespace NAttreid\Analytics\DI;
 
 use NAttreid\AppManager\AppManager;
+use NAttreid\Crm\DI\ModuleExtension;
+use NAttreid\Menu\Menu;
+use NAttreid\WebManager\IPageMenuFactory;
+use NAttreid\WebManager\PageService;
 use Nette\DI\Statement;
+use Nette\InvalidStateException;
 use Nextras\Orm\Model\Model;
 
 /**
@@ -11,7 +16,7 @@ use Nextras\Orm\Model\Model;
  *
  * @author Attreid <attreid@gmail.com>
  */
-class WebManagerExtension extends \NAttreid\Crm\DI\ModuleExtension
+class WebManagerExtension extends ModuleExtension
 {
 
 	protected $namespace = 'webManager';
@@ -24,15 +29,19 @@ class WebManagerExtension extends \NAttreid\Crm\DI\ModuleExtension
 		$config = $this->validateConfig($this->loadFromFile($this->dir . '/default.neon'), $this->config);
 
 		if ($config['homepage'] === NULL) {
-			throw new \Nette\InvalidStateException("WebManager: 'homepage' does not set in config.neon");
+			throw new InvalidStateException("WebManager: 'homepage' does not set in config.neon");
 		}
 		if ($config['page'] === NULL) {
-			throw new \Nette\InvalidStateException("WebManager: 'page' does not set in config.neon");
+			throw new InvalidStateException("WebManager: 'page' does not set in config.neon");
 		}
 
 		$builder->addDefinition($this->prefix('pageService'))
-			->setClass(\NAttreid\WebManager\PageService::class)
+			->setClass(PageService::class)
 			->setArguments([$config['homepage'], $config['page']]);
+
+		$builder->addDefinition($this->prefix('menu'))
+			->setImplement(IPageMenuFactory::class)
+			->setFactory(Menu::class);
 	}
 
 	public function beforeCompile()

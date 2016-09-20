@@ -6,6 +6,7 @@ use NAttreid\Form\Form;
 use NAttreid\WebManager\Model\Content;
 use NAttreid\WebManager\Model\Orm;
 use Nette\Utils\ArrayHash;
+use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Model\Model;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -127,7 +128,7 @@ class ContentPresenter extends BasePresenter
 
 		$form->addImageUpload('image', 'webManager.web.content.photo', 'webManager.web.content.photoDelete')
 			->setNamespace('content')
-			->setPreview();
+			->setPreview('300x100');
 
 		$form->addTextArea('description', 'webManager.web.content.description');
 
@@ -167,7 +168,7 @@ class ContentPresenter extends BasePresenter
 
 			$this->orm->persistAndFlush($content);
 			$this->restoreBacklink();
-		} catch (\Nextras\Dbal\UniqueConstraintViolationException $ex) {
+		} catch (UniqueConstraintViolationException $ex) {
 			$form->addError('webManager.web.content.constantExists');
 		}
 	}
