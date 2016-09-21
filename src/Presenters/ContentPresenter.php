@@ -39,15 +39,6 @@ class ContentPresenter extends BasePresenter
 	}
 
 	/**
-	 * {@inheritdoc }
-	 */
-	public function restoreBacklink()
-	{
-		parent::restoreBacklink();
-		$this->redirect('default');
-	}
-
-	/**
 	 * Smazani obsahu
 	 * @secured
 	 */
