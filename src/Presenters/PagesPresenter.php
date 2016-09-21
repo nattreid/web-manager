@@ -39,26 +39,15 @@ class PagesPresenter extends BasePresenter
 	}
 
 	/**
-	 * {@inheritdoc }
-	 */
-	public function restoreBacklink()
-	{
-		parent::restoreBacklink();
-		$this->redirect('default');
-	}
-
-	/**
 	 * Smazani stranky
 	 * @secured
 	 */
 	public function handleDelete($id)
 	{
-		/* @var $grid Datagrid */
-		$grid = $this['list'];
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($id);
 			$this->orm->pages->removeAndFlush($page);
-			$grid->reload();
+			$this['list']->reload();
 		} else {
 			$this->terminate();
 		}
@@ -70,15 +59,13 @@ class PagesPresenter extends BasePresenter
 	 */
 	public function deletePages(array $ids)
 	{
-		/* @var $grid Datagrid */
-		$grid = $this['list'];
 		if ($this->isAjax()) {
 			$pages = $this->orm->pages->findById($ids);
 			foreach ($pages as $page) {
 				$this->orm->pages->remove($page);
 			}
 			$this->orm->flush();
-			$grid->reload();
+			$this['list']->reload();
 		} else {
 			$this->terminate();
 		}
@@ -117,10 +104,7 @@ class PagesPresenter extends BasePresenter
 		if (!$this->page) {
 			$this->error();
 		}
-
-		/* @var $form Form */
-		$form = $this['editForm'];
-		$form->setDefaults($this->page->toArray());
+		$this['editForm']->setDefaults($this->page->toArray());
 	}
 
 	/**

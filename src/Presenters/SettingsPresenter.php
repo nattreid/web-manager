@@ -17,9 +17,7 @@ class SettingsPresenter extends BasePresenter
 	 */
 	public function actionDefault()
 	{
-		/* @var $form Form */
-		$form = $this['settingsForm'];
-		$form->setDefaults($this->configurator->fetchConfigurations());
+		$this['settingsForm']->setDefaults($this->configurator->fetchConfigurations());
 	}
 
 	/**
