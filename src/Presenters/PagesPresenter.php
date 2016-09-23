@@ -89,7 +89,7 @@ class PagesPresenter extends BasePresenter
 	/**
 	 * Pridani stranky
 	 */
-	public function actionAdd()
+	public function renderAdd()
 	{
 		$this->setView('edit');
 	}
@@ -104,6 +104,10 @@ class PagesPresenter extends BasePresenter
 		if (!$this->page) {
 			$this->error();
 		}
+	}
+
+	public function renderEdit()
+	{
 		$this['editForm']->setDefaults($this->page->toArray());
 	}
 

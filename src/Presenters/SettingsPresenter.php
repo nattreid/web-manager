@@ -15,7 +15,7 @@ class SettingsPresenter extends BasePresenter
 	/**
 	 * Zobrazeni nastaveni
 	 */
-	public function actionDefault()
+	public function renderDefault()
 	{
 		$this['settingsForm']->setDefaults($this->configurator->fetchConfigurations());
 	}

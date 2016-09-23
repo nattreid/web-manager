@@ -74,7 +74,7 @@ class ContentPresenter extends BasePresenter
 	/**
 	 * Pridani obsahu
 	 */
-	public function actionAdd()
+	public function renderAdd()
 	{
 		$this->setView('edit');
 	}
@@ -89,6 +89,10 @@ class ContentPresenter extends BasePresenter
 		if (!$this->content) {
 			$this->error();
 		}
+	}
+
+	public function renderEdit()
+	{
 		$this['editForm']->setDefaults($this->content->toArray());
 	}
 
