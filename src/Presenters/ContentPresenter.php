@@ -2,6 +2,7 @@
 
 namespace NAttreid\WebManager\Presenters;
 
+use NAttreid\Crm\LocaleService;
 use NAttreid\Form\Form;
 use NAttreid\WebManager\Model\Content;
 use NAttreid\WebManager\Model\Orm;
@@ -24,10 +25,14 @@ class ContentPresenter extends BasePresenter
 	/** @var Content */
 	private $content;
 
-	public function __construct(Model $orm)
+	/** @var LocaleService */
+	private $localeService;
+
+	public function __construct(Model $orm, LocaleService $localeService)
 	{
 		parent::__construct();
 		$this->orm = $orm;
+		$this->localeService = $localeService;
 	}
 
 	/**
@@ -110,6 +115,9 @@ class ContentPresenter extends BasePresenter
 		$form->addText('const', 'webManager.web.content.const')
 			->setRequired();
 
+		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
+			->setItems($this->localeService->getAllowed());
+
 		$form->addText('title', 'webManager.web.content.contentTitle');
 
 		$form->addTextArea('keywords', 'webManager.web.content.keywords');
@@ -147,6 +155,7 @@ class ContentPresenter extends BasePresenter
 
 		try {
 			$content->name = $values->name;
+			$content->locale = $values->locale;
 			$content->setConst($values->const);
 			$content->title = $values->title;
 			$content->keywords = $values->keywords;
@@ -182,6 +191,9 @@ class ContentPresenter extends BasePresenter
 		$grid->addColumnText('const', 'webManager.web.content.const')
 			->setSortable()
 			->setFilterText();
+
+		$grid->addColumnText('locale', 'webManager.web.content.locale', 'locale.name')
+			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->getAllowed());
 
 		$grid->addAction('edit', NULL)
 			->setIcon('pencil')

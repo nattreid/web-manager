@@ -34,6 +34,9 @@ class Content extends Entity
 	 */
 	public function setConst($const)
 	{
+		if (!$this->locale) {
+			throw new InvalidArgumentException('Locale must be set before calling setConst');
+		}
 		if (Strings::match($const, '/[^A-Za-z0-9_]/')) {
 			throw new InvalidArgumentException('Constant contains invalid characters');
 		}
