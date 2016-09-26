@@ -23,8 +23,8 @@ class PagesMapper extends Mapper
 		$table->addColumn('name')
 			->varChar(100);
 		$table->addColumn('url')
-			->varChar(100)
-			->setUnique();
+			->varChar(100);
+		$table->addForeignKey('localeId', LocalesMapper::class);
 		$table->addColumn('title')
 			->varChar(150);
 		$table->addColumn('image')
@@ -42,6 +42,7 @@ class PagesMapper extends Mapper
 		$table->addColumn('position')
 			->int()
 			->setKey();
+		$table->setUnique('url', 'localeId');
 	}
 
 	/**

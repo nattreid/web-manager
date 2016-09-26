@@ -52,11 +52,15 @@ class PagesRepository extends Repository
 	/**
 	 * Vrati stranku podle url
 	 * @param string $url
+	 * @param string $locale
 	 * @return Page
 	 */
-	public function getByUrl($url)
+	public function getByUrl($url, $locale)
 	{
-		return $this->getBy(['url' => $url]);
+		return $this->getBy([
+			'url' => $url,
+			'locale.name' => $locale
+		]);
 	}
 
 	/**

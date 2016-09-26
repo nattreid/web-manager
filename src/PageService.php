@@ -58,12 +58,13 @@ class PageService
 	/**
 	 * Vrati stranku, presmeruje na HP nebo vyhodi chybu 404
 	 * @param string $url
+	 * @param string $locale
 	 * @return Page
 	 */
-	public function getPage($url)
+	public function getPage($url, $locale)
 	{
 		Strings::ifEmpty($url, '');
-		$page = $this->orm->pages->getByUrl($url);
+		$page = $this->orm->pages->getByUrl($url, $locale);
 		if (!$page) {
 			if ($url == '') {
 				$this->presenter->redirect($this->defaultLink);

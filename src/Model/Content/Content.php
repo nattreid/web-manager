@@ -2,9 +2,10 @@
 
 namespace NAttreid\WebManager\Model;
 
+use NAttreid\Crm\Model\Locale;
 use Nette\Utils\Strings;
-use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Dbal\InvalidArgumentException;
+use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Entity\Entity;
 
 /**
@@ -13,6 +14,7 @@ use Nextras\Orm\Entity\Entity;
  * @property int $id {primary}
  * @property string $name
  * @property string $const
+ * @property Locale $locale {m:1 Locale, oneSided=TRUE}
  * @property string|NULL $title
  * @property string|NULL $image
  * @property string|NULL $keywords

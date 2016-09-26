@@ -14,11 +14,13 @@ webManager:
 nastavit **HomepagePresenter**
 ```php
 class HomepagePresenter extendes Presenter {
+    public $locale;
+
     /** @var \NAttreid\WebManager\PageService @inject */
     public $pageService;
 
     public function actionPage($url) {
-        $page = $this->pageService->getPage($url);
+        $page = $this->pageService->getPage($url, $locale);
 
         // stranku dat template pro zobrazeni
         $this->template->page = $page;
@@ -32,17 +34,15 @@ class FrontRouter extends Router {
     /** @var \NAttreid\WebManager\PageService */
     private $pageService;
 
-    public function __construct($url, $secured, \NAttreid\WebManager\PageService $pageService) {
-        parent::__construct($url, $secured);
+    public function __construct($url, \NAttreid\WebManager\PageService $pageService) {
+        parent::__construct($url);
         $this->pageService = $pageService;
     }
 
     public function createRoutes() {
         $routes = $this->getRouter('Front');
 
-        $routes[] = new Route($this->getUrl() . 'sitemap.xml', 'Feed:sitemap');
-
-        $this->pageService->createRoute($routes, $this->getUrl(), $this->getFlag());
+        $this->pageService->createRoute($routes, $this->getUrl());
     }
 
 }

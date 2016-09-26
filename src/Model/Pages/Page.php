@@ -13,6 +13,7 @@ use Nextras\Orm\Entity\Entity;
  * @property int $id {primary}
  * @property string $name
  * @property string $url
+ * @property Locale $locale {m:1 Locale, oneSided=TRUE}
  * @property string $title
  * @property string|NULL $image
  * @property string|NULL $keywords
@@ -33,13 +34,16 @@ class Page extends Entity
 	 */
 	public function setUrl($url)
 	{
+		if (!$this->locale) {
+			throw new InvalidArgumentException('Locale must be set before calling setUrl');
+		}
 		if (Strings::match($url, '/[^A-Za-z0-9_]/')) {
 			throw new InvalidArgumentException('URL contains invalid characters');
 		}
 
 		/* @var $repository PagesRepository */
 		$repository = $this->getRepository();
-		$page = $repository->getByUrl($url);
+		$page = $repository->getByUrl($url, $this->locale);
 		if ($page !== NULL && $page !== $this) {
 			throw new UniqueConstraintViolationException("Page with '$url' exists");
 		}

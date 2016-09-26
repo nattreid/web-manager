@@ -1,6 +1,8 @@
 <?php
 
 namespace NAttreid\WebManager\Model;
+
+use NAttreid\Crm\Model\LocalesMapper;
 use NAttreid\Orm\Structure\Table;
 
 /**
@@ -19,8 +21,8 @@ class ContentMapper extends Mapper
 		$table->addColumn('name')
 			->varChar(50);
 		$table->addColumn('const')
-			->varChar(30)
-			->setUnique();
+			->varChar(30);
+		$table->addForeignKey('localeId', LocalesMapper::class);
 		$table->addColumn('title')
 			->varChar(150)
 			->setDefault(NULL);
@@ -35,6 +37,7 @@ class ContentMapper extends Mapper
 			->setDefault(NULL);
 		$table->addColumn('content')
 			->text();
+		$table->setUnique('const', 'localeId');
 	}
 
 }
