@@ -59,7 +59,7 @@ class PagesRepository extends Repository
 	{
 		return $this->getBy([
 			'url' => $url,
-			'locale.name' => $locale
+			'this->locale->name' => $locale
 		]);
 	}
 
