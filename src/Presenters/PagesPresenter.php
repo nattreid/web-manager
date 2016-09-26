@@ -96,6 +96,9 @@ class PagesPresenter extends BasePresenter
 	 */
 	public function renderAdd()
 	{
+		$this['editForm']->setDefaults([
+			'locale' => $this->localeService->get($this->locale)
+		]);
 		$this->setView('edit');
 	}
 

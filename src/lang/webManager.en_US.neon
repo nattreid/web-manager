@@ -13,6 +13,7 @@ web:
         description: "Description"
         content: "Content"
         urlExists: "URL exists"
+        locale: "Language"
     content:
         title: "Content"
         add: "Add Content"
@@ -24,6 +25,7 @@ web:
         const: "Constant"
         content: "Content"
         constantExists: "Constant exists"
+        locale: "Language"
     settings:
         title: "Settings"
         cookiePolicy: "Show cookie policy bar"

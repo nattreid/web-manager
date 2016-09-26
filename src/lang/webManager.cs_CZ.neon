@@ -13,6 +13,7 @@ web:
         description: "Popisek"
         content: "Obsah"
         urlExists: "URL již existuje"
+        locale: "Jazyk"
     content:
         title: "Obsah"
         add: "Přidat obsah"
@@ -24,6 +25,7 @@ web:
         const: "Konstanta"
         content: "Obsah"
         constantExists: "Konstanta již existuje"
+        locale: "Jazyk"
     settings:
         title: "Nastavení"
         cookiePolicy: "Zobrazit potvrzeni používání cookies"
