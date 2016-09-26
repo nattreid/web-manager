@@ -82,7 +82,7 @@ class ContentPresenter extends BasePresenter
 	public function renderAdd()
 	{
 		$this['editForm']->setDefaults([
-			'locale' => $this->localeService->get($this->locale)
+			'locale' => $this->localeService->get($this->locale)->id
 		]);
 		$this->setView('edit');
 	}
