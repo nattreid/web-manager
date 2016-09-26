@@ -45,15 +45,14 @@ class PageService
 	 * Vytvori routy
 	 * @param IRouter $routes
 	 * @param string $url
-	 * @param string $flag
 	 */
-	public function createRoute(IRouter $routes, $url, $flag)
+	public function createRoute(IRouter $routes, $url)
 	{
-		$routes[] = new Routing\PageRoute($url, $flag, $this->pageLink, $this->orm);
+		$routes[] = new Routing\PageRoute($url, $this->pageLink, $this->orm);
 
-		$routes[] = new Route($url, $this->defaultLink, $flag);
+		$routes[] = new Route($url, $this->defaultLink);
 		$routes[] = new Route($url . 'index.php', $this->pageLink, Route::ONE_WAY);
-		$routes[] = new Route($url . '<presenter>[/<action>]', $this->pageLink, $flag);
+		$routes[] = new Route($url . '<presenter>[/<action>]', $this->pageLink);
 	}
 
 	/**

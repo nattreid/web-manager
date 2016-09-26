@@ -17,9 +17,9 @@ class PageRoute extends Route
 	/** @var Orm */
 	private $orm;
 
-	public function __construct($url, $flag, $pageLink, Model $orm)
+	public function __construct($url, $pageLink, Model $orm)
 	{
-		parent::__construct($url . '[<url>]', $pageLink, $flag);
+		parent::__construct($url . '[<url>]', $pageLink);
 		$this->orm = $orm;
 	}
 

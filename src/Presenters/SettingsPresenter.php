@@ -51,7 +51,6 @@ class SettingsPresenter extends BasePresenter
 	 */
 	public function settingsFormSucceeded(Form $form, $values)
 	{
-		$form->setValues($values);
 		foreach ($values as $name => $value) {
 			$this->configurator->$name = $value;
 		}
