@@ -77,7 +77,7 @@ class PageService
 	}
 
 	/**
-	 * Vrati stranku, presmeruje na HP nebo vyhodi chybu 404
+	 * Vrati stranku
 	 * @param string $url
 	 * @param string $locale
 	 * @return Page

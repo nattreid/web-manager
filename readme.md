@@ -9,6 +9,7 @@ extensions:
 webManager:
     homepage: 'Homepage:default'
     page: 'Homepage:page'
+    module: 'Front'
 ```
 
 nastavit **HomepagePresenter**
@@ -20,9 +21,9 @@ class HomepagePresenter extendes Presenter {
     public $pageService;
 
     public function actionPage($url) {
-        $page = $this->pageService->getPage($url, $locale);
+        $page = $this->pageService->getPage($url, $this->locale);
 
-        // stranku dat template pro zobrazeni
+        // stranku date do template pro zobrazeni
         $this->template->page = $page;
 }
 ```
