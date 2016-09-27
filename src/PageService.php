@@ -56,7 +56,19 @@ class PageService
 	 */
 	public function createRoute(IRouter $routes, $url)
 	{
-		$routes[] = new Routing\PageRoute($url, $this->pageLink, $this->orm);
+		list($presenter, $action) = explode(':', $this->pageLink);
+
+		$routes[] = new Route($url . '[<url>]', [
+			'presenter' => $presenter,
+			'action' => $action,
+			'url' => [
+				Route::FILTER_IN => function ($url) {
+					if ($this->orm->pages->exists($url)) {
+						return $url;
+					}
+				}
+			],
+		]);
 
 		$routes[] = new Route($url, $this->defaultLink);
 		$routes[] = new Route($url . 'index.php', $this->pageLink, Route::ONE_WAY);
@@ -68,6 +80,7 @@ class PageService
 	 * @param string $url
 	 * @param string $locale
 	 * @return Page
+	 * @throws BadRequestException
 	 */
 	public function getPage($url, $locale)
 	{

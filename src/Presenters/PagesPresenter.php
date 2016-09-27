@@ -208,7 +208,7 @@ class PagesPresenter extends BasePresenter
 
 		$grid->addToolbarButton('add', 'webManager.web.pages.add');
 
-		$grid->addColumnLink('name', 'webManager.web.pages.name', $this->pageService->pageLink, 'url', ['url'=> 'url'])
+		$grid->addColumnLink('name', 'webManager.web.pages.name', $this->pageService->pageLink, NULL, ['url' => 'url', 'locale' => 'locale.name'])
 			->setFilterText();
 
 		$grid->addColumnText('url', 'default.url')
