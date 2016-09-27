@@ -17,6 +17,8 @@ use Nextras\Orm\Model\Model;
 /**
  * Sluzba stranek
  *
+ * @property-read string $pageLink
+ *
  * @author Attreid <attreid@gmail.com>
  */
 class PageService
@@ -32,13 +34,17 @@ class PageService
 	/** @var string */
 	private $pageLink;
 
+	/** @var string */
+	private $module;
+
 	/** @var IPageMenuFactory */
 	private $menuFactory;
 
-	public function __construct($defaultLink, $pageLink, Model $orm, IPageMenuFactory $menuFactory)
+	public function __construct($defaultLink, $pageLink, $module, Model $orm, IPageMenuFactory $menuFactory)
 	{
 		$this->defaultLink = $defaultLink;
 		$this->pageLink = $pageLink;
+		$this->module = $module;
 		$this->orm = $orm;
 		$this->menuFactory = $menuFactory;
 	}
@@ -71,6 +77,14 @@ class PageService
 			throw new BadRequestException(NULL, IResponse::S404_NOT_FOUND);
 		}
 		return $page;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getPageLink()
+	{
+		return ':' . $this->module . ':' . $this->pageLink;
 	}
 
 	/**

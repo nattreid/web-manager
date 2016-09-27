@@ -34,10 +34,13 @@ class WebManagerExtension extends ModuleExtension
 		if ($config['page'] === NULL) {
 			throw new InvalidStateException("WebManager: 'page' does not set in config.neon");
 		}
+		if ($config['module'] === NULL) {
+			throw new InvalidStateException("WebManager: 'module' does not set in config.neon");
+		}
 
 		$builder->addDefinition($this->prefix('pageService'))
 			->setClass(PageService::class)
-			->setArguments([$config['homepage'], $config['page']]);
+			->setArguments([$config['homepage'], $config['page'], $config['module']]);
 
 		$builder->addDefinition($this->prefix('menu'))
 			->setImplement(IPageMenuFactory::class)

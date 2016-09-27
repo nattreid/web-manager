@@ -6,6 +6,7 @@ use NAttreid\Crm\LocaleService;
 use NAttreid\Form\Form;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
+use NAttreid\WebManager\PageService;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Model\Model;
@@ -28,11 +29,15 @@ class PagesPresenter extends BasePresenter
 	/** @var LocaleService */
 	private $localeService;
 
-	public function __construct(Model $orm, LocaleService $localeService)
+	/** @var PageService */
+	private $pageService;
+
+	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService)
 	{
 		parent::__construct();
 		$this->orm = $orm;
 		$this->localeService = $localeService;
+		$this->pageService = $pageService;
 	}
 
 	/**
@@ -116,6 +121,7 @@ class PagesPresenter extends BasePresenter
 
 	public function renderEdit()
 	{
+		$this->addBreadcrumbLink($this->page->name);
 		$this['editForm']->setDefaults($this->page->toArray(Page::TO_ARRAY_RELATIONSHIP_AS_ID));
 	}
 
@@ -202,7 +208,7 @@ class PagesPresenter extends BasePresenter
 
 		$grid->addToolbarButton('add', 'webManager.web.pages.add');
 
-		$grid->addColumnText('name', 'webManager.web.pages.name')
+		$grid->addColumnLink('name', 'webManager.web.pages.name', $this->pageService->pageLink, 'url', ['url'=> 'url'])
 			->setFilterText();
 
 		$grid->addColumnText('url', 'default.url')

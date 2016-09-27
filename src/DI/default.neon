@@ -3,6 +3,7 @@ position: 0
 
 homepage: NULL
 page: NULL
+module: NULL
 
 menu:
     web:
