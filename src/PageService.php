@@ -2,7 +2,6 @@
 
 namespace NAttreid\WebManager;
 
-use NAttreid\Menu\Menu;
 use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
@@ -37,16 +36,12 @@ class PageService
 	/** @var string */
 	private $module;
 
-	/** @var IPageMenuFactory */
-	private $menuFactory;
-
-	public function __construct($defaultLink, $pageLink, $module, Model $orm, IPageMenuFactory $menuFactory)
+	public function __construct($defaultLink, $pageLink, $module, Model $orm)
 	{
 		$this->defaultLink = $defaultLink;
 		$this->pageLink = $pageLink;
 		$this->module = $module;
 		$this->orm = $orm;
-		$this->menuFactory = $menuFactory;
 	}
 
 	/**
@@ -103,25 +98,12 @@ class PageService
 
 	/**
 	 * Vrati stranky krome Homepage
-	 * @return Page[]|ICollection
+	 * @param bool $withHome
+	 * @return Model\Page[]|ICollection
 	 */
-	public function getPages()
+	public function getPages($withHome = FALSE)
 	{
-		return $this->orm->pages->findPages();
-	}
-
-	/**
-	 * Vrati menu
-	 * @return Menu
-	 */
-	public function createMenu()
-	{
-		$menu = $this->menuFactory->create();
-		foreach ($this->getPages() as $page) {
-			$menu->addLink($page->name, $page->url);
-		}
-
-		return $menu;
+		return $this->orm->pages->findAll($withHome);
 	}
 
 }

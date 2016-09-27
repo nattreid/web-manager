@@ -31,22 +31,18 @@ class PagesRepository extends Repository
 	}
 
 	/**
-	 * Vrati kolekci
-	 * @return ICollection|Page
+	 * Vrati stranky
+	 * @param bool $withHome
+	 * @return ICollection|Page[]
 	 */
-	public function findAll()
+	public function findAll($withHome = FALSE)
 	{
-		return parent::findAll()->orderBy('position');
-	}
-
-	/**
-	 * Vrati stranky (mimo hlavni, pokud existuje)
-	 * @return ICollection|Page
-	 */
-	public function findPages()
-	{
-		return $this->findBy(['url!=' => ''])
-			->orderBy('position');
+		if ($withHome) {
+			$result = parent::findAll();
+		} else {
+			$result = $this->findBy(['url!=' => '']);
+		}
+		return $result->orderBy('position');
 	}
 
 	/**
