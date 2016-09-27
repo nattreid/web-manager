@@ -37,10 +37,9 @@ class PagesRepository extends Repository
 	 */
 	public function findAll($withHome = FALSE)
 	{
-		if ($withHome) {
-			$result = parent::findAll();
-		} else {
-			$result = $this->findBy(['url!=' => '']);
+		$result = parent::findAll();
+		if (!$withHome) {
+			$result = $result->findBy(['url!=' => '']);
 		}
 		return $result->orderBy('position');
 	}
