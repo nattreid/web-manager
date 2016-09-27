@@ -61,11 +61,12 @@ class PageService
 		$routes[] = new Route($url . '[<url>]', [
 			'presenter' => $presenter,
 			'action' => $action,
-			'url' => [
-				Route::FILTER_IN => function ($url) {
-					if ($this->orm->pages->exists($url)) {
-						return $url;
+			NULL => [
+				Route::FILTER_IN => function ($params) {
+					if ($this->orm->pages->exists($params['url'])) {
+						return $params;
 					}
+					return NULL;
 				}
 			],
 		]);
