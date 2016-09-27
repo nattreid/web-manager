@@ -7,7 +7,7 @@ use NAttreid\Form\Form;
 use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
-use NAttreid\WebManager\PageService;
+use NAttreid\WebManager\Service;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Model\Model;
@@ -30,13 +30,13 @@ class PagesPresenter extends BasePresenter
 	/** @var LocaleService */
 	private $localeService;
 
-	/** @var PageService */
+	/** @var Service */
 	private $pageService;
-	
+
 	/** @var RouterFactory */
 	private $routerFactory;
 
-	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService, RouterFactory $routerFactory)
+	public function __construct(Model $orm, LocaleService $localeService, Service $pageService, RouterFactory $routerFactory)
 	{
 		parent::__construct();
 		$this->orm = $orm;

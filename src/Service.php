@@ -3,6 +3,7 @@
 namespace NAttreid\WebManager;
 
 use NAttreid\Utils\Strings;
+use NAttreid\WebManager\Model\Content;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
 use Nette\Application\BadRequestException;
@@ -14,13 +15,13 @@ use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
 
 /**
- * Sluzba stranek
+ * Sluzba Manageru
  *
  * @property-read string $pageLink
  *
  * @author Attreid <attreid@gmail.com>
  */
-class PageService
+class Service
 {
 	use SmartObject;
 
@@ -104,6 +105,17 @@ class PageService
 	public function getPages($withHome = FALSE)
 	{
 		return $this->orm->pages->findAll($withHome);
+	}
+
+	/**
+	 * Vrati text
+	 * @param $const
+	 * @param $locale
+	 * @return Content
+	 */
+	public function getContent($const, $locale)
+	{
+		return $this->orm->content->getByConst($const, $locale);
 	}
 
 }

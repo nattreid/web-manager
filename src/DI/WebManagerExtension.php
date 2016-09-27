@@ -4,9 +4,7 @@ namespace NAttreid\Analytics\DI;
 
 use NAttreid\AppManager\AppManager;
 use NAttreid\Crm\DI\ModuleExtension;
-use NAttreid\Menu\Menu;
-use NAttreid\WebManager\IPageMenuFactory;
-use NAttreid\WebManager\PageService;
+use NAttreid\WebManager\Service;
 use Nette\DI\Statement;
 use Nette\InvalidStateException;
 use Nextras\Orm\Model\Model;
@@ -39,7 +37,7 @@ class WebManagerExtension extends ModuleExtension
 		}
 
 		$builder->addDefinition($this->prefix('pageService'))
-			->setClass(PageService::class)
+			->setClass(Service::class)
 			->setArguments([$config['homepage'], $config['page'], $config['module']]);
 	}
 

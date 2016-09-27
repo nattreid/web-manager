@@ -1,6 +1,7 @@
 <?php
 
 namespace NAttreid\WebManager\Model;
+
 use NAttreid\Orm\Repository;
 
 /**
@@ -17,28 +18,16 @@ class ContentRepository extends Repository
 	}
 
 	/**
-	 * Vrati pouze obsah podle konstanty
-	 * @param string $const
-	 * @return string|FALSE
-	 */
-	public function getContent($const)
-	{
-		$content = $this->getByConst($const);
-		if ($content) {
-			return $content->content;
-		} else {
-			return FALSE;
-		}
-	}
-
-	/**
 	 * Vrati obsah podle konstanty
 	 * @param string $const
 	 * @return Content
 	 */
-	public function getByConst($const)
+	public function getByConst($const, $locale)
 	{
-		return $this->getBy(['const' => $const]);
+		return $this->getBy([
+			'const' => $const,
+			'locale' => $locale
+		]);
 	}
 
 }
