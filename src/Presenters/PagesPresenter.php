@@ -116,7 +116,7 @@ class PagesPresenter extends BasePresenter
 
 	public function renderEdit()
 	{
-		$this['editForm']->setDefaults($this->page->toArray());
+		$this['editForm']->setDefaults($this->page->toArray(Page::TO_ARRAY_RELATIONSHIP_AS_ID));
 	}
 
 	/**

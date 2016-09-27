@@ -6,8 +6,10 @@ use NAttreid\Menu\Menu;
 use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
+use Nette\Application\BadRequestException;
 use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
+use Nette\Http\IResponse;
 use Nette\SmartObject;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
@@ -66,11 +68,7 @@ class PageService
 		Strings::ifEmpty($url, '');
 		$page = $this->orm->pages->getByUrl($url, $locale);
 		if (!$page) {
-			if ($url == '') {
-				$this->presenter->redirect($this->defaultLink);
-			} else {
-				$this->presenter->error();
-			}
+			throw new BadRequestException(NULL, IResponse::S404_NOT_FOUND);
 		}
 		return $page;
 	}

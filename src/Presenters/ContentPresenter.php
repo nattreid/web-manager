@@ -101,7 +101,7 @@ class ContentPresenter extends BasePresenter
 
 	public function renderEdit()
 	{
-		$this['editForm']->setDefaults($this->content->toArray());
+		$this['editForm']->setDefaults($this->content->toArray(Content::TO_ARRAY_RELATIONSHIP_AS_ID));
 	}
 
 	/**
