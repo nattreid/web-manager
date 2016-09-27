@@ -41,10 +41,6 @@ class WebManagerExtension extends ModuleExtension
 		$builder->addDefinition($this->prefix('pageService'))
 			->setClass(PageService::class)
 			->setArguments([$config['homepage'], $config['page'], $config['module']]);
-
-		$builder->addDefinition($this->prefix('menu'))
-			->setImplement(IPageMenuFactory::class)
-			->setFactory(Menu::class);
 	}
 
 	public function beforeCompile()
