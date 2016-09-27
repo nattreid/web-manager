@@ -99,7 +99,7 @@ class PageService
 	/**
 	 * Vrati stranky krome Homepage
 	 * @param bool $withHome
-	 * @return Model\Page[]|ICollection
+	 * @return Page[]|ICollection
 	 */
 	public function getPages($withHome = FALSE)
 	{

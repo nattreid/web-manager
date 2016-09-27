@@ -4,6 +4,7 @@ namespace NAttreid\WebManager\Presenters;
 
 use NAttreid\Crm\LocaleService;
 use NAttreid\Form\Form;
+use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
 use NAttreid\WebManager\PageService;
@@ -31,13 +32,17 @@ class PagesPresenter extends BasePresenter
 
 	/** @var PageService */
 	private $pageService;
+	
+	/** @var RouterFactory */
+	private $routerFactory;
 
-	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService)
+	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService, RouterFactory $routerFactory)
 	{
 		parent::__construct();
 		$this->orm = $orm;
 		$this->localeService = $localeService;
 		$this->pageService = $pageService;
+		$this->routerFactory = $routerFactory;
 	}
 
 	/**
