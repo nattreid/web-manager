@@ -30,16 +30,16 @@ class PagesMapper extends Mapper
 			->varChar(150);
 		$table->addColumn('image')
 			->varChar(150)
-			->setDefault(NULL);
+			->setDefault(null);
 		$table->addColumn('keywords')
 			->varChar()
-			->setDefault(NULL);
+			->setDefault(null);
 		$table->addColumn('description')
 			->varChar()
-			->setDefault(NULL);
+			->setDefault(null);
 		$table->addColumn('content')
 			->text()
-			->setDefault(NULL);
+			->setDefault(null);
 		$table->addColumn('position')
 			->int()
 			->setKey();
@@ -65,12 +65,12 @@ class PagesMapper extends Mapper
 	{
 		$key = 'pagesList';
 		$rows = $this->cache->load($key);
-		if ($rows === NULL) {
+		if ($rows === null) {
 			$rows = $this->cache->save($key, function () {
 				$result = [];
 				foreach ($this->getRepository()->findAll() as $page) {
 					/* @var $page Page */
-					$result[$page->url] = TRUE;
+					$result[$page->url] = true;
 				}
 				return $result;
 			}, [
@@ -78,9 +78,9 @@ class PagesMapper extends Mapper
 			]);
 		}
 		if (isset($rows[$url])) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 
@@ -90,7 +90,7 @@ class PagesMapper extends Mapper
 	 */
 	public function getMaxPosition()
 	{
-		return $this->connection->query('SELECT IFNULL(MAX([position]), 0) position FROM %table', $this->getTableName())->fetch()->position;
+		return $this->connection->query('SELECT IFnull(MAX([position]), 0) position FROM %table', $this->getTableName())->fetch()->position;
 	}
 
 }

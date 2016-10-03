@@ -25,16 +25,16 @@ class ContentMapper extends Mapper
 		$table->addForeignKey('localeId', LocalesMapper::class);
 		$table->addColumn('title')
 			->varChar(150)
-			->setDefault(NULL);
+			->setDefault(null);
 		$table->addColumn('image')
 			->varChar(150)
-			->setDefault(NULL);
+			->setDefault(null);
 		$table->addColumn('keywords')
 			->varChar()
-			->setDefault(NULL);
+			->setDefault(null);
 		$table->addColumn('description')
 			->varChar()
-			->setDefault(NULL);
+			->setDefault(null);
 		$table->addColumn('content')
 			->text();
 		$table->setUnique('const', 'localeId');

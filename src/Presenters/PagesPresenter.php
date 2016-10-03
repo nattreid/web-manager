@@ -213,7 +213,7 @@ class PagesPresenter extends BasePresenter
 
 		$grid->addToolbarButton('add', 'webManager.web.pages.add');
 
-		$grid->addColumnLink('name', 'webManager.web.pages.name', $this->pageService->pageLink, NULL, ['url', $this->routerFactory->variable => 'locale.name'])
+		$grid->addColumnLink('name', 'webManager.web.pages.name', $this->pageService->pageLink, null, ['url', $this->routerFactory->variable => 'locale.name'])
 			->setFilterText();
 
 		$grid->addColumnText('url', 'default.url')
@@ -222,11 +222,11 @@ class PagesPresenter extends BasePresenter
 		$grid->addColumnText('locale', 'webManager.web.pages.locale', 'locale.name')
 			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->getAllowed());
 
-		$grid->addAction('edit', NULL)
+		$grid->addAction('edit', null)
 			->setIcon('pencil')
 			->setTitle('default.edit');
 
-		$grid->addAction('delete', NULL, 'delete!')
+		$grid->addAction('delete', null, 'delete!')
 			->setIcon('trash')
 			->setTitle('default.delete')
 			->setClass('btn btn-xs btn-danger ajax')

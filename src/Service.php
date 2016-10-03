@@ -57,12 +57,12 @@ class Service
 		$routes[] = new Route($url . '[<url>]', [
 			'presenter' => $presenter,
 			'action' => $action,
-			NULL => [
+			null => [
 				Route::FILTER_IN => function ($params) {
 					if ($this->orm->pages->exists($params['url'])) {
 						return $params;
 					}
-					return NULL;
+					return null;
 				}
 			],
 		]);
@@ -84,7 +84,7 @@ class Service
 		Strings::ifEmpty($url, '');
 		$page = $this->orm->pages->getByUrl($url, $locale);
 		if (!$page) {
-			throw new BadRequestException(NULL, IResponse::S404_NOT_FOUND);
+			throw new BadRequestException(null, IResponse::S404_NOT_FOUND);
 		}
 		return $page;
 	}
@@ -102,7 +102,7 @@ class Service
 	 * @param bool $withHome
 	 * @return Page[]|ICollection
 	 */
-	public function getPages($withHome = FALSE)
+	public function getPages($withHome = false)
 	{
 		return $this->orm->pages->findAll($withHome);
 	}

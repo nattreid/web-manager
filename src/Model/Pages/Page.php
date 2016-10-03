@@ -14,13 +14,13 @@ use Nextras\Orm\Entity\Entity;
  * @property int $id {primary}
  * @property string $name
  * @property string $url
- * @property Locale $locale {m:1 Locale, oneSided=TRUE}
+ * @property Locale $locale {m:1 Locale, oneSided=true}
  * @property string $title
- * @property string|NULL $image
- * @property string|NULL $keywords
- * @property string|NULL $description
- * @property string|NULL $content
- * @property int|NULL $position
+ * @property string|null $image
+ * @property string|null $keywords
+ * @property string|null $description
+ * @property string|null $content
+ * @property int|null $position
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -45,7 +45,7 @@ class Page extends Entity
 		/* @var $repository PagesRepository */
 		$repository = $this->getRepository();
 		$page = $repository->getByUrl($url, $this->locale);
-		if ($page !== NULL && $page !== $this) {
+		if ($page !== null && $page !== $this) {
 			throw new UniqueConstraintViolationException("Page with '$url' exists");
 		}
 		$this->url = $url;
@@ -53,7 +53,7 @@ class Page extends Entity
 
 	protected function onBeforeInsert()
 	{
-		if ($this->position === NULL) {
+		if ($this->position === null) {
 			/* @var $repo PagesRepository */
 			$repo = $this->getRepository();
 			$this->position = $repo->getMaxPosition() + 1;

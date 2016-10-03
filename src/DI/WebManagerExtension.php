@@ -26,13 +26,13 @@ class WebManagerExtension extends ModuleExtension
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->loadFromFile($this->dir . '/default.neon'), $this->config);
 
-		if ($config['homepage'] === NULL) {
+		if ($config['homepage'] === null) {
 			throw new InvalidStateException("WebManager: 'homepage' does not set in config.neon");
 		}
-		if ($config['page'] === NULL) {
+		if ($config['page'] === null) {
 			throw new InvalidStateException("WebManager: 'page' does not set in config.neon");
 		}
-		if ($config['module'] === NULL) {
+		if ($config['module'] === null) {
 			throw new InvalidStateException("WebManager: 'module' does not set in config.neon");
 		}
 

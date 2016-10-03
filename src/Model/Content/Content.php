@@ -14,12 +14,12 @@ use Nextras\Orm\Entity\Entity;
  * @property int $id {primary}
  * @property string $name
  * @property string $const
- * @property Locale $locale {m:1 Locale, oneSided=TRUE}
- * @property string|NULL $title
- * @property string|NULL $image
- * @property string|NULL $keywords
- * @property string|NULL $description
- * @property string|NULL $content
+ * @property Locale $locale {m:1 Locale, oneSided=true}
+ * @property string|null $title
+ * @property string|null $image
+ * @property string|null $keywords
+ * @property string|null $description
+ * @property string|null $content
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -44,7 +44,7 @@ class Content extends Entity
 		/* @var $repository ContentRepository */
 		$repository = $this->getRepository();
 		$content = $repository->getByConst($const);
-		if ($content !== NULL && $content !== $this) {
+		if ($content !== null && $content !== $this) {
 			throw new UniqueConstraintViolationException("Content with '$const' exists");
 		}
 		$this->const = $const;

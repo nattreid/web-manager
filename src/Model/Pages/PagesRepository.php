@@ -35,7 +35,7 @@ class PagesRepository extends Repository
 	 * @param bool $withHome
 	 * @return ICollection|Page[]
 	 */
-	public function findAll($withHome = FALSE)
+	public function findAll($withHome = false)
 	{
 		$result = parent::findAll();
 		if (!$withHome) {

@@ -199,11 +199,11 @@ class ContentPresenter extends BasePresenter
 		$grid->addColumnText('locale', 'webManager.web.content.locale', 'locale.name')
 			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->getAllowed());
 
-		$grid->addAction('edit', NULL)
+		$grid->addAction('edit', null)
 			->setIcon('pencil')
 			->setTitle('default.edit');
 
-		$grid->addAction('delete', NULL, 'delete!')
+		$grid->addAction('delete', null, 'delete!')
 			->setIcon('trash')
 			->setTitle('default.delete')
 			->setClass('btn btn-xs btn-danger ajax')
