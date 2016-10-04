@@ -1,7 +1,8 @@
 <?php
 
 namespace NAttreid\WebManager\Presenters;
-use NAttreid\Crm\Control\ExtensionPresenter;
+
+use NAttreid\Crm\Control\ModulePresenter;
 use NAttreid\WebManager\IConfigurator;
 
 /**
@@ -9,7 +10,7 @@ use NAttreid\WebManager\IConfigurator;
  *
  * @author Attreid <attreid@gmail.com>
  */
-abstract class BasePresenter extends ExtensionPresenter
+abstract class BasePresenter extends ModulePresenter
 {
 	/** @var IConfigurator */
 	protected $configurator;
