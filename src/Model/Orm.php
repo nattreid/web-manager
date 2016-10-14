@@ -2,7 +2,6 @@
 
 namespace NAttreid\WebManager\Model;
 
-use NAttreid\AppManager\AppManager;
 use Nextras\Orm\Model\Model;
 
 /**
@@ -13,12 +12,5 @@ use Nextras\Orm\Model\Model;
  */
 class Orm extends Model
 {
-
-	public function setAppManager(AppManager $app)
-	{
-		$app->onInvalidateCache[] = function () {
-			$this->pages->cleanCache();
-		};
-	}
 
 }
