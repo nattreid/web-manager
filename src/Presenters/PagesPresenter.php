@@ -126,8 +126,9 @@ class PagesPresenter extends BasePresenter
 
 	public function renderEdit()
 	{
-		$this->addBreadcrumbLink($this->page->name);
-		$this['editForm']->setDefaults($this->page->toArray(Page::TO_ARRAY_RELATIONSHIP_AS_ID));
+		$page = $this->page;
+		$this->addBreadcrumbLink($page->name);
+		$this['editForm']->setDefaults($page->toArray($page::TO_ARRAY_RELATIONSHIP_AS_ID));
 	}
 
 	/**
