@@ -48,7 +48,7 @@ class WebManagerExtension extends ModuleExtension
 
 		$app = $builder->getByType(AppManager::class);
 		$builder->getDefinition($app)
-			->addSetup(new Statement('$app->onInvalidateCache[] = function() {?->pages->cleanCache();}', ['@' . Model::class]));
+			->addSetup(new Statement('$service->onInvalidateCache[] = function() {?->pages->cleanCache();}', ['@' . Model::class]));
 	}
 
 }
