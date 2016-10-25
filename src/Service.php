@@ -2,6 +2,7 @@
 
 namespace NAttreid\WebManager;
 
+use Kdyby\Translation\Translator;
 use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Content;
 use NAttreid\WebManager\Model\Orm;
@@ -37,12 +38,16 @@ class Service
 	/** @var string */
 	private $module;
 
-	public function __construct($defaultLink, $pageLink, $module, Model $orm)
+	/** @var Translator */
+	private $translator;
+
+	public function __construct($defaultLink, $pageLink, $module, Model $orm, Translator $translator)
 	{
 		$this->defaultLink = $defaultLink;
 		$this->pageLink = $pageLink;
 		$this->module = $module;
 		$this->orm = $orm;
+		$this->translator = $translator;
 	}
 
 	/**
@@ -75,14 +80,13 @@ class Service
 	/**
 	 * Vrati stranku
 	 * @param string $url
-	 * @param string $locale
 	 * @return Page
 	 * @throws BadRequestException
 	 */
-	public function getPage($url, $locale)
+	public function getPage($url)
 	{
 		Strings::ifEmpty($url, '');
-		$page = $this->orm->pages->getByUrl($url, $locale);
+		$page = $this->orm->pages->getByUrl($url, $this->translator->getLocale());
 		if (!$page) {
 			throw new BadRequestException(null, IResponse::S404_NOT_FOUND);
 		}
@@ -98,24 +102,22 @@ class Service
 	}
 
 	/**
-	 * Vrati stranky krome Homepage
-	 * @param bool $withHome
+	 * Vrati stranky
 	 * @return Page[]|ICollection
 	 */
-	public function getPages($withHome = false)
+	public function findPages()
 	{
-		return $this->orm->pages->findAll($withHome);
+		return $this->orm->pages->findLocale($this->translator->getLocale());
 	}
 
 	/**
 	 * Vrati text
 	 * @param $const
-	 * @param $locale
 	 * @return Content
 	 */
-	public function getContent($const, $locale)
+	public function getContent($const)
 	{
-		return $this->orm->content->getByConst($const, $locale);
+		return $this->orm->content->getByConst($const, $this->translator->getLocale());
 	}
 
 }

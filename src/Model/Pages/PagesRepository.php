@@ -31,17 +31,25 @@ class PagesRepository extends Repository
 	}
 
 	/**
-	 * Vrati stranky
-	 * @param bool $withHome
 	 * @return ICollection|Page[]
 	 */
-	public function findAll($withHome = false)
+	public function findAll()
 	{
-		$result = parent::findAll();
-		if (!$withHome) {
-			$result = $result->findBy(['url!=' => '']);
-		}
-		return $result->orderBy('position');
+		return parent::findAll()->orderBy('position');
+	}
+
+
+	/**
+	 * Vrati lokalizovane stranky bez HP
+	 * @return ICollection|Page[]
+	 */
+	public function findLocale($locale)
+	{
+		return $this->findAll()
+			->findBy([
+				'url!=' => '',
+				'this->locale->name' => $locale
+			]);
 	}
 
 	/**
