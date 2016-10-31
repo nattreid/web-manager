@@ -43,7 +43,7 @@ class PagesMapper extends Mapper
 		$table->addColumn('position')
 			->int()
 			->setKey();
-		$table->setUnique('url', 'localeId');
+		$table->addUnique('url', 'localeId');
 	}
 
 	/**

@@ -37,7 +37,7 @@ class ContentMapper extends Mapper
 			->setDefault(null);
 		$table->addColumn('content')
 			->text();
-		$table->setUnique('const', 'localeId');
+		$table->addUnique('const', 'localeId');
 	}
 
 }
