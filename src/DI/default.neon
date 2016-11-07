@@ -8,8 +8,8 @@ module: null
 menu:
     web:
         settings:
-            link: ''
+            link:
         pages:
-            link: ''
+            link:
         content:
-            link: ''
+            link:
