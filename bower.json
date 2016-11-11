@@ -16,7 +16,7 @@
   ],
   "dependencies": {
     "crm": "git@git.newtravel.cz:nattreid/crm.git#latest",
-    "cookiepolicy": "git@git.newtravel.cz:nattreid/cookiepolicy.git#~1.0"
+    "cookiepolicy": "git@git.newtravel.cz:nattreid/cookiepolicy.git#latest"
   },
   "resolutions": {
     "nette.ajax.js": "~2.1",
