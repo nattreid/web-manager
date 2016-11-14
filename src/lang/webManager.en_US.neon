@@ -13,6 +13,7 @@ web:
         description: "Description"
         content: "Content"
         urlExists: "URL exists"
+        urlContainsInvalidCharacters: "URL contains invalid characters"
         locale: "Language"
     content:
         title: "Content"

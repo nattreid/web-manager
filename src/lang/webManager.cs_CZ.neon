@@ -13,6 +13,7 @@ web:
         description: "Popisek"
         content: "Obsah"
         urlExists: "URL již existuje"
+        urlContainsInvalidCharacters: "URL obsahuje nepovolené znaky"
         locale: "Jazyk"
     content:
         title: "Obsah"

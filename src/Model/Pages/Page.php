@@ -38,7 +38,7 @@ class Page extends Entity
 		if (!$this->locale) {
 			throw new InvalidArgumentException('Locale must be set before calling setUrl');
 		}
-		if (Strings::match($url, '/[^A-Za-z0-9_]/')) {
+		if (Strings::match($url, '/[^A-Za-z0-9_-]/')) {
 			throw new InvalidArgumentException('URL contains invalid characters');
 		}
 
