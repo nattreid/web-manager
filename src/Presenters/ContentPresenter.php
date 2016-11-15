@@ -36,14 +36,6 @@ class ContentPresenter extends BasePresenter
 	}
 
 	/**
-	 * Zobrazeni seznamu
-	 */
-	public function renderDefault()
-	{
-		$this->storeBacklink();
-	}
-
-	/**
 	 * Smazani obsahu
 	 * @secured
 	 */
@@ -169,7 +161,7 @@ class ContentPresenter extends BasePresenter
 			$content->content = $values->content;
 
 			$this->orm->persistAndFlush($content);
-			$this->restoreBacklink();
+			$this->redirect('default');
 		} catch (UniqueConstraintViolationException $ex) {
 			$form->addError('webManager.web.content.constantExists');
 		}
