@@ -45,6 +45,11 @@ class PagesPresenter extends BasePresenter
 		$this->routerFactory = $routerFactory;
 	}
 
+	public function handleBack($backlink)
+	{
+		$this->redirect('this');
+	}
+
 	/**
 	 * Smazani stranky
 	 * @secured
@@ -186,7 +191,7 @@ class PagesPresenter extends BasePresenter
 			$page->content = $values->content;
 
 			$this->orm->persistAndFlush($page);
-			$this->redirect('default');
+			$this->restoreBacklink();
 		} catch (UniqueConstraintViolationException $ex) {
 			$form->addError('webManager.web.pages.urlExists');
 		} catch (InvalidArgumentException $ex) {

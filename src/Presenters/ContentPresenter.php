@@ -35,6 +35,11 @@ class ContentPresenter extends BasePresenter
 		$this->localeService = $localeService;
 	}
 
+	public function handleBack($backlink)
+	{
+		$this->redirect('this');
+	}
+
 	/**
 	 * Smazani obsahu
 	 * @secured
@@ -161,7 +166,7 @@ class ContentPresenter extends BasePresenter
 			$content->content = $values->content;
 
 			$this->orm->persistAndFlush($content);
-			$this->redirect('default');
+			$this->restoreBacklink();
 		} catch (UniqueConstraintViolationException $ex) {
 			$form->addError('webManager.web.content.constantExists');
 		}
