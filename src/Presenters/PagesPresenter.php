@@ -8,7 +8,6 @@ use NAttreid\Form\Form;
 use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
-use NAttreid\WebManager\Model\PageGroup;
 use NAttreid\WebManager\Service;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
@@ -147,7 +146,7 @@ class PagesPresenter extends BasePresenter
 			->setItems($this->localeService->getAllowed());
 
 		$form->addCheckboxList('groups', 'webManager.web.pages.groups.title')
-			->setItems($this->orm->pages->fetchPairsGroupById());
+			->setItems($this->orm->pagesGroups->fetchPairsById());
 
 		$form->addText('title', 'webManager.web.pages.pageTitle')
 			->setRequired();
@@ -186,23 +185,28 @@ class PagesPresenter extends BasePresenter
 		}
 
 		try {
-			$page->name = $values->name;
-			$page->locale = $values->locale;
 			$page->setUrl($values->url);
-			$page->title = $values->title;
-			$page->keywords = $values->keywords;
-			$page->image = $values->image;
-			$page->description = $values->description;
-			$page->content = $values->content;
-			$page->groups = $values->groups;
-
-			$this->orm->persistAndFlush($page);
-			$this->restoreBacklink();
 		} catch (UniqueConstraintViolationException $ex) {
 			$form->addError('webManager.web.pages.urlExists');
+			return;
 		} catch (InvalidArgumentException $ex) {
 			$form->addError('webManager.web.pages.urlContainsInvalidCharacters');
+			return;
 		}
+
+		$page->name = $values->name;
+		$page->locale = $values->locale;
+		$page->title = $values->title;
+		$page->keywords = $values->keywords;
+		$page->image = $values->image;
+		$page->description = $values->description;
+		$page->content = $values->content;
+		$page->groups->set($values->groups);
+
+		$this->orm->persistAndFlush($page);
+		$this->restoreBacklink();
+
+
 	}
 
 	/**
@@ -232,7 +236,8 @@ class PagesPresenter extends BasePresenter
 			->setRenderer(function (Page $row) {
 				return implode(', ', $row->getGroups());
 			})
-			->setFilterSelect(['' => 'form.none'] + PageGroup::$names);
+			->setFilterSelect(['' => 'form.none'] + $this->orm->pagesGroups->fetchUntranslatedPairsById(), 'groups.id')
+			->setTranslateOptions();
 
 		$grid->addAction('edit', null)
 			->setIcon('pencil')

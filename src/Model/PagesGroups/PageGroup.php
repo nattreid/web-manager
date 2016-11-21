@@ -4,28 +4,21 @@ namespace NAttreid\WebManager\Model;
 
 use Kdyby\Translation\Translator;
 use Nextras\Orm\Entity\Entity;
+use Nextras\Orm\Relationships\ManyHasMany;
 
 /**
  * PageGroup
  *
  * @property int $id {primary}
- * @property Page $page {m:1 Page::groups}
- * @property int $group
- * @property string $name {virtual}
+ * @property ManyHasMany|Page[] $pages {m:n Page::$groups}
+ * @property string $name
+ * @property string $translatedName {virtual}
+ * @property string $untranslatedName {virtual}
  *
  * @author Attreid <attreid@gmail.com>
  */
 class PageGroup extends Entity
 {
-	const
-		MENU = 1,
-		FOOTER = 2;
-
-	public static $names = [
-		PageGroup::MENU => 'webManager.web.pages.groups.menu',
-		PageGroup::FOOTER => 'webManager.web.pages.groups.footer'
-	];
-
 	/** @var Translator */
 	private $translator;
 
@@ -34,8 +27,13 @@ class PageGroup extends Entity
 		$this->translator = $translator;
 	}
 
-	protected function getterName($value)
+	protected function getterTranslatedName()
 	{
-		return $this->translator->translate(self::$names[$value]);
+		return $this->translator->translate($this->untranslatedName);
+	}
+
+	protected function getterUntranslatedName()
+	{
+		return 'webManager.web.pages.groups.' . $this->name;
 	}
 }

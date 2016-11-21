@@ -14,13 +14,12 @@ class PagesGroupsMapper extends Mapper
 
 	protected function createTable(Table $table)
 	{
+		$table->setDefaultDataFile(__DIR__ . '/groups.sql');
+
 		$table->addPrimaryKey('id')
 			->int()
 			->setAutoIncrement();
-		$table->addForeignKey('pageId', PagesMapper::class);
-		$table->addColumn('group')
-			->int()
-			->setKey();
-		$table->addUnique('pageId', 'group');
+		$table->addColumn('name')
+			->varChar(50);
 	}
 }

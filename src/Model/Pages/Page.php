@@ -7,7 +7,7 @@ use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Entity\Entity;
-use Nextras\Orm\Relationships\OneHasMany;
+use Nextras\Orm\Relationships\ManyHasMany;
 
 /**
  * Page
@@ -21,7 +21,7 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property string|null $keywords
  * @property string|null $description
  * @property string|null $content
- * @property OneHasMany|PageGroup[] $groups {1:m PageGroup::page}
+ * @property ManyHasMany|PageGroup[] $groups {m:n PageGroup::$pages, isMain=true}
  * @property int|null $position
  *
  * @author Attreid <attreid@gmail.com>
@@ -37,7 +37,7 @@ class Page extends Entity
 		$result = [];
 		foreach ($this->groups->get() as $row) {
 			/* @var $row PageGroup */
-			$result[] = $row->name;
+			$result[] = $row->translatedName;
 		}
 		return $result;
 	}

@@ -45,6 +45,11 @@ class PagesMapper extends Mapper
 			->int()
 			->setKey();
 		$table->addUnique('url', 'localeId');
+
+		$relationTable = $table->createRelationTable(PagesGroupsMapper::class);
+		$relationTable->addForeignKey('pageId', $table);
+		$relationTable->addForeignKey('pageGroupId', PagesGroupsMapper::class);
+		$relationTable->setPrimaryKey('pageId', 'pageGroupId');
 	}
 
 	/**
