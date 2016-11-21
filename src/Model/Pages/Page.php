@@ -7,6 +7,7 @@ use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Entity\Entity;
+use Nextras\Orm\Relationships\OneHasMany;
 
 /**
  * Page
@@ -20,53 +21,23 @@ use Nextras\Orm\Entity\Entity;
  * @property string|null $keywords
  * @property string|null $description
  * @property string|null $content
- * @property int $group {default 0}
- * @property array|int[] $groups {virtual}
+ * @property OneHasMany|PageGroup[] $groups {1:m PageGroup::page}
  * @property int|null $position
  *
  * @author Attreid <attreid@gmail.com>
  */
 class Page extends Entity
 {
-	const
-		MENU = 1,
-		FOOTER = 2;
-
 	/**
-	 * Page constructor.
-	 * @param int $id
+	 * Vrati nazvy skupin
+	 * @return string[]
 	 */
-	public function __construct()
-	{
-		parent::__construct();
-		if (!isset($this->group)) {
-			$this->group = 0;
-		}
-	}
-
-	protected function setterGroups($value)
-	{
-		$this->group = 0;
-		if (is_array($value)) {
-			foreach ($value as $row) {
-				$this->group |= $row;
-			}
-		} else {
-			$this->group |= $value;
-		}
-		return $value;
-	}
-
-	protected function getterGroups()
+	public function getGroups()
 	{
 		$result = [];
-		/* @var $repo PagesRepository */
-		$repo = $this->getRepository();
-		$groups = $repo->fetchPairsGroupById();
-		foreach ($groups as $group => $name) {
-			if (($this->group & $group) > 0) {
-				$result[] = $group;
-			}
+		foreach ($this->groups->get() as $row) {
+			/* @var $row PageGroup */
+			$result[] = $row->name;
 		}
 		return $result;
 	}

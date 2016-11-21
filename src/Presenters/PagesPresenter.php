@@ -8,11 +8,11 @@ use NAttreid\Form\Form;
 use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
+use NAttreid\WebManager\Model\PageGroup;
 use NAttreid\WebManager\Service;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Model\Model;
-use Tracy\Debugger;
 use Ublaboo\DataGrid\DataGrid;
 
 /**
@@ -227,6 +227,12 @@ class PagesPresenter extends BasePresenter
 
 		$grid->addColumnText('locale', 'webManager.web.pages.locale', 'locale.name')
 			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->getAllowed());
+
+		$grid->addColumnText('groups', 'webManager.web.pages.groups.title')
+			->setRenderer(function (Page $row) {
+				return implode(', ', $row->getGroups());
+			})
+			->setFilterSelect(['' => 'form.none'] + PageGroup::$names);
 
 		$grid->addAction('edit', null)
 			->setIcon('pencil')

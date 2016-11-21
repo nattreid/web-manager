@@ -41,10 +41,6 @@ class PagesMapper extends Mapper
 		$table->addColumn('content')
 			->text()
 			->setDefault(null);
-		$table->addColumn('group')
-			->int()
-			->setDefault(0)
-			->setKey();
 		$table->addColumn('position')
 			->int()
 			->setKey();

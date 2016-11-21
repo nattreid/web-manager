@@ -119,17 +119,6 @@ class PagesRepository extends Repository
 	}
 
 	/**
-	 * @return array
-	 */
-	public function fetchPairsGroupById()
-	{
-		return [
-			Page::MENU => 'webManager.web.pages.groups.menu',
-			Page::FOOTER => 'webManager.web.pages.groups.footer'
-		];
-	}
-
-	/**
 	 * Smaze cache
 	 */
 	public function cleanCache()
