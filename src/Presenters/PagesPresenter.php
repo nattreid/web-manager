@@ -2,6 +2,7 @@
 
 namespace NAttreid\WebManager\Presenters;
 
+use InvalidArgumentException;
 use NAttreid\Crm\LocaleService;
 use NAttreid\Form\Form;
 use NAttreid\Routing\RouterFactory;
@@ -11,6 +12,7 @@ use NAttreid\WebManager\Service;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Model\Model;
+use Tracy\Debugger;
 use Ublaboo\DataGrid\DataGrid;
 
 /**
@@ -47,7 +49,7 @@ class PagesPresenter extends BasePresenter
 
 	public function handleBack($backlink)
 	{
-		$this->redirect('this');
+		$this->redirect('default');
 	}
 
 	/**
@@ -124,7 +126,7 @@ class PagesPresenter extends BasePresenter
 	public function renderEdit()
 	{
 		$page = $this->page;
-		$this->addBreadcrumbLink($page->name);
+		$this->addBreadcrumbLinkUntranslated($page->name);
 		$this['editForm']->setDefaults($page->toArray($page::TO_ARRAY_RELATIONSHIP_AS_ID));
 	}
 
@@ -143,6 +145,9 @@ class PagesPresenter extends BasePresenter
 
 		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
 			->setItems($this->localeService->getAllowed());
+
+		$form->addCheckboxList('groups', 'webManager.web.pages.groups.title')
+			->setItems($this->orm->pages->fetchPairsGroupById());
 
 		$form->addText('title', 'webManager.web.pages.pageTitle')
 			->setRequired();
@@ -189,6 +194,7 @@ class PagesPresenter extends BasePresenter
 			$page->image = $values->image;
 			$page->description = $values->description;
 			$page->content = $values->content;
+			$page->groups = $values->groups;
 
 			$this->orm->persistAndFlush($page);
 			$this->restoreBacklink();

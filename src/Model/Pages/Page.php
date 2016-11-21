@@ -20,12 +20,56 @@ use Nextras\Orm\Entity\Entity;
  * @property string|null $keywords
  * @property string|null $description
  * @property string|null $content
+ * @property int $group {default 0}
+ * @property array|int[] $groups {virtual}
  * @property int|null $position
  *
  * @author Attreid <attreid@gmail.com>
  */
 class Page extends Entity
 {
+	const
+		MENU = 1,
+		FOOTER = 2;
+
+	/**
+	 * Page constructor.
+	 * @param int $id
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		if (!isset($this->group)) {
+			$this->group = 0;
+		}
+	}
+
+	protected function setterGroups($value)
+	{
+		$this->group = 0;
+		if (is_array($value)) {
+			foreach ($value as $row) {
+				$this->group |= $row;
+			}
+		} else {
+			$this->group |= $value;
+		}
+		return $value;
+	}
+
+	protected function getterGroups()
+	{
+		$result = [];
+		/* @var $repo PagesRepository */
+		$repo = $this->getRepository();
+		$groups = $repo->fetchPairsGroupById();
+		foreach ($groups as $group => $name) {
+			if (($this->group & $group) > 0) {
+				$result[] = $group;
+			}
+		}
+		return $result;
+	}
 
 	/**
 	 * Nastavi URL
@@ -59,5 +103,4 @@ class Page extends Entity
 			$this->position = $repo->getMaxPosition() + 1;
 		}
 	}
-
 }

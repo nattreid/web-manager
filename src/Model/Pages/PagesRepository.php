@@ -8,6 +8,8 @@ use Nextras\Orm\Collection\ICollection;
 /**
  * Pages Repository
  *
+ * @method ICollection|Page[] findByGroup($group, $locale) Vrati lokalizovane stranky podle skupin
+ *
  * @author Attreid <attreid@gmail.com>
  */
 class PagesRepository extends Repository
@@ -43,7 +45,7 @@ class PagesRepository extends Repository
 	 * Vrati lokalizovane stranky bez HP
 	 * @return ICollection|Page[]
 	 */
-	public function findLocale($locale)
+	public function findByLocale($locale)
 	{
 		return $this->findAll()
 			->findBy([
@@ -64,6 +66,26 @@ class PagesRepository extends Repository
 			'url' => $url,
 			'this->locale->name' => $locale
 		]);
+	}
+
+	/**
+	 * Vrati stranky v menu
+	 * @param $locale
+	 * @return Page[]|ICollection
+	 */
+	public function findMenu($locale)
+	{
+		return $this->findByGroup(Page::MENU, $locale);
+	}
+
+	/**
+	 * Vrati stranky v paticce
+	 * @param $locale
+	 * @return Page[]|ICollection
+	 */
+	public function findFooter($locale)
+	{
+		return $this->findByGroup(Page::FOOTER, $locale);
 	}
 
 	/**
@@ -94,6 +116,17 @@ class PagesRepository extends Repository
 	public function changeSort($id, $prevId, $nextId)
 	{
 		$this->mapper->changeSort('position', $id, $prevId, $nextId);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function fetchPairsGroupById()
+	{
+		return [
+			Page::MENU => 'webManager.web.pages.groups.menu',
+			Page::FOOTER => 'webManager.web.pages.groups.footer'
+		];
 	}
 
 	/**

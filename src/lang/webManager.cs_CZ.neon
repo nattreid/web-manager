@@ -15,6 +15,10 @@ web:
         urlExists: "URL již existuje"
         urlContainsInvalidCharacters: "URL obsahuje nepovolené znaky"
         locale: "Jazyk"
+        groups:
+            title: "Skupiny"
+            menu: "Menu"
+            footer: "Patička"
     content:
         title: "Obsah"
         add: "Přidat obsah"

@@ -43,7 +43,7 @@ class Content extends Entity
 
 		/* @var $repository ContentRepository */
 		$repository = $this->getRepository();
-		$content = $repository->getByConst($const);
+		$content = $repository->getByConst($const, $this->locale);
 		if ($content !== null && $content !== $this) {
 			throw new UniqueConstraintViolationException("Content with '$const' exists");
 		}

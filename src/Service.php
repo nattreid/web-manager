@@ -107,7 +107,7 @@ class Service
 	 */
 	public function findPages()
 	{
-		return $this->orm->pages->findLocale($this->translator->getLocale());
+		return $this->orm->pages->findByLocale($this->translator->getLocale());
 	}
 
 	/**

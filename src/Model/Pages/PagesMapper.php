@@ -5,6 +5,7 @@ namespace NAttreid\WebManager\Model;
 use NAttreid\Crm\Model\LocalesMapper;
 use NAttreid\Orm\Structure\Table;
 use Nette\Caching\Cache;
+use Nextras\Dbal\QueryBuilder\QueryBuilder;
 
 /**
  * Pages Mapper
@@ -40,6 +41,10 @@ class PagesMapper extends Mapper
 		$table->addColumn('content')
 			->text()
 			->setDefault(null);
+		$table->addColumn('group')
+			->int()
+			->setDefault(0)
+			->setKey();
 		$table->addColumn('position')
 			->int()
 			->setKey();
@@ -82,6 +87,18 @@ class PagesMapper extends Mapper
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * @param $group
+	 * @param $locale
+	 * @return QueryBuilder
+	 */
+	public function findByGroup($group, $locale)
+	{
+		return $this->builder()
+			->andWhere('group & %i > 0', $group)
+			->andWhere('locale = %s', $locale);
 	}
 
 	/**

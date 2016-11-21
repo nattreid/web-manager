@@ -37,7 +37,7 @@ class ContentPresenter extends BasePresenter
 
 	public function handleBack($backlink)
 	{
-		$this->redirect('this');
+		$this->redirect('default');
 	}
 
 	/**
