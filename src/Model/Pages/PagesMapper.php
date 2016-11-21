@@ -91,18 +91,6 @@ class PagesMapper extends Mapper
 	}
 
 	/**
-	 * @param $group
-	 * @param $locale
-	 * @return QueryBuilder
-	 */
-	public function findByGroup($group, $locale)
-	{
-		return $this->builder()
-			->andWhere('group & %i > 0', $group)
-			->andWhere('locale = %s', $locale);
-	}
-
-	/**
 	 * Vrati nejvetsi pozici
 	 * @return int
 	 */

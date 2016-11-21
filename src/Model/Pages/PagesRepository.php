@@ -8,8 +8,6 @@ use Nextras\Orm\Collection\ICollection;
 /**
  * Pages Repository
  *
- * @method ICollection|Page[] findByGroup($group, $locale) Vrati lokalizovane stranky podle skupin
- *
  * @author Attreid <attreid@gmail.com>
  */
 class PagesRepository extends Repository
@@ -75,7 +73,11 @@ class PagesRepository extends Repository
 	 */
 	public function findMenu($locale)
 	{
-		return $this->findByGroup(Page::MENU, $locale);
+		return $this->findAll()
+			->findBy([
+				'this->groups->id' => 1,
+				'this->locale->name' => $locale
+			]);
 	}
 
 	/**
@@ -85,7 +87,11 @@ class PagesRepository extends Repository
 	 */
 	public function findFooter($locale)
 	{
-		return $this->findByGroup(Page::FOOTER, $locale);
+		return $this->findAll()
+			->findBy([
+				'this->groups->id' => 2,
+				'this->locale->name' => $locale
+			]);
 	}
 
 	/**

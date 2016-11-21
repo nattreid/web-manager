@@ -111,6 +111,24 @@ class Service
 	}
 
 	/**
+	 * Vrati stranky v menu
+	 * @return Page[]|ICollection
+	 */
+	public function findMenuPages()
+	{
+		return $this->orm->pages->findMenu($this->translator->getLocale());
+	}
+
+	/**
+	 * Vrati stranky v paticce
+	 * @return Page[]|ICollection
+	 */
+	public function findFooterPages()
+	{
+		return $this->orm->pages->findFooter($this->translator->getLocale());
+	}
+
+	/**
 	 * Vrati text
 	 * @param $const
 	 * @return Content
