@@ -156,8 +156,8 @@ class ContentPresenter extends BasePresenter
 		}
 
 		try {
-			$content->name = $values->name;
 			$content->locale = $values->locale;
+			$content->name = $values->name;
 			$content->setConst($values->const);
 			$content->title = $values->title;
 			$content->keywords = $values->keywords;

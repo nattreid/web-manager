@@ -184,6 +184,7 @@ class PagesPresenter extends BasePresenter
 			$this->orm->pages->attach($page);
 		}
 
+		$page->locale = $values->locale;
 		try {
 			$page->setUrl($values->url);
 		} catch (UniqueConstraintViolationException $ex) {
@@ -193,9 +194,7 @@ class PagesPresenter extends BasePresenter
 			$form->addError('webManager.web.pages.urlContainsInvalidCharacters');
 			return;
 		}
-
 		$page->name = $values->name;
-		$page->locale = $values->locale;
 		$page->title = $values->title;
 		$page->keywords = $values->keywords;
 		$page->image = $values->image;
