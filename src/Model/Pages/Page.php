@@ -22,7 +22,7 @@ use Nextras\Orm\Relationships\ManyHasMany;
  * @property string|null $description
  * @property string|null $content
  * @property ManyHasMany|PageGroup[] $groups {m:n PageGroup::$pages, isMain=true}
- * @property int|null $position
+ * @property int $position
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -68,7 +68,7 @@ class Page extends Entity
 
 	protected function onBeforeInsert()
 	{
-		if ($this->position === null) {
+		if (!isset($this->position)) {
 			/* @var $repo PagesRepository */
 			$repo = $this->getRepository();
 			$this->position = $repo->getMaxPosition() + 1;
