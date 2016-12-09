@@ -5,7 +5,6 @@ namespace NAttreid\WebManager\Model;
 use NAttreid\Crm\Model\LocalesMapper;
 use NAttreid\Orm\Structure\Table;
 use Nette\Caching\Cache;
-use Nextras\Dbal\QueryBuilder\QueryBuilder;
 
 /**
  * Pages Mapper
@@ -88,15 +87,6 @@ class PagesMapper extends Mapper
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Vrati nejvetsi pozici
-	 * @return int
-	 */
-	public function getMaxPosition()
-	{
-		return $this->connection->query('SELECT IFnull(MAX([position]), 0) position FROM %table', $this->getTableName())->fetch()->position;
 	}
 
 }

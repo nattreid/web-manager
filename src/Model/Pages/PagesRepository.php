@@ -110,7 +110,7 @@ class PagesRepository extends Repository
 	 */
 	public function getMaxPosition()
 	{
-		return $this->mapper->getMaxPosition();
+		return $this->mapper->getMaxPosition('position');
 	}
 
 	/**
