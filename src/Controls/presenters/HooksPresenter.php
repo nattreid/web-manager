@@ -28,7 +28,7 @@ class HooksPresenter extends BasePresenter
 
 	public function googleAnalyticsFormSucceeded(Form $form, $values)
 	{
-		$this->configurator->googleAnalyticsClientId = $values->googleAnalyticsClientId;
+		$this->configurator->googleAnalyticsClientId = $values->clientId;
 
 		$this->flashNotifier->success('default.dataSaved');
 		if (!$this->isAjax()) {
@@ -41,7 +41,7 @@ class HooksPresenter extends BasePresenter
 		$form = $this->formFactory->create();
 		$form->setAjaxRequest();
 
-		$form->addText('clientId', 'webManager.web.hooks.webMaster.hash')
+		$form->addText('hash', 'webManager.web.hooks.webMaster.hash')
 			->setDefaultValue($this->configurator->webmasterHash);
 
 		$form->addSubmit('save', 'form.save');
@@ -53,7 +53,7 @@ class HooksPresenter extends BasePresenter
 
 	public function webMasterFormSucceeded(Form $form, $values)
 	{
-		$this->configurator->webmasterHash = $values->webmasterHash;
+		$this->configurator->webmasterHash = $values->hash;
 
 		$this->flashNotifier->success('default.dataSaved');
 		if (!$this->isAjax()) {

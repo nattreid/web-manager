@@ -30,3 +30,9 @@ class Footer extends Control
 		$this->template->render();
 	}
 }
+
+interface IFooterFactory
+{
+	/** @return Footer */
+	public function create();
+}

@@ -4,6 +4,10 @@ namespace NAttreid\WebManager;
 
 use Kdyby\Translation\Translator;
 use NAttreid\Utils\Strings;
+use NAttreid\WebManager\Components\Footer;
+use NAttreid\WebManager\Components\Header;
+use NAttreid\WebManager\Components\IFooterFactory;
+use NAttreid\WebManager\Components\IHeaderFactory;
 use NAttreid\WebManager\Model\Content;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
@@ -41,13 +45,21 @@ class Service
 	/** @var Translator */
 	private $translator;
 
-	public function __construct($defaultLink, $pageLink, $module, Model $orm, Translator $translator)
+	/** @var IHeaderFactory */
+	private $headerFactory;
+
+	/** @var IFooterFactory */
+	private $footerFactory;
+
+	public function __construct($defaultLink, $pageLink, $module, Model $orm, Translator $translator, IHeaderFactory $headerFactory, IFooterFactory $footerFactory)
 	{
 		$this->defaultLink = $defaultLink;
 		$this->pageLink = $pageLink;
 		$this->module = $module;
 		$this->orm = $orm;
 		$this->translator = $translator;
+		$this->headerFactory = $headerFactory;
+		$this->footerFactory = $footerFactory;
 	}
 
 	/**
@@ -138,14 +150,20 @@ class Service
 		return $this->orm->content->getByConst($const, $this->translator->getLocale());
 	}
 
+	/**
+	 * @return Header
+	 */
 	public function createHeader()
 	{
-
+		return $this->headerFactory->create();
 	}
 
+	/**
+	 * @return Footer
+	 */
 	public function createFooter()
 	{
-
+		return $this->footerFactory->create();
 	}
 
 }

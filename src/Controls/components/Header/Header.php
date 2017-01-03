@@ -30,3 +30,9 @@ class Header extends Control
 		$this->template->render();
 	}
 }
+
+interface IHeaderFactory
+{
+	/** @return Header */
+	public function create();
+}

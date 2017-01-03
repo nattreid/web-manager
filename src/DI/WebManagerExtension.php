@@ -4,6 +4,10 @@ namespace NAttreid\Analytics\DI;
 
 use NAttreid\AppManager\AppManager;
 use NAttreid\Crm\DI\ModuleExtension;
+use NAttreid\WebManager\Components\Footer;
+use NAttreid\WebManager\Components\Header;
+use NAttreid\WebManager\Components\IFooterFactory;
+use NAttreid\WebManager\Components\IHeaderFactory;
 use NAttreid\WebManager\Service;
 use Nette\DI\Statement;
 use Nette\InvalidStateException;
@@ -39,6 +43,14 @@ class WebManagerExtension extends ModuleExtension
 		$builder->addDefinition($this->prefix('pageService'))
 			->setClass(Service::class)
 			->setArguments([$config['homepage'], $config['page'], $config['module']]);
+
+		$builder->addDefinition($this->prefix('headerFactory'))
+			->setImplement(IHeaderFactory::class)
+			->setFactory(Header::class);
+
+		$builder->addDefinition($this->prefix('footerFactory'))
+			->setImplement(IFooterFactory::class)
+			->setFactory(Footer::class);
 	}
 
 	public function beforeCompile()
