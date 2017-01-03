@@ -41,3 +41,11 @@ web:
         saved: "Settings saved"
         logo: "Logo"
         deleteLogo: "Delete logo"
+    hooks:
+        title: "Hooks"
+        googleAnalytics:
+            title: "Google Analytics"
+            clientId: "Client Id"
+        webMaster:
+            title: "Web Master"
+            hash: "Hash code"

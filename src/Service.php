@@ -138,4 +138,14 @@ class Service
 		return $this->orm->content->getByConst($const, $this->translator->getLocale());
 	}
 
+	public function createHeader()
+	{
+
+	}
+
+	public function createFooter()
+	{
+
+	}
+
 }

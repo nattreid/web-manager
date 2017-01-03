@@ -1,0 +1,20 @@
+{block content}
+{panel}
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#googleAnalytics">{_'webManager.web.hooks.googleAnalytics.title'}</a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#webMaster">{_'webManager.web.hooks.webMaster.title'}</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="googleAnalytics" class="tab-pane fade in active">
+            {control googleAnalyticsForm}
+        </div>
+        <div id="webMaster" class="tab-pane fade">
+            {control webMasterForm}
+        </div>
+    </div>
+{/panel}

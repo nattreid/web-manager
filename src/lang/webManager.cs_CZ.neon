@@ -41,3 +41,11 @@ web:
         saved: "Nastavení uloženo"
         logo: "Logo"
         deleteLogo: "Smazat logo"
+    hooks:
+        title: "Propojení"
+        googleAnalytics:
+            title: "Google Analytics"
+            clientId: "Id klienta"
+        webMaster:
+            title: "Web Master"
+            hash: "Hash kód"
