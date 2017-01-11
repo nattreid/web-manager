@@ -31,8 +31,11 @@ class SettingsPresenter extends BasePresenter
 		$form->addImageUpload('logo', 'webManager.web.settings.logo', 'webManager.web.settings.deleteLogo')
 			->setNamespace('front')
 			->setPreview('300x100');
-		$form->addCheckbox('cookiePolicy', 'webManager.web.settings.cookiePolicy');
-		$form->addText('cookiePolicyLink', 'webManager.web.settings.cookiePolicyLink');
+		$form->addCheckbox('cookiePolicy', 'webManager.web.settings.cookiePolicy')
+			->addCondition($form::EQUAL, true)
+			->toggle('cookiePolicy');
+		$form->addText('cookiePolicyLink', 'webManager.web.settings.cookiePolicyLink')
+			->setOption('id', 'cookiePolicy');
 		$form->addText('title', 'webManager.web.settings.pagesTitle');
 		$form->addTextArea('keywords', 'webManager.web.settings.keywords');
 		$form->addTextArea('description', 'webManager.web.settings.description');
