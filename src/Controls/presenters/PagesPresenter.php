@@ -145,7 +145,7 @@ class PagesPresenter extends BasePresenter
 		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
 			->setItems($this->localeService->getAllowed());
 
-		$form->addCheckboxList('groups', 'webManager.web.pages.groups.title')
+		$form->addCheckboxListUntranslated('groups', 'webManager.web.pages.groups.title')
 			->setItems($this->orm->pagesGroups->fetchPairsById());
 
 		$form->addText('title', 'webManager.web.pages.pageTitle')
