@@ -79,7 +79,7 @@ class ContentPresenter extends BasePresenter
 	public function renderAdd()
 	{
 		$this['editForm']->setDefaults([
-			'locale' => $this->localeService->getCurrentLocaleId()
+			'locale' => $this->localeService->currentLocaleId()
 		]);
 		$this->setView('edit');
 	}
@@ -118,7 +118,7 @@ class ContentPresenter extends BasePresenter
 			->setRequired();
 
 		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
-			->setItems($this->localeService->getAllowed());
+			->setItems($this->localeService->allowed);
 
 		$form->addText('title', 'webManager.web.content.contentTitle');
 
@@ -195,7 +195,7 @@ class ContentPresenter extends BasePresenter
 			->setFilterText();
 
 		$grid->addColumnText('locale', 'webManager.web.content.locale', 'locale.name')
-			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->getAllowed());
+			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->allowed);
 
 		$grid->addAction('edit', null)
 			->setIcon('pencil')

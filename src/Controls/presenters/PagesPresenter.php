@@ -105,7 +105,7 @@ class PagesPresenter extends BasePresenter
 	public function renderAdd()
 	{
 		$this['editForm']->setDefaults([
-			'locale' => $this->localeService->getCurrentLocaleId()
+			'locale' => $this->localeService->currentLocaleId
 		]);
 		$this->setView('edit');
 	}
@@ -143,7 +143,7 @@ class PagesPresenter extends BasePresenter
 		$form->addText('url', 'default.url');
 
 		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
-			->setItems($this->localeService->getAllowed());
+			->setItems($this->localeService->allowed);
 
 		$form->addCheckboxListUntranslated('groups', 'webManager.web.pages.groups.title')
 			->setItems($this->orm->pagesGroups->fetchPairsById());
@@ -229,7 +229,7 @@ class PagesPresenter extends BasePresenter
 			->setFilterText();
 
 		$grid->addColumnText('locale', 'webManager.web.pages.locale', 'locale.name')
-			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->getAllowed());
+			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->allowed);
 
 		$grid->addColumnText('groups', 'webManager.web.pages.groups.title')
 			->setRenderer(function (Page $row) {
