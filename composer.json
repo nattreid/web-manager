@@ -19,12 +19,11 @@
   ],
   "require": {
     "php": ">= 5.6",
-    "nattreid/crm": "dev-master",
+    "nattreid/crm": "~1.0",
     "nattreid/cookiepolicy": "~1.0"
   },
   "require-dev": {
-    "nette/tester": "~1.7",
-    "kdyby/translation": "dev-master"
+    "nette/tester": "~1.7"
   },
   "autoload": {
     "classmap": [
