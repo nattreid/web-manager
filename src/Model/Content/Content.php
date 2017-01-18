@@ -2,7 +2,7 @@
 
 namespace NAttreid\WebManager\Model;
 
-use NAttreid\Crm\Model\Locale;
+use NAttreid\Cms\Model\Locale;
 use Nette\Utils\Strings;
 use Nextras\Dbal\InvalidArgumentException;
 use Nextras\Dbal\UniqueConstraintViolationException;

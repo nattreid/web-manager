@@ -3,7 +3,7 @@
 namespace NAttreid\WebManager\Presenters;
 
 use InvalidArgumentException;
-use NAttreid\Crm\LocaleService;
+use NAttreid\Cms\LocaleService;
 use NAttreid\Form\Form;
 use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;

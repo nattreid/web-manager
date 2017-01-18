@@ -2,7 +2,7 @@
 
 namespace NAttreid\WebManager\Presenters;
 
-use NAttreid\Crm\Control\ModulePresenter;
+use NAttreid\Cms\Control\ModulePresenter;
 use NAttreid\WebManager\IConfigurator;
 
 /**

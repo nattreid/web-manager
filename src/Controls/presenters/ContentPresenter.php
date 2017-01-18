@@ -2,7 +2,7 @@
 
 namespace NAttreid\WebManager\Presenters;
 
-use NAttreid\Crm\LocaleService;
+use NAttreid\Cms\LocaleService;
 use NAttreid\Form\Form;
 use NAttreid\WebManager\Model\Content;
 use NAttreid\WebManager\Model\Orm;

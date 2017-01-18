@@ -15,7 +15,7 @@ namespace NAttreid\WebManager;
  *
  * @author Attreid <attreid@gmail.com>
  */
-interface IConfigurator extends \NAttreid\Crm\Configurator\IConfigurator
+interface IConfigurator extends \NAttreid\Cms\Configurator\IConfigurator
 {
 
 }

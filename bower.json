@@ -1,6 +1,6 @@
 {
   "name": "web-manager",
-  "description": "Analytics for CRM",
+  "description": "Analytics for CMS",
   "license": [
     "Unlicense"
   ],
@@ -15,7 +15,7 @@
     "*.json"
   ],
   "dependencies": {
-    "crm": "git@git.newtravel.cz:nattreid/crm.git#latest",
+    "crm": "git@git.newtravel.cz:nattreid/cms.git#latest",
     "cookiepolicy": "git@git.newtravel.cz:nattreid/cookiepolicy.git#latest"
   },
   "resolutions": {

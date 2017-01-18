@@ -1,6 +1,6 @@
 {
   "name": "nattreid/web-manager",
-  "description": "Web Manager for CRM",
+  "description": "Web Manager for CMS",
   "type": "library",
   "license": [
     "Unlicense"
@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": ">= 5.6",
-    "nattreid/crm": "~1.0",
+    "nattreid/cms": "~1.0",
     "nattreid/cookiepolicy": "~1.0"
   },
   "require-dev": {

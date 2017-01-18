@@ -3,7 +3,7 @@
 namespace NAttreid\Analytics\DI;
 
 use NAttreid\AppManager\AppManager;
-use NAttreid\Crm\DI\ModuleExtension;
+use NAttreid\Cms\DI\ModuleExtension;
 use NAttreid\WebManager\Components\Footer;
 use NAttreid\WebManager\Components\Header;
 use NAttreid\WebManager\Components\IFooterFactory;

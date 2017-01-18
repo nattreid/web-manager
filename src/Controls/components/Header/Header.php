@@ -2,7 +2,7 @@
 
 namespace NAttreid\WebManager\Components;
 
-use NAttreid\Crm\Configurator\Configurator;
+use NAttreid\Cms\Configurator\Configurator;
 use Nette\Application\UI\Control;
 
 /**

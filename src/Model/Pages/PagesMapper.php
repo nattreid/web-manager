@@ -2,7 +2,7 @@
 
 namespace NAttreid\WebManager\Model;
 
-use NAttreid\Crm\Model\LocalesMapper;
+use NAttreid\Cms\Model\LocalesMapper;
 use NAttreid\Orm\Structure\Table;
 use Nette\Caching\Cache;
 
