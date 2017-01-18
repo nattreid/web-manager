@@ -15,7 +15,7 @@
     "*.json"
   ],
   "dependencies": {
-    "crm": "git@git.newtravel.cz:nattreid/cms.git#latest",
+    "cms": "git@git.newtravel.cz:nattreid/cms.git#latest",
     "cookiepolicy": "git@git.newtravel.cz:nattreid/cookiepolicy.git#latest"
   },
   "resolutions": {
