@@ -1,20 +1,14 @@
 {block content}
 {panel}
     <ul class="nav nav-tabs">
-        <li class="active">
-            <a data-toggle="tab" href="#googleAnalytics">{_'webManager.web.hooks.googleAnalytics.title'}</a>
-        </li>
-        <li>
-            <a data-toggle="tab" href="#webMaster">{_'webManager.web.hooks.webMaster.title'}</a>
+        <li n:foreach="$hooks as $hook" n:class="$tab == $hook ? active">
+            <a data-toggle="tab" href="#{$hook}">{_'webManager.web.hooks.' . $hook . '.title'}</a>
         </li>
     </ul>
 
     <div class="tab-content">
-        <div id="googleAnalytics" class="tab-pane fade in active">
-            {control googleAnalyticsForm}
-        </div>
-        <div id="webMaster" class="tab-pane fade">
-            {control webMasterForm}
+        <div n:foreach="$hooks as $hook" id="{$hook}" n:class="$tab == $hook ? 'in active', 'tab-pane fade'">
+            {control $hook}
         </div>
     </div>
 {/panel}

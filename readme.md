@@ -18,11 +18,11 @@ Nastavte **HomepagePresenter**
 class HomepagePresenter extendes Presenter {
     public $locale;
 
-    /** @var \NAttreid\WebManager\Service @inject */
-    public $webManager;
+    /** @var \NAttreid\WebManager\Services\PageService @inject */
+    public $pageService;
 
     public function actionPage($url) {
-        $page = $this->webManager->getPage($url, $this->locale);
+        $page = $this->pageService->getPage($url, $this->locale);
 
         // stranku date do template pro zobrazeni
         $this->template->page = $page;
@@ -33,18 +33,18 @@ a upravte router
 ```php
 class FrontRouter extends Router {
 
-    /** @var \NAttreid\WebManager\Service */
-    private $webManager;
+    /** @var \NAttreid\WebManager\Services\PageService */
+    private $pageService;
 
-    public function __construct($url, \NAttreid\WebManager\Service $webManager) {
+    public function __construct($url, \NAttreid\WebManager\Services\PageService $pageService) {
         parent::__construct($url);
-        $this->webManager = $webManager;
+        $this->pageService = $pageService;
     }
 
     public function createRoutes() {
         $routes = $this->getRouter('Front');
 
-        $this->$webManager->createRoute($routes, $this->getUrl());
+        $this->pageService->createRoute($routes, $this->getUrl());
     }
 
 }
@@ -65,3 +65,36 @@ class HomepagePresenter extendes Presenter {
         $this->template->content = $content;
 }
 ```
+
+## Hooks
+```php
+class SomeHook extends \NAttreid\WebManager\Services\Hooks\HookFactory
+{
+	/** @var IConfigurator */
+	protected $configurator;
+
+	/** @return Form */
+	public function create()
+	{
+		$form = $this->formFactory->create();
+		$form->setAjaxRequest();
+
+		$form->addText('id', 'webManager.web.hooks.some.clientId')
+			->setDefaultValue($this->configurator->someId);
+
+		$form->addSubmit('save', 'form.save');
+
+		$form->onSuccess[] = [$this, 'someFormSucceeded'];
+
+		return $form;
+	}
+
+	public function someFormSucceeded(Form $form, $values)
+	{
+		$this->configurator->someId = $values->id;
+
+		$this->flashNotifier->success('default.dataSaved');
+	}
+}
+```
+A třídu zaregistrovat jako službu a načte se automaticky do CMS

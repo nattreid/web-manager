@@ -1,6 +1,6 @@
 <?php
 
-namespace NAttreid\WebManager;
+namespace NAttreid\WebManager\Services;
 
 use Kdyby\Translation\Translator;
 use NAttreid\Utils\Strings;
@@ -8,7 +8,6 @@ use NAttreid\WebManager\Components\Footer;
 use NAttreid\WebManager\Components\Header;
 use NAttreid\WebManager\Components\IFooterFactory;
 use NAttreid\WebManager\Components\IHeaderFactory;
-use NAttreid\WebManager\Model\Content;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Page;
 use Nette\Application\BadRequestException;
@@ -20,13 +19,13 @@ use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
 
 /**
- * Sluzba Manageru
+ * Sluzba obsahu manageru
  *
  * @property-read string $pageLink
  *
  * @author Attreid <attreid@gmail.com>
  */
-class Service
+class PageService
 {
 	use SmartObject;
 
@@ -143,7 +142,7 @@ class Service
 	/**
 	 * Vrati text
 	 * @param $const
-	 * @return Content
+	 * @return Pages
 	 */
 	public function getContent($const)
 	{

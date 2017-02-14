@@ -1,6 +1,6 @@
 <?php
 
-namespace NAttreid\Analytics\DI;
+namespace NAttreid\WebManager\DI;
 
 use NAttreid\AppManager\AppManager;
 use NAttreid\Cms\DI\ModuleExtension;
@@ -8,7 +8,12 @@ use NAttreid\WebManager\Components\Footer;
 use NAttreid\WebManager\Components\Header;
 use NAttreid\WebManager\Components\IFooterFactory;
 use NAttreid\WebManager\Components\IHeaderFactory;
-use NAttreid\WebManager\Service;
+use NAttreid\WebManager\Services\Hooks\GoogleAnalyticsHook;
+use NAttreid\WebManager\Services\Hooks\HookFactory;
+use NAttreid\WebManager\Services\Hooks\HookService;
+use NAttreid\WebManager\Services\Hooks\WebMasterHook;
+use NAttreid\WebManager\Services\PageService;
+use Nette\DI\ServiceDefinition;
 use Nette\DI\Statement;
 use Nette\InvalidStateException;
 use Nextras\Orm\Model\Model;
@@ -41,7 +46,7 @@ class WebManagerExtension extends ModuleExtension
 		}
 
 		$builder->addDefinition($this->prefix('pageService'))
-			->setClass(Service::class)
+			->setClass(PageService::class)
 			->setArguments([$config['homepage'], $config['page'], $config['module']]);
 
 		$builder->addDefinition($this->prefix('headerFactory'))
@@ -51,6 +56,24 @@ class WebManagerExtension extends ModuleExtension
 		$builder->addDefinition($this->prefix('footerFactory'))
 			->setImplement(IFooterFactory::class)
 			->setFactory(Footer::class);
+
+		$this->prepareHooks();
+	}
+
+	private function prepareHooks()
+	{
+		$builder = $this->getContainerBuilder();
+
+		$gaHook=$builder->addDefinition($this->prefix('googleAnalyticsHook'))
+			->setClass(GoogleAnalyticsHook::class);
+		$wmHook=$builder->addDefinition($this->prefix('webMasterHook'))
+			->setClass(WebMasterHook::class);
+
+		$builder->addDefinition($this->prefix('hookService'))
+			->setClass(HookService::class)
+			->addSetup('addHook', [$gaHook])
+			->addSetup('addHook', [$wmHook]);
+
 	}
 
 	public function beforeCompile()
@@ -61,6 +84,24 @@ class WebManagerExtension extends ModuleExtension
 		$app = $builder->getByType(AppManager::class);
 		$builder->getDefinition($app)
 			->addSetup(new Statement('$service->onInvalidateCache[] = function() {?->pages->cleanCache();}', ['@' . Model::class]));
+
+		$hook = $builder->getByType(HookService::class);
+		$hookService = $builder->getDefinition($hook);
+		foreach ($this->findByType(HookFactory::class) as $def) {
+			$hookService->addSetup('addHook', [$def]);
+		}
 	}
 
+	/**
+	 *
+	 * @param string $type
+	 * @return ServiceDefinition[]
+	 */
+	private function findByType($type)
+	{
+		$type = ltrim($type, '\\');
+		return array_filter($this->getContainerBuilder()->getDefinitions(), function (ServiceDefinition $def) use ($type) {
+			return is_a($def->getClass(), $type, true) || is_a($def->getImplement(), $type, true);
+		});
+	}
 }

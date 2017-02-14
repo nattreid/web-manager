@@ -2,7 +2,8 @@
 
 namespace NAttreid\WebManager\Presenters;
 
-use NAttreid\Form\Form;
+use InvalidArgumentException;
+use NAttreid\WebManager\Services\Hooks\HookService;
 
 /**
  * Class ServicesPresenter
@@ -11,53 +12,36 @@ use NAttreid\Form\Form;
  */
 class HooksPresenter extends BasePresenter
 {
-	protected function createComponentGoogleAnalyticsForm()
+
+	/** @var HookService */
+	private $hookService;
+
+	public function __construct(HookService $hookService)
 	{
-		$form = $this->formFactory->create();
-		$form->setAjaxRequest();
-
-		$form->addText('clientId', 'webManager.web.hooks.googleAnalytics.clientId')
-			->setDefaultValue($this->configurator->googleAnalyticsClientId);
-
-		$form->addSubmit('save', 'form.save');
-
-		$form->onSuccess[] = [$this, 'googleAnalyticsFormSucceeded'];
-
-		return $form;
+		parent::__construct();
+		$this->hookService = $hookService;
 	}
 
-	public function googleAnalyticsFormSucceeded(Form $form, $values)
+	public function renderDefault($tab)
 	{
-		$this->configurator->googleAnalyticsClientId = $values->clientId;
-
-		$this->flashNotifier->success('default.dataSaved');
-		if (!$this->isAjax()) {
-			$this->redirect('this');
-		}
+		$this->template->tab = $tab ?: $this->hookService->firstHookName;
+		$this->template->hooks = $this->hookService->hooks;
 	}
 
-	protected function createComponentWebMasterForm()
+	protected function createComponent($name)
 	{
-		$form = $this->formFactory->create();
-		$form->setAjaxRequest();
+		try {
+			$form = $this->hookService->getHook($name)->create();
 
-		$form->addText('hash', 'webManager.web.hooks.webMaster.hash')
-			->setDefaultValue($this->configurator->webmasterHash);
+			$form->onSuccess[] = function () use ($name) {
+				if (!$this->isAjax()) {
+					$this->redirect('this', $name);
+				}
+			};
 
-		$form->addSubmit('save', 'form.save');
-
-		$form->onSuccess[] = [$this, 'webMasterFormSucceeded'];
-
-		return $form;
-	}
-
-	public function webMasterFormSucceeded(Form $form, $values)
-	{
-		$this->configurator->webmasterHash = $values->hash;
-
-		$this->flashNotifier->success('default.dataSaved');
-		if (!$this->isAjax()) {
-			$this->redirect('this');
+			return $form;
+		} catch (InvalidArgumentException $ex) {
+			return parent::createComponent($name);
 		}
 	}
 }
