@@ -9,7 +9,6 @@ use Nette\SmartObject;
  * Class HookService
  *
  * @property-read HookFactory[] $hooks
- * @property-read string[] $
  * @property-read string $firstHookName
  *
  * @author Attreid <attreid@gmail.com>
@@ -38,7 +37,7 @@ class HookService
 	 */
 	protected function getHooks()
 	{
-		return array_keys($this->hooks);
+		return $this->hooks;
 	}
 
 	/**

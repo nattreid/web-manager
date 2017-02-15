@@ -8,11 +8,13 @@ use NAttreid\Cms\Factories\FormFactory;
 use NAttreid\Form\Form;
 use Nette\Reflection\ClassType;
 use Nette\SmartObject;
+use Tracy\Debugger;
 
 /**
  * Class HookFactory
  *
  * @property-read string $name
+ * @property string $latte
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -32,6 +34,9 @@ abstract class HookFactory
 	/** @var string */
 	private $name;
 
+	/** @var string */
+	private $latte;
+
 	public function __construct(FormFactory $formFactory, Configurator $configurator, FlashNotifier $flashNotifier)
 	{
 		$this->formFactory = $formFactory;
@@ -39,6 +44,13 @@ abstract class HookFactory
 		$this->flashNotifier = $flashNotifier;
 
 		$this->name = $this->createName();
+
+		$this->init();
+	}
+
+	public function init()
+	{
+
 	}
 
 	/**
@@ -57,6 +69,22 @@ abstract class HookFactory
 	protected function getName()
 	{
 		return $this->name;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getLatte()
+	{
+		return $this->latte;
+	}
+
+	/**
+	 * @param string $latte
+	 */
+	protected function setLatte($latte)
+	{
+		$this->latte = (string)$latte;
 	}
 
 	/** @return Form */

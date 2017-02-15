@@ -1,14 +1,17 @@
 {block content}
-{panel}
+{panel id => hooks}
     <ul class="nav nav-tabs">
-        <li n:foreach="$hooks as $hook" n:class="$tab == $hook ? active">
-            <a data-toggle="tab" href="#{$hook}">{_'webManager.web.hooks.' . $hook . '.title'}</a>
+        <li n:foreach="$hooks as $name => $hook" n:class="$tab == $name ? active">
+            <a data-toggle="tab" href="#{$name}">{_'webManager.web.hooks.' . $name . '.title'}</a>
         </li>
     </ul>
 
     <div class="tab-content">
-        <div n:foreach="$hooks as $hook" id="{$hook}" n:class="$tab == $hook ? 'in active', 'tab-pane fade'">
-            {control $hook}
+        <div n:foreach="$hooks as $name => $hook" id="{$name}" n:class="$tab == $name ? 'in active', 'tab-pane fade'">
+            <div class n:if="$hook->latte">
+                {include $hook->latte}
+            </div>
+            {control $name}
         </div>
     </div>
 {/panel}

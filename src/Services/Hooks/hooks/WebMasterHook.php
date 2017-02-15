@@ -15,6 +15,11 @@ class WebMasterHook extends HookFactory
 	/** @var IConfigurator */
 	protected $configurator;
 
+	public function init()
+	{
+		$this->latte = __DIR__ . '/webMasterHook.latte';
+	}
+
 	/** @return Form */
 	public function create()
 	{

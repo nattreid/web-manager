@@ -15,6 +15,11 @@ class GoogleAnalyticsHook extends HookFactory
 	/** @var IConfigurator */
 	protected $configurator;
 
+	public function init()
+	{
+		$this->latte = __DIR__ . '/googleAnalyticsHook.latte';
+	}
+
 	/** @return Form */
 	public function create()
 	{
