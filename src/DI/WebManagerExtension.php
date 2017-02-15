@@ -64,9 +64,9 @@ class WebManagerExtension extends ModuleExtension
 	{
 		$builder = $this->getContainerBuilder();
 
-		$gaHook=$builder->addDefinition($this->prefix('googleAnalyticsHook'))
+		$gaHook = $builder->addDefinition($this->prefix('googleAnalyticsHook'))
 			->setClass(GoogleAnalyticsHook::class);
-		$wmHook=$builder->addDefinition($this->prefix('webMasterHook'))
+		$wmHook = $builder->addDefinition($this->prefix('webMasterHook'))
 			->setClass(WebMasterHook::class);
 
 		$builder->addDefinition($this->prefix('hookService'))
