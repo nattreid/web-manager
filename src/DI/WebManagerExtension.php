@@ -4,14 +4,8 @@ namespace NAttreid\WebManager\DI;
 
 use NAttreid\AppManager\AppManager;
 use NAttreid\Cms\DI\ModuleExtension;
-use NAttreid\WebManager\Components\Footer;
-use NAttreid\WebManager\Components\Header;
-use NAttreid\WebManager\Components\IFooterFactory;
-use NAttreid\WebManager\Components\IHeaderFactory;
-use NAttreid\WebManager\Services\Hooks\GoogleAnalyticsHook;
 use NAttreid\WebManager\Services\Hooks\HookFactory;
 use NAttreid\WebManager\Services\Hooks\HookService;
-use NAttreid\WebManager\Services\Hooks\WebMasterHook;
 use NAttreid\WebManager\Services\PageService;
 use Nette\DI\ServiceDefinition;
 use Nette\DI\Statement;
@@ -49,31 +43,8 @@ class WebManagerExtension extends ModuleExtension
 			->setClass(PageService::class)
 			->setArguments([$config['homepage'], $config['page'], $config['module']]);
 
-		$builder->addDefinition($this->prefix('headerFactory'))
-			->setImplement(IHeaderFactory::class)
-			->setFactory(Header::class);
-
-		$builder->addDefinition($this->prefix('footerFactory'))
-			->setImplement(IFooterFactory::class)
-			->setFactory(Footer::class);
-
-		$this->prepareHooks();
-	}
-
-	private function prepareHooks()
-	{
-		$builder = $this->getContainerBuilder();
-
-		$gaHook = $builder->addDefinition($this->prefix('googleAnalyticsHook'))
-			->setClass(GoogleAnalyticsHook::class);
-		$wmHook = $builder->addDefinition($this->prefix('webMasterHook'))
-			->setClass(WebMasterHook::class);
-
 		$builder->addDefinition($this->prefix('hookService'))
-			->setClass(HookService::class)
-			->addSetup('addHook', [$gaHook])
-			->addSetup('addHook', [$wmHook]);
-
+			->setClass(HookService::class);
 	}
 
 	public function beforeCompile()
