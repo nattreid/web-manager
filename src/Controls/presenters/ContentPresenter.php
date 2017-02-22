@@ -4,7 +4,7 @@ namespace NAttreid\WebManager\Presenters;
 
 use NAttreid\Cms\LocaleService;
 use NAttreid\Form\Form;
-use NAttreid\WebManager\Model\Content;
+use NAttreid\WebManager\Model\Content\Content;
 use NAttreid\WebManager\Model\Orm;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
@@ -42,6 +42,7 @@ class ContentPresenter extends BasePresenter
 
 	/**
 	 * Smazani obsahu
+	 * @param string $id
 	 * @secured
 	 */
 	public function handleDelete($id)
@@ -79,7 +80,7 @@ class ContentPresenter extends BasePresenter
 	public function renderAdd()
 	{
 		$this['editForm']->setDefaults([
-			'locale' => $this->localeService->currentLocaleId()
+			'locale' => $this->localeService->currentLocaleId
 		]);
 		$this->setView('edit');
 	}

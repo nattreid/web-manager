@@ -1,6 +1,6 @@
 <?php
 
-namespace NAttreid\WebManager\Model;
+namespace NAttreid\WebManager\Model\PagesGroup;
 
 use NAttreid\Orm\Repository;
 use Nextras\Orm\Collection\ICollection;
@@ -15,7 +15,7 @@ use Nextras\Orm\Collection\ICollection;
 class PagesGroupsRepository extends Repository
 {
 
-	/** @var PagesMapper */
+	/** @var PagesGroupsMapper */
 	protected $mapper;
 
 	public static function getEntityClassNames()

@@ -1,6 +1,6 @@
 <?php
 
-namespace NAttreid\WebManager\Model;
+namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Orm\Repository;
 use Nextras\Orm\Collection\ICollection;
@@ -41,7 +41,8 @@ class PagesRepository extends Repository
 
 	/**
 	 * Vrati lokalizovane stranky bez HP
-	 * @return ICollection|Page[]
+	 * @param string $locale
+	 * @return Page[]|ICollection
 	 */
 	public function findByLocale($locale)
 	{

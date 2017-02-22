@@ -1,8 +1,9 @@
 <?php
 
-namespace NAttreid\WebManager\Model;
+namespace NAttreid\WebManager\Model\PagesGroup;
 
 use Kdyby\Translation\Translator;
+use NAttreid\WebManager\Model\Pages\Page;
 use Nextras\Orm\Entity\Entity;
 use Nextras\Orm\Relationships\ManyHasMany;
 

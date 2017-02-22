@@ -5,7 +5,7 @@ namespace NAttreid\WebManager\Services;
 use Kdyby\Translation\Translator;
 use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Orm;
-use NAttreid\WebManager\Model\Page;
+use NAttreid\WebManager\Model\Pages\Page;
 use Nette\Application\BadRequestException;
 use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;

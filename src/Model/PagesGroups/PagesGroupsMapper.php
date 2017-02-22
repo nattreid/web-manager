@@ -1,8 +1,9 @@
 <?php
 
-namespace NAttreid\WebManager\Model;
+namespace NAttreid\WebManager\Model\PagesGroup;
 
 use NAttreid\Orm\Structure\Table;
+use NAttreid\WebManager\Model\Mapper;
 
 /**
  * PagesGroups Mapper

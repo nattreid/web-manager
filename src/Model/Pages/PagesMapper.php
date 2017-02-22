@@ -1,9 +1,11 @@
 <?php
 
-namespace NAttreid\WebManager\Model;
+namespace NAttreid\WebManager\Model\Pages;
 
-use NAttreid\Cms\Model\LocalesMapper;
+use NAttreid\Cms\Model\Locale\LocalesMapper;
 use NAttreid\Orm\Structure\Table;
+use NAttreid\WebManager\Model\Mapper;
+use NAttreid\WebManager\Model\PagesGroup\PagesGroupsMapper;
 use Nette\Caching\Cache;
 
 /**

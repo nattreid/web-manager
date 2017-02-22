@@ -1,8 +1,9 @@
 <?php
 
-namespace NAttreid\WebManager\Model;
+namespace NAttreid\WebManager\Model\Pages;
 
-use NAttreid\Cms\Model\Locale;
+use NAttreid\Cms\Model\Locale\Locale;
+use NAttreid\WebManager\Model\PagesGroup\PageGroup;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nextras\Dbal\UniqueConstraintViolationException;

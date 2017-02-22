@@ -7,7 +7,7 @@ use NAttreid\Cms\LocaleService;
 use NAttreid\Form\Form;
 use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;
-use NAttreid\WebManager\Model\Page;
+use NAttreid\WebManager\Model\Pages\Page;
 use NAttreid\WebManager\Services\PageService;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
@@ -53,6 +53,7 @@ class PagesPresenter extends BasePresenter
 
 	/**
 	 * Smazani stranky
+	 * @param string $id
 	 * @secured
 	 */
 	public function handleDelete($id)

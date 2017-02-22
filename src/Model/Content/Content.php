@@ -1,8 +1,8 @@
 <?php
 
-namespace NAttreid\WebManager\Model;
+namespace NAttreid\WebManager\Model\Content;
 
-use NAttreid\Cms\Model\Locale;
+use NAttreid\Cms\Model\Locale\Locale;
 use Nette\Utils\Strings;
 use Nextras\Dbal\InvalidArgumentException;
 use Nextras\Dbal\UniqueConstraintViolationException;

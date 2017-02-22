@@ -21,6 +21,7 @@ class HookService
 	private $hooks = [];
 
 	/**
+	 * @param string $name
 	 * @return HookFactory
 	 * @throw InvalidArgumentException
 	 */

@@ -8,7 +8,6 @@ use NAttreid\Cms\Factories\FormFactory;
 use NAttreid\Form\Form;
 use Nette\Reflection\ClassType;
 use Nette\SmartObject;
-use Tracy\Debugger;
 
 /**
  * Class HookFactory
