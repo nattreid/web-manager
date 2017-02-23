@@ -1,17 +1,21 @@
 <?php
 
-namespace NAttreid\WebManager\Model\PagesGroup;
+namespace NAttreid\WebManager\Model\PagesViews;
 
 use NAttreid\Orm\Structure\Table;
 use NAttreid\WebManager\Model\Mapper;
 
 /**
- * PagesGroups Mapper
+ * PagesViews Mapper
  *
  * @author Attreid <attreid@gmail.com>
  */
-class PagesGroupsMapper extends Mapper
+class PagesViewsMapper extends Mapper
 {
+
+	const
+		MENU = 1,
+		FOOTER = 2;
 
 	protected function createTable(Table $table)
 	{
@@ -24,10 +28,10 @@ class PagesGroupsMapper extends Mapper
 		$this->afterCreateTable[] = function () {
 			$this->insert([
 				[
-					'id' => 1,
+					'id' => self::MENU,
 					'name' => 'menu'
 				], [
-					'id' => 2,
+					'id' => self::FOOTER,
 					'name' => 'footer'
 				]
 			]);

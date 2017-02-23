@@ -3,10 +3,14 @@
 namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Orm\Repository;
+use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use Nextras\Orm\Collection\ICollection;
 
 /**
  * Pages Repository
+ *
+ * @method Page getByUrl($url, $locale) Vrati stranku podle url
+ * @method Page getById($id)
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -38,6 +42,15 @@ class PagesRepository extends Repository
 		return parent::findAll()->orderBy('position');
 	}
 
+	/**
+	 * Vrati hlavni stranky
+	 * @return ICollection|Page[]
+	 */
+	public function findMain()
+	{
+		return $this->findAll()->findBy(['parent' => null]);
+	}
+
 
 	/**
 	 * Vrati lokalizovane stranky bez HP
@@ -54,29 +67,15 @@ class PagesRepository extends Repository
 	}
 
 	/**
-	 * Vrati stranku podle url
-	 * @param string $url
-	 * @param string $locale
-	 * @return Page
-	 */
-	public function getByUrl($url, $locale)
-	{
-		return $this->getBy([
-			'url' => $url,
-			'this->locale->name' => $locale
-		]);
-	}
-
-	/**
 	 * Vrati stranky v menu
 	 * @param $locale
 	 * @return Page[]|ICollection
 	 */
 	public function findMenu($locale)
 	{
-		return $this->findAll()
+		return $this->findMain()
 			->findBy([
-				'this->groups->id' => 1,
+				'this->views->id' => PagesViewsMapper::MENU,
 				'this->locale->name' => $locale
 			]);
 	}
@@ -90,7 +89,7 @@ class PagesRepository extends Repository
 	{
 		return $this->findAll()
 			->findBy([
-				'this->groups->id' => 2,
+				'this->views->id' => PagesViewsMapper::FOOTER,
 				'this->locale->name' => $locale
 			]);
 	}

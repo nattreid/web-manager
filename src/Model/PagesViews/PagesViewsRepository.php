@@ -1,26 +1,26 @@
 <?php
 
-namespace NAttreid\WebManager\Model\PagesGroup;
+namespace NAttreid\WebManager\Model\PagesViews;
 
 use NAttreid\Orm\Repository;
 use Nextras\Orm\Collection\ICollection;
 
 /**
- * PagesGroups Repository
+ * PagesViews Repository
  *
- * @method ICollection|PageGroup[] findAll()
+ * @method ICollection|PageView[] findAll()
  *
  * @author Attreid <attreid@gmail.com>
  */
-class PagesGroupsRepository extends Repository
+class PagesViewsRepository extends Repository
 {
 
-	/** @var PagesGroupsMapper */
+	/** @var PagesViewsMapper */
 	protected $mapper;
 
 	public static function getEntityClassNames()
 	{
-		return [PageGroup::class];
+		return [PageView::class];
 	}
 
 	public function fetchPairsByName()

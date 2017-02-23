@@ -60,26 +60,13 @@ class PagesPresenter extends BasePresenter
 	{
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($id);
+			$parent = $page->parent;
 			$this->orm->pages->removeAndFlush($page);
-			$this['list']->reload();
-		} else {
-			$this->terminate();
-		}
-	}
-
-	/**
-	 * Smaze stranky
-	 * @param array $ids
-	 */
-	public function deletePages(array $ids)
-	{
-		if ($this->isAjax()) {
-			$pages = $this->orm->pages->findById($ids);
-			foreach ($pages as $page) {
-				$this->orm->pages->remove($page);
+			if ($parent !== null) {
+				$this['list']->redrawControl();
+			} else {
+				$this['list']->redrawItem($parent->id);
 			}
-			$this->orm->flush();
-			$this['list']->reload();
 		} else {
 			$this->terminate();
 		}
@@ -90,10 +77,15 @@ class PagesPresenter extends BasePresenter
 	 * @param int $item_id
 	 * @param int $prev_id
 	 * @param int $next_id
+	 * @param int $parent_id
 	 */
-	public function handleSort($item_id, $prev_id, $next_id)
+	public function handleSort($item_id, $prev_id, $next_id, $parent_id)
 	{
 		if ($this->isAjax()) {
+			$page = $this->orm->pages->getById($item_id);
+			$page->parent = $parent_id;
+			$this->orm->persistAndFlush($page);
+
 			$this->orm->pages->changeSort($item_id, $prev_id, $next_id);
 		} else {
 			$this->terminate();
@@ -102,11 +94,13 @@ class PagesPresenter extends BasePresenter
 
 	/**
 	 * Pridani stranky
+	 * @param string $id
 	 */
-	public function renderAdd()
+	public function renderAdd($id)
 	{
 		$this['editForm']->setDefaults([
-			'locale' => $this->localeService->currentLocaleId
+			'locale' => $this->localeService->defaultLocaleId,
+			'parent' => $id
 		]);
 		$this->setView('edit');
 	}
@@ -138,6 +132,8 @@ class PagesPresenter extends BasePresenter
 	{
 		$form = $this->formFactory->create();
 
+		$form->addHidden('parent');
+
 		$form->addText('name', 'webManager.web.pages.name')
 			->setRequired();
 
@@ -146,8 +142,8 @@ class PagesPresenter extends BasePresenter
 		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
 			->setItems($this->localeService->allowed);
 
-		$form->addCheckboxListUntranslated('groups', 'webManager.web.pages.groups.title')
-			->setItems($this->orm->pagesGroups->fetchPairsById());
+		$form->addCheckboxListUntranslated('views', 'webManager.web.pages.views.title')
+			->setItems($this->orm->pagesViews->fetchPairsById());
 
 		$form->addText('title', 'webManager.web.pages.pageTitle')
 			->setRequired();
@@ -195,13 +191,15 @@ class PagesPresenter extends BasePresenter
 			$form->addError('webManager.web.pages.urlContainsInvalidCharacters');
 			return;
 		}
+
 		$page->name = $values->name;
+		$page->parent = $values->parent;
 		$page->title = $values->title;
 		$page->keywords = $values->keywords;
 		$page->image = $values->image;
 		$page->description = $values->description;
 		$page->content = $values->content;
-		$page->groups->set($values->groups);
+		$page->views->set($values->views);
 
 		$this->orm->persistAndFlush($page);
 		$this->restoreBacklink();
@@ -216,28 +214,33 @@ class PagesPresenter extends BasePresenter
 	protected function createComponentList()
 	{
 		$grid = $this->dataGridFactory->create();
-
-		$grid->setDataSource($this->orm->pages->findAll());
-
+		$grid->setDataSource($this->orm->pages->findMain());
 		$grid->setSortable();
+		$grid->setTreeView([$this, 'getChildren'], 'hasChildren');
 
-		$grid->addToolbarButton('add', 'webManager.web.pages.add');
-
-		$grid->addColumnLink('name', 'webManager.web.pages.name', $this->pageService->pageLink, null, ['url', $this->routerFactory->variable => 'locale.name'])
+		$grid->addColumnLink('name', 'webManager.web.pages.name', $this->pageService->pageLink, null, ['url' => 'completeUrl', $this->routerFactory->variable => 'locale.name'])
+			->setOpenInNewTab()
 			->setFilterText();
 
 		$grid->addColumnText('url', 'default.url')
 			->setFilterText();
 
-		$grid->addColumnText('locale', 'webManager.web.pages.locale', 'locale.name')
-			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->allowed);
-
-		$grid->addColumnText('groups', 'webManager.web.pages.groups.title')
-			->setRenderer(function (Page $row) {
-				return implode(', ', $row->getGroups());
+		$grid->addColumnText('locale', 'webManager.web.pages.locale')
+			->setRenderer(function (Page $page) {
+				return $page->name;
 			})
-			->setFilterSelect(['' => 'form.none'] + $this->orm->pagesGroups->fetchUntranslatedPairsById(), 'groups.id')
+			->setFilterSelect($this->localeService->allowed);
+
+		$grid->addColumnText('views', 'webManager.web.pages.views.title')
+			->setRenderer(function (Page $row) {
+				return implode(', ', $row->getViews());
+			})
+			->setFilterSelect(['' => 'form.none'] + $this->orm->pagesViews->fetchUntranslatedPairsById(), 'views.id')
 			->setTranslateOptions();
+
+		$grid->addAction('add', null)
+			->setIcon('plus')
+			->setTitle('webManager.web.pages.add');
 
 		$grid->addAction('edit', null)
 			->setIcon('pencil')
@@ -251,9 +254,15 @@ class PagesPresenter extends BasePresenter
 				return $this->translate('default.confirmDelete', 1, ['name' => $page->name]);
 			});
 
-		$grid->addGroupAction('default.delete')->onSelect[] = [$this, 'deletePages'];
+		$grid->setDefaultFilter(['locale' => $this->localeService->defaultLocaleId]);
 
 		return $grid;
+	}
+
+	public function getChildren($id)
+	{
+		$page = $this->orm->pages->getById($id);
+		return $page->children->get();
 	}
 
 }

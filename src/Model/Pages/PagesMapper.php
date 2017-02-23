@@ -3,10 +3,12 @@
 namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Cms\Model\Locale\LocalesMapper;
+use NAttreid\Cms\Model\Orm;
 use NAttreid\Orm\Structure\Table;
 use NAttreid\WebManager\Model\Mapper;
-use NAttreid\WebManager\Model\PagesGroup\PagesGroupsMapper;
+use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use Nette\Caching\Cache;
+use Nextras\Orm\Entity\IEntity;
 
 /**
  * Pages Mapper
@@ -15,8 +17,11 @@ use Nette\Caching\Cache;
  */
 class PagesMapper extends Mapper
 {
-
+	/** @var string */
 	private $tag = 'netta/pages';
+
+	/** @var string[] */
+	private $pageList;
 
 	protected function createTable(Table $table)
 	{
@@ -28,6 +33,7 @@ class PagesMapper extends Mapper
 		$table->addColumn('url')
 			->varChar(100);
 		$table->addForeignKey('localeId', LocalesMapper::class);
+		$table->addForeignKey('parentId', $table, null);
 		$table->addColumn('title')
 			->varChar(150);
 		$table->addColumn('image')
@@ -47,9 +53,9 @@ class PagesMapper extends Mapper
 			->setKey();
 		$table->addUnique('url', 'localeId');
 
-		$relationTable = $table->createRelationTable(PagesGroupsMapper::class);
+		$relationTable = $table->createRelationTable(PagesViewsMapper::class);
 		$relationTable->addForeignKey('pageId', $table);
-		$relationTable->addForeignKey('pageGroupId', PagesGroupsMapper::class);
+		$relationTable->addForeignKey('pageGroupId', PagesViewsMapper::class);
 		$relationTable->setPrimaryKey('pageId', 'pageGroupId');
 	}
 
@@ -64,31 +70,65 @@ class PagesMapper extends Mapper
 	}
 
 	/**
+	 * Vrati stranku podle url
+	 * @param string $url
+	 * @param string $locale
+	 * @return IEntity
+	 */
+	public function getByUrl($url, $locale)
+	{
+		/* @var $orm Orm */
+		$orm = $this->getRepository()->getModel();
+		$eLocale = $orm->locales->getByLocale($locale);
+
+		$urls = $this->getPageList();
+		if (isset($urls[$url])) {
+			$builder = $this->builder()
+				->andWhere('[id] = %i', $urls[$url])
+				->andWhere('[localeId] = %i', $eLocale->id);
+			return $this->fetch($builder);
+		}
+		return null;
+	}
+
+	/**
 	 * Je URL v databazi
 	 * @param string $url
 	 * @return boolean
 	 */
 	public function exists($url)
 	{
-		$key = 'pagesList';
-		$rows = $this->cache->load($key);
-		if ($rows === null) {
-			$rows = $this->cache->save($key, function () {
-				$result = [];
-				foreach ($this->getRepository()->findAll() as $page) {
-					/* @var $page Page */
-					$result[$page->url] = true;
-				}
-				return $result;
-			}, [
-				Cache::TAGS => [$this->tag]
-			]);
-		}
-		if (isset($rows[$url])) {
+		$urls = $this->getPageList();
+		if (isset($urls[$url])) {
 			return true;
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * @return string[]
+	 */
+	private function getPageList()
+	{
+		if ($this->pageList === null) {
+			$key = 'pagesList';
+			$this->pageList = $this->cache->load($key);
+			if ($this->pageList === null) {
+				$this->pageList = $this->cache->save($key, function () {
+					/* @var $repo PagesRepository */
+					$repo = $this->getRepository();
+					$result = [];
+					foreach ($repo->findAll() as $page) {
+						$result[$page->completeUrl] = $page->id;
+					}
+					return $result;
+				}, [
+					Cache::TAGS => [$this->tag]
+				]);
+			}
+		}
+		return $this->pageList;
 	}
 
 }

@@ -58,7 +58,7 @@ class PageService
 	{
 		list($presenter, $action) = explode(':', $this->pageLink);
 
-		$routes[] = new Route($url . '[<url>]', [
+		$routes[] = new Route($url . '[<url .*>]', [
 			'presenter' => $presenter,
 			'action' => $action,
 			null => [
@@ -101,7 +101,7 @@ class PageService
 	}
 
 	/**
-	 * Vrati stranky
+	 * Vrati stranky bez HP
 	 * @return Page[]|ICollection
 	 */
 	public function findPages()

@@ -8,6 +8,7 @@ namespace NAttreid\WebManager;
  * @property boolean $cookiePolicy potvrzeni pouzivani cookie
  * @property string $cookiePolicyLink link pro informace o pouzivani cookie
  * @property string $keywords klicova slova
+ * @property string $title nazev
  * @property string $description popis
  * @property string $logo logo
  *

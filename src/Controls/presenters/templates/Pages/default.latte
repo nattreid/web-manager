@@ -1,5 +1,12 @@
 {block title}{_'webManager.web.pages.title'}{/block}
 {block content}
 {panel}
+    <div class="container-fluid">
+        <a n:href="add" class="btn btn-xs btn-default pull-right"
+                        title="{_'webManager.web.pages.add'}">
+            <span class="fa fa-plus"></span>
+        </a>
+    </div>
+    <div class="clearfix"></div>
     {control list}
 {/panel}

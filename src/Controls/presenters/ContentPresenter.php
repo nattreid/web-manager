@@ -180,7 +180,6 @@ class ContentPresenter extends BasePresenter
 	protected function createComponentList()
 	{
 		$grid = $this->dataGridFactory->create();
-
 		$grid->setDataSource($this->orm->content->findAll());
 
 		$grid->setDefaultSort(['name' => 'ASC']);
@@ -195,8 +194,11 @@ class ContentPresenter extends BasePresenter
 			->setSortable()
 			->setFilterText();
 
-		$grid->addColumnText('locale', 'webManager.web.content.locale', 'locale.name')
-			->setFilterSelect(['' => $this->translate('form.none')] + $this->localeService->allowed);
+		$grid->addColumnText('locale', 'webManager.web.content.locale')
+			->setRenderer(function (Content $content) {
+				return $content->name;
+			})
+			->setFilterSelect($this->localeService->allowed);
 
 		$grid->addAction('edit', null)
 			->setIcon('pencil')
@@ -209,6 +211,8 @@ class ContentPresenter extends BasePresenter
 			->setConfirm(function (Content $content) {
 				return $this->translate('default.confirmDelete', 1, ['name' => $content->name]);
 			});
+
+		$grid->setDefaultFilter(['locale' => $this->localeService->defaultLocaleId]);
 
 		$grid->addGroupAction('default.delete')->onSelect[] = [$this, 'deletePages'];
 

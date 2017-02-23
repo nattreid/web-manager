@@ -15,8 +15,8 @@ web:
         urlExists: "URL exists"
         urlContainsInvalidCharacters: "URL contains invalid characters"
         locale: "Language"
-        groups:
-            title: "Groups"
+        views:
+            title: "Zobrazení"
             menu: "Menu"
             footer: "Footer"
     content:
