@@ -48,7 +48,7 @@ class WebManagerExtension extends ModuleExtension
 			->setClass(HookService::class);
 
 		$gallery = new GalleryExtension();
-		$gallery->setCompiler($this->compiler, 'gallery');
+		$gallery->setCompiler($this->compiler, 'webManagerGallery');
 		$gallery->loadConfiguration();
 	}
 
