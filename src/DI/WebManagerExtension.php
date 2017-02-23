@@ -4,6 +4,7 @@ namespace NAttreid\WebManager\DI;
 
 use NAttreid\AppManager\AppManager;
 use NAttreid\Cms\DI\ModuleExtension;
+use NAttreid\Gallery\DI\GalleryExtension;
 use NAttreid\WebManager\Services\Hooks\HookFactory;
 use NAttreid\WebManager\Services\Hooks\HookService;
 use NAttreid\WebManager\Services\PageService;
@@ -45,6 +46,10 @@ class WebManagerExtension extends ModuleExtension
 
 		$builder->addDefinition($this->prefix('hookService'))
 			->setClass(HookService::class);
+
+		$gallery = new GalleryExtension();
+		$gallery->setCompiler($this->compiler, 'gallery');
+		$gallery->loadConfiguration();
 	}
 
 	public function beforeCompile()
@@ -61,6 +66,10 @@ class WebManagerExtension extends ModuleExtension
 		foreach ($this->findByType(HookFactory::class) as $def) {
 			$hookService->addSetup('addHook', [$def]);
 		}
+
+		$gallery = new GalleryExtension();
+		$gallery->setCompiler($this->compiler, 'gallery');
+		$gallery->beforeCompile();
 	}
 
 	/**

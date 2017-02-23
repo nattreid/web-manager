@@ -5,6 +5,8 @@ namespace NAttreid\WebManager\Presenters;
 use InvalidArgumentException;
 use NAttreid\Cms\LocaleService;
 use NAttreid\Form\Form;
+use NAttreid\Gallery\Control\Gallery;
+use NAttreid\Gallery\Control\IGalleryFactory;
 use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
@@ -37,13 +39,17 @@ class PagesPresenter extends BasePresenter
 	/** @var RouterFactory */
 	private $routerFactory;
 
-	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService, RouterFactory $routerFactory)
+	/** @var IGalleryFactory */
+	private $galleryFactory;
+
+	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService, RouterFactory $routerFactory, IGalleryFactory $galleryFactory)
 	{
 		parent::__construct();
 		$this->orm = $orm;
 		$this->localeService = $localeService;
 		$this->pageService = $pageService;
 		$this->routerFactory = $routerFactory;
+		$this->galleryFactory = $galleryFactory;
 	}
 
 	public function handleBack($backlink)
@@ -94,6 +100,17 @@ class PagesPresenter extends BasePresenter
 
 	/**
 	 * Pridani stranky
+	 */
+	public function actionAdd()
+	{
+		$session = $this->getSession('cms/web-manager/pages');
+		$gallery = $this['gallery'];
+		$gallery->setStorage($session);
+		$gallery->setNamespace('product');
+	}
+
+	/**
+	 * Pridani stranky
 	 * @param string $id
 	 */
 	public function renderAdd($id)
@@ -115,6 +132,11 @@ class PagesPresenter extends BasePresenter
 		if (!$this->page) {
 			$this->error();
 		}
+
+		$gallery = $this['gallery'];
+		$gallery->setStorage($this->orm->pagesGalleries);
+		$gallery->setForeignKey('page', $this->page->id);
+		$gallery->setNamespace('page/' . $this->page->url);
 	}
 
 	public function renderEdit()
@@ -122,6 +144,16 @@ class PagesPresenter extends BasePresenter
 		$page = $this->page;
 		$this->addBreadcrumbLinkUntranslated($page->name);
 		$this['editForm']->setDefaults($page->toArray($page::TO_ARRAY_RELATIONSHIP_AS_ID));
+	}
+
+	/**
+	 * @return Gallery
+	 */
+	protected function createComponentGallery()
+	{
+		$gallery = $this->galleryFactory->create();
+		$gallery->getTranslator()->setLang($this->locale);
+		return $gallery;
 	}
 
 	/**

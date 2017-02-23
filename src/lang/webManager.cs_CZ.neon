@@ -15,6 +15,7 @@ web:
         urlExists: "URL již existuje"
         urlContainsInvalidCharacters: "URL obsahuje nepovolené znaky"
         locale: "Jazyk"
+        gallery: "Galerie"
         views:
             title: "Zobrazení"
             menu: "Menu"

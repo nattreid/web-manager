@@ -15,6 +15,7 @@ web:
         urlExists: "URL exists"
         urlContainsInvalidCharacters: "URL contains invalid characters"
         locale: "Language"
+        gallery: "Gallery"
         views:
             title: "Zobrazení"
             menu: "Menu"

@@ -16,7 +16,8 @@
   ],
   "dependencies": {
     "cms": "git@git.newtravel.cz:nattreid/cms.git#latest",
-    "cookiepolicy": "git@git.newtravel.cz:nattreid/cookiepolicy.git#latest"
+    "cookiepolicy": "git@git.newtravel.cz:nattreid/cookiepolicy.git#latest",
+    "gallery": "git@git.newtravel.cz:nattreid/gallery.git#latest"
   },
   "resolutions": {
     "nette.ajax.js": "~2.1",

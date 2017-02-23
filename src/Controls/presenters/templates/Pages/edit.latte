@@ -1,5 +1,21 @@
 {block title}{_'webManager.web.pages.title'}{/block}
 {block content}
 {panel}
-    {control editForm}
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a data-toggle="tab" href="#page">{_'webManager.web.pages.name'}</a>
+        </li>
+        <li>
+            <a data-toggle="tab" href="#gallery">{_'webManager.web.pages.gallery'}</a>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="page" class="tab-pane fade in active">
+            {control editForm}
+        </div>
+        <div id="gallery" class="tab-pane fade">
+            {control gallery}
+        </div>
+    </div>
 {/panel}
