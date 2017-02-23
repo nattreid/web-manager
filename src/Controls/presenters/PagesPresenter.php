@@ -63,9 +63,9 @@ class PagesPresenter extends BasePresenter
 			$parent = $page->parent;
 			$this->orm->pages->removeAndFlush($page);
 			if ($parent !== null) {
-				$this['list']->redrawControl();
-			} else {
 				$this['list']->redrawItem($parent->id);
+			} else {
+				$this['list']->redrawControl();
 			}
 		} else {
 			$this->terminate();
