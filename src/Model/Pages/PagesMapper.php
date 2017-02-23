@@ -2,6 +2,7 @@
 
 namespace NAttreid\WebManager\Model\Pages;
 
+use NAttreid\Cms\Model\Locale\Locale;
 use NAttreid\Cms\Model\Locale\LocalesMapper;
 use NAttreid\Cms\Model\Orm;
 use NAttreid\Orm\Structure\Table;
@@ -72,14 +73,18 @@ class PagesMapper extends Mapper
 	/**
 	 * Vrati stranku podle url
 	 * @param string $url
-	 * @param string $locale
+	 * @param string|Locale $locale
 	 * @return IEntity
 	 */
 	public function getByUrl($url, $locale)
 	{
 		/* @var $orm Orm */
 		$orm = $this->getRepository()->getModel();
-		$eLocale = $orm->locales->getByLocale($locale);
+		if ($locale instanceof Locale) {
+			$eLocale = $locale;
+		} else {
+			$eLocale = $orm->locales->getByLocale($locale);
+		}
 
 		$urls = $this->getPageList();
 		if (isset($urls[$url])) {
