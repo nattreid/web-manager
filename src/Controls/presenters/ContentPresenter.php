@@ -196,7 +196,7 @@ class ContentPresenter extends BasePresenter
 
 		$grid->addColumnText('locale', 'webManager.web.content.locale')
 			->setRenderer(function (Content $content) {
-				return $content->name;
+				return $content->locale->name;
 			})
 			->setFilterSelect($this->localeService->allowed);
 

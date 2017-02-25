@@ -259,7 +259,7 @@ class PagesPresenter extends BasePresenter
 
 		$grid->addColumnText('locale', 'webManager.web.pages.locale')
 			->setRenderer(function (Page $page) {
-				return $page->name;
+				return $page->locale->name;
 			})
 			->setFilterSelect($this->localeService->allowed);
 
