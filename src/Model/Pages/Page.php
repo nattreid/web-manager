@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Cms\Model\Locale\Locale;
@@ -21,7 +23,7 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property string $completeUrl {virtual}
  * @property Page|null $parent {m:1 Page::$children}
  * @property OneHasMany|Page[] $children {1:m Page::$parent}
- * @property boolean $hasChildren {virtual}
+ * @property bool $hasChildren {virtual}
  * @property Locale $locale {m:1 Locale, oneSided=true}
  * @property string $title
  * @property string|null $image
@@ -40,7 +42,7 @@ class Page extends Entity
 	 * Vrati nazvy zobarazeni
 	 * @return string[]
 	 */
-	public function getViews()
+	public function getViews(): array
 	{
 		$result = [];
 		foreach ($this->views->get() as $row) {
@@ -56,7 +58,7 @@ class Page extends Entity
 	 * @throws InvalidArgumentException
 	 * @throws UniqueConstraintViolationException
 	 */
-	public function setUrl($url)
+	public function setUrl(string $url)
 	{
 		if (!$this->locale) {
 			throw new InvalidArgumentException('Locale must be set before calling setUrl');

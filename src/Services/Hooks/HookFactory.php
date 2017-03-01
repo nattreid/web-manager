@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Services\Hooks;
 
 use IPub\FlashMessages\FlashNotifier;
@@ -56,7 +58,7 @@ abstract class HookFactory
 	 * Vrati nazev
 	 * @return string
 	 */
-	private function createName()
+	private function createName(): string
 	{
 		$reflection = new ClassType(get_called_class());
 		return str_replace('Hook', '', lcfirst($reflection->getShortName()));
@@ -65,7 +67,7 @@ abstract class HookFactory
 	/**
 	 * @return string
 	 */
-	protected function getName()
+	protected function getName(): string
 	{
 		return $this->name;
 	}
@@ -73,7 +75,7 @@ abstract class HookFactory
 	/**
 	 * @return string
 	 */
-	protected function getLatte()
+	protected function getLatte(): string
 	{
 		return $this->latte;
 	}
@@ -81,11 +83,11 @@ abstract class HookFactory
 	/**
 	 * @param string $latte
 	 */
-	protected function setLatte($latte)
+	protected function setLatte(string $latte)
 	{
 		$this->latte = (string)$latte;
 	}
 
 	/** @return Form */
-	public abstract function create();
+	public abstract function create(): Form;
 }

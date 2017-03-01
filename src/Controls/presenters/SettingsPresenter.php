@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Presenters;
 
 use NAttreid\Form\Form;
+use Nette\Utils\ArrayHash;
 
 /**
  * Hlavni nastaveni stranek
@@ -24,7 +27,7 @@ class SettingsPresenter extends BasePresenter
 	 * Hlavni nastaveni stranek
 	 * @return Form
 	 */
-	protected function createComponentSettingsForm()
+	protected function createComponentSettingsForm(): Form
 	{
 		$form = $this->formFactory->create();
 
@@ -52,7 +55,7 @@ class SettingsPresenter extends BasePresenter
 	 * @param Form $form
 	 * @param array $values
 	 */
-	public function settingsFormSucceeded(Form $form, $values)
+	public function settingsFormSucceeded(Form $form, ArrayHash $values)
 	{
 		foreach ($values as $name => $value) {
 			$this->configurator->$name = $value;

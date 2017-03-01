@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model;
 
 /**
@@ -10,7 +12,7 @@ namespace NAttreid\WebManager\Model;
 abstract class Mapper extends \NAttreid\Orm\Mapper
 {
 
-	public function getTablePrefix()
+	public function getTablePrefix(): string
 	{
 		return '_';
 	}

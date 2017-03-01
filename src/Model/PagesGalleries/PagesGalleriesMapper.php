@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\PagesGalleries;
 
 use NAttreid\Orm\Structure\Table;
@@ -36,7 +38,7 @@ class PagesGalleriesMapper extends Mapper
 	 * @param Page $page
 	 * @return int
 	 */
-	public function getMaxPosition($page)
+	public function getMaxPagePosition(Page $page): int
 	{
 		return $this->connection->query('SELECT IFnull(MAX([position]), 0) position FROM %table WHERE [pageId] = %i', $this->getTableName(), $page->id)->fetch()->position;
 	}

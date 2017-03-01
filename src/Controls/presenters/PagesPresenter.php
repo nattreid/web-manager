@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Presenters;
 
 use InvalidArgumentException;
@@ -52,17 +54,17 @@ class PagesPresenter extends BasePresenter
 		$this->galleryFactory = $galleryFactory;
 	}
 
-	public function handleBack($backlink)
+	public function handleBack(string $backlink = null)
 	{
 		$this->redirect('default');
 	}
 
 	/**
 	 * Smazani stranky
-	 * @param string $id
+	 * @param int $id
 	 * @secured
 	 */
-	public function handleDelete($id)
+	public function handleDelete(int $id)
 	{
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($id);
@@ -85,7 +87,7 @@ class PagesPresenter extends BasePresenter
 	 * @param int $next_id
 	 * @param int $parent_id
 	 */
-	public function handleSort($item_id, $prev_id, $next_id, $parent_id)
+	public function handleSort(int $item_id, int $prev_id, int $next_id, int $parent_id)
 	{
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($item_id);
@@ -111,9 +113,9 @@ class PagesPresenter extends BasePresenter
 
 	/**
 	 * Pridani stranky
-	 * @param string $id
+	 * @param int $id
 	 */
-	public function renderAdd($id)
+	public function renderAdd(int $id)
 	{
 		$this['editForm']->setDefaults([
 			'locale' => $this->localeService->defaultLocaleId,
@@ -126,7 +128,7 @@ class PagesPresenter extends BasePresenter
 	 * Editace stranky
 	 * @param int $id
 	 */
-	public function actionEdit($id)
+	public function actionEdit(int $id)
 	{
 		$this->page = $this->orm->pages->getById($id);
 		if (!$this->page) {
@@ -149,7 +151,7 @@ class PagesPresenter extends BasePresenter
 	/**
 	 * @return Gallery
 	 */
-	protected function createComponentGallery()
+	protected function createComponentGallery(): Gallery
 	{
 		$gallery = $this->galleryFactory->create();
 		$gallery->getTranslator()->setLang($this->locale);
@@ -160,7 +162,7 @@ class PagesPresenter extends BasePresenter
 	 * Editace stranky
 	 * @return Form
 	 */
-	protected function createComponentEditForm()
+	protected function createComponentEditForm(): Form
 	{
 		$form = $this->formFactory->create();
 
@@ -204,7 +206,7 @@ class PagesPresenter extends BasePresenter
 	 * @param Form $form
 	 * @param ArrayHash $values
 	 */
-	public function editFormSucceeded(Form $form, $values)
+	public function editFormSucceeded(Form $form, ArrayHash $values)
 	{
 		if ($this->page) {
 			$page = $this->page;
@@ -243,7 +245,7 @@ class PagesPresenter extends BasePresenter
 	 * Seznam stranek
 	 * @return DataGrid
 	 */
-	protected function createComponentList()
+	protected function createComponentList(): DataGrid
 	{
 		$grid = $this->dataGridFactory->create();
 		$grid->setDataSource($this->orm->pages->findMain());
@@ -291,7 +293,7 @@ class PagesPresenter extends BasePresenter
 		return $grid;
 	}
 
-	public function getChildren($id)
+	public function getChildren(int $id)
 	{
 		$page = $this->orm->pages->getById($id);
 		return $page->children->get();

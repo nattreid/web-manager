@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\PagesViews;
 
 use NAttreid\Orm\Repository;
@@ -23,7 +25,7 @@ class PagesViewsRepository extends Repository
 		return [PageView::class];
 	}
 
-	public function fetchPairsByName()
+	public function fetchPairsByName(): array
 	{
 		$arr = $this->fetchPairsById();
 		asort($arr);
@@ -31,7 +33,7 @@ class PagesViewsRepository extends Repository
 	}
 
 
-	public function fetchPairsById()
+	public function fetchPairsById(): array
 	{
 		$arr = [];
 		$rows = $this->findAll();
@@ -44,7 +46,7 @@ class PagesViewsRepository extends Repository
 	/**
 	 * @return array
 	 */
-	public function fetchUntranslatedPairsById()
+	public function fetchUntranslatedPairsById(): array
 	{
 		$arr = [];
 		$rows = $this->findAll();

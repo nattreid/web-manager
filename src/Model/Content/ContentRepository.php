@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\Content;
 
 use NAttreid\Orm\Repository;
@@ -21,9 +23,9 @@ class ContentRepository extends Repository
 	 * Vrati obsah podle konstanty
 	 * @param string $const
 	 * @param string $locale
-	 * @return Content
+	 * @return Content|null
 	 */
-	public function getByConst($const, $locale)
+	public function getByConst(string $const, string $locale)
 	{
 		return $this->getBy([
 			'const' => $const,

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Presenters;
 
 use NAttreid\Cms\LocaleService;
@@ -35,17 +37,17 @@ class ContentPresenter extends BasePresenter
 		$this->localeService = $localeService;
 	}
 
-	public function handleBack($backlink)
+	public function handleBack(string $backlink = null)
 	{
 		$this->redirect('default');
 	}
 
 	/**
 	 * Smazani obsahu
-	 * @param string $id
+	 * @param int $id
 	 * @secured
 	 */
-	public function handleDelete($id)
+	public function handleDelete(int $id)
 	{
 		if ($this->isAjax()) {
 			$content = $this->orm->content->getById($id);
@@ -89,7 +91,7 @@ class ContentPresenter extends BasePresenter
 	 * Editace obsahu
 	 * @param int $id
 	 */
-	public function actionEdit($id)
+	public function actionEdit(int $id)
 	{
 		$this->content = $this->orm->content->getById($id);
 		if (!$this->content) {
@@ -108,7 +110,7 @@ class ContentPresenter extends BasePresenter
 	 * Editace obsahu
 	 * @return Form
 	 */
-	protected function createComponentEditForm()
+	protected function createComponentEditForm(): Form
 	{
 		$form = $this->formFactory->create();
 
@@ -147,7 +149,7 @@ class ContentPresenter extends BasePresenter
 	 * @param Form $form
 	 * @param ArrayHash $values
 	 */
-	public function editFormSucceeded(Form $form, $values)
+	public function editFormSucceeded(Form $form, ArrayHash $values)
 	{
 		if ($this->content) {
 			$content = $this->content;
@@ -177,7 +179,7 @@ class ContentPresenter extends BasePresenter
 	 * Seznam obsahu
 	 * @return DataGrid
 	 */
-	protected function createComponentList()
+	protected function createComponentList(): DataGrid
 	{
 		$grid = $this->dataGridFactory->create();
 		$grid->setDataSource($this->orm->content->findAll());

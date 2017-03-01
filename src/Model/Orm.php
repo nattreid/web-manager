@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model;
 
 use NAttreid\WebManager\Model\Content\ContentRepository;

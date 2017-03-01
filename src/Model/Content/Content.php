@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\Content;
 
 use NAttreid\Cms\Model\Locale\Locale;
@@ -32,7 +34,7 @@ class Content extends Entity
 	 * @throws InvalidArgumentException
 	 * @throws UniqueConstraintViolationException
 	 */
-	public function setConst($const)
+	public function setConst(string $const)
 	{
 		if (!$this->locale) {
 			throw new InvalidArgumentException('Locale must be set before calling setConst');
@@ -43,7 +45,7 @@ class Content extends Entity
 
 		/* @var $repository ContentRepository */
 		$repository = $this->getRepository();
-		$content = $repository->getByConst($const, $this->locale);
+		$content = $repository->getByConst($const, $this->locale->name);
 		if ($content !== null && $content !== $this) {
 			throw new UniqueConstraintViolationException("Content with '$const' exists");
 		}

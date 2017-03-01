@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\PagesGalleries;
 
 use NAttreid\WebManager\Model\Pages\Page;

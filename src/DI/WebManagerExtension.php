@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\DI;
 
 use NAttreid\AppManager\AppManager;
@@ -77,7 +79,7 @@ class WebManagerExtension extends ModuleExtension
 	 * @param string $type
 	 * @return ServiceDefinition[]
 	 */
-	private function findByType($type)
+	private function findByType(string $type): array
 	{
 		$type = ltrim($type, '\\');
 		return array_filter($this->getContainerBuilder()->getDefinitions(), function (ServiceDefinition $def) use ($type) {

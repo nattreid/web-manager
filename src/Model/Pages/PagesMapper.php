@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Cms\Model\Locale\Locale;
@@ -74,9 +76,9 @@ class PagesMapper extends Mapper
 	 * Vrati stranku podle url
 	 * @param string $url
 	 * @param string|Locale $locale
-	 * @return IEntity
+	 * @return IEntity|null
 	 */
-	public function getByUrl($url, $locale)
+	public function getByUrl(string $url, string $locale)
 	{
 		/* @var $orm Orm */
 		$orm = $this->getRepository()->getModel();
@@ -99,9 +101,9 @@ class PagesMapper extends Mapper
 	/**
 	 * Je URL v databazi
 	 * @param string $url
-	 * @return boolean
+	 * @return bool
 	 */
-	public function exists($url)
+	public function exists(string $url): bool
 	{
 		$urls = $this->getPageList();
 		if (isset($urls[$url])) {
@@ -114,7 +116,7 @@ class PagesMapper extends Mapper
 	/**
 	 * @return string[]
 	 */
-	private function getPageList()
+	private function getPageList(): array
 	{
 		if ($this->pageList === null) {
 			$key = 'pagesList';

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\PagesViews;
 
 use Kdyby\Translation\Translator;
@@ -28,12 +30,12 @@ class PageView extends Entity
 		$this->translator = $translator;
 	}
 
-	protected function getterTranslatedName()
+	protected function getterTranslatedName(): string
 	{
 		return $this->translator->translate($this->untranslatedName);
 	}
 
-	protected function getterUntranslatedName()
+	protected function getterUntranslatedName(): string
 	{
 		return 'webManager.web.pages.views.' . $this->name;
 	}

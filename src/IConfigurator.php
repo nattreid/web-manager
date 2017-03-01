@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager;
 
 /**
  * Interface IConfigurator
  *
- * @property boolean $cookiePolicy potvrzeni pouzivani cookie
+ * @property bool $cookiePolicy potvrzeni pouzivani cookie
  * @property string $cookiePolicyLink link pro informace o pouzivani cookie
  * @property string $keywords klicova slova
  * @property string $title nazev

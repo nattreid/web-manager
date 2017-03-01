@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Orm\Repository;
@@ -37,7 +39,7 @@ class PagesRepository extends Repository
 	/**
 	 * @return ICollection|Page[]
 	 */
-	public function findAll()
+	public function findAll(): ICollection
 	{
 		return parent::findAll()->orderBy('position');
 	}
@@ -46,7 +48,7 @@ class PagesRepository extends Repository
 	 * Vrati hlavni stranky
 	 * @return ICollection|Page[]
 	 */
-	public function findMain()
+	public function findMain(): ICollection
 	{
 		return $this->findAll()->findBy(['parent' => null]);
 	}
@@ -57,7 +59,7 @@ class PagesRepository extends Repository
 	 * @param string $locale
 	 * @return Page[]|ICollection
 	 */
-	public function findByLocale($locale)
+	public function findByLocale(string $locale): ICollection
 	{
 		return $this->findAll()
 			->findBy([
@@ -71,7 +73,7 @@ class PagesRepository extends Repository
 	 * @param $locale
 	 * @return Page[]|ICollection
 	 */
-	public function findMenu($locale)
+	public function findMenu(string $locale): ICollection
 	{
 		return $this->findMain()
 			->findBy([
@@ -85,7 +87,7 @@ class PagesRepository extends Repository
 	 * @param $locale
 	 * @return Page[]|ICollection
 	 */
-	public function findFooter($locale)
+	public function findFooter(string $locale): ICollection
 	{
 		return $this->findAll()
 			->findBy([
@@ -97,9 +99,9 @@ class PagesRepository extends Repository
 	/**
 	 * Je URL v databazi
 	 * @param string $url
-	 * @return boolean
+	 * @return bool
 	 */
-	public function exists($url)
+	public function exists(string $url): bool
 	{
 		return $this->mapper->exists($url);
 	}
@@ -108,18 +110,18 @@ class PagesRepository extends Repository
 	 * Vrati nejvetsi pozici
 	 * @return int
 	 */
-	public function getMaxPosition()
+	public function getMaxPosition(): int
 	{
 		return $this->mapper->getMaxPosition('position');
 	}
 
 	/**
 	 * Zmeni razeni
-	 * @param mixed $id
-	 * @param mixed $prevId
-	 * @param mixed $nextId
+	 * @param int $id
+	 * @param int $prevId
+	 * @param int $nextId
 	 */
-	public function changeSort($id, $prevId, $nextId)
+	public function changeSort(int $id, int $prevId, int $nextId)
 	{
 		$this->mapper->changeSort('position', $id, $prevId, $nextId);
 	}

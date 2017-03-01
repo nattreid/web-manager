@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Services\Hooks;
 
 use InvalidArgumentException;
@@ -25,7 +27,7 @@ class HookService
 	 * @return HookFactory
 	 * @throw InvalidArgumentException
 	 */
-	public function getHook($name)
+	public function getHook(string $name): HookFactory
 	{
 		if (!isset($this->hooks[$name])) {
 			throw new InvalidArgumentException();
@@ -36,7 +38,7 @@ class HookService
 	/**
 	 * @return HookFactory[]
 	 */
-	protected function getHooks()
+	protected function getHooks(): array
 	{
 		return $this->hooks;
 	}
@@ -44,7 +46,7 @@ class HookService
 	/**
 	 * @return string
 	 */
-	protected function getFirstHookName()
+	protected function getFirstHookName(): string
 	{
 		reset($this->hooks);
 		return key($this->hooks);

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Services;
 
 use Kdyby\Translation\Translator;
 use NAttreid\Utils\Strings;
+use NAttreid\WebManager\Model\Content\Content;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
 use Nette\Application\BadRequestException;
@@ -40,7 +43,7 @@ class PageService
 	/** @var Translator */
 	private $translator;
 
-	public function __construct($defaultLink, $pageLink, $module, Model $orm, Translator $translator)
+	public function __construct(string $defaultLink, string $pageLink, string $module, Model $orm, Translator $translator)
 	{
 		$this->defaultLink = $defaultLink;
 		$this->pageLink = $pageLink;
@@ -54,7 +57,7 @@ class PageService
 	 * @param IRouter $routes
 	 * @param string $url
 	 */
-	public function createRoute(IRouter $routes, $url)
+	public function createRoute(IRouter $routes, string $url)
 	{
 		list($presenter, $action) = explode(':', $this->pageLink);
 
@@ -82,7 +85,7 @@ class PageService
 	 * @return Page
 	 * @throws BadRequestException
 	 */
-	public function getPage($url)
+	public function getPage(string $url): Page
 	{
 		Strings::ifEmpty($url, '');
 		$page = $this->orm->pages->getByUrl($url, $this->translator->getLocale());
@@ -95,7 +98,7 @@ class PageService
 	/**
 	 * @return string
 	 */
-	public function getPageLink()
+	public function getPageLink(): string
 	{
 		return ':' . $this->module . ':' . $this->pageLink;
 	}
@@ -104,7 +107,7 @@ class PageService
 	 * Vrati stranky bez HP
 	 * @return Page[]|ICollection
 	 */
-	public function findPages()
+	public function findPages(): ICollection
 	{
 		return $this->orm->pages->findByLocale($this->translator->getLocale());
 	}
@@ -113,7 +116,7 @@ class PageService
 	 * Vrati stranky v menu
 	 * @return Page[]|ICollection
 	 */
-	public function findMenuPages()
+	public function findMenuPages(): ICollection
 	{
 		return $this->orm->pages->findMenu($this->translator->getLocale());
 	}
@@ -122,17 +125,17 @@ class PageService
 	 * Vrati stranky v paticce
 	 * @return Page[]|ICollection
 	 */
-	public function findFooterPages()
+	public function findFooterPages(): ICollection
 	{
 		return $this->orm->pages->findFooter($this->translator->getLocale());
 	}
 
 	/**
 	 * Vrati text
-	 * @param $const
-	 * @return PageService
+	 * @param string $const
+	 * @return Content|null
 	 */
-	public function getContent($const)
+	public function getContent(string $const)
 	{
 		return $this->orm->content->getByConst($const, $this->translator->getLocale());
 	}

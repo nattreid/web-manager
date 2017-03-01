@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace NAttreid\WebManager\Model\Content;
 
 use NAttreid\Cms\Model\Locale\LocalesMapper;
