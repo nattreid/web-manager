@@ -101,7 +101,7 @@ class PagesRepository extends Repository
 	 * @param string $url
 	 * @return bool
 	 */
-	public function exists(string $url): bool
+	public function exists(string $url = null): bool
 	{
 		return $this->mapper->exists($url);
 	}

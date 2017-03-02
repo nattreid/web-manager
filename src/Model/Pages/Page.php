@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Cms\Model\Locale\Locale;
+use NAttreid\Gallery\Control\Image;
 use NAttreid\WebManager\Model\PagesGalleries\PageGallery;
 use NAttreid\WebManager\Model\PagesViews\PageView;
 use Nette\InvalidArgumentException;
@@ -69,11 +70,25 @@ class Page extends Entity
 
 		/* @var $repository PagesRepository */
 		$repository = $this->getRepository();
-		$page = $repository->getByUrl($url, $this->locale);
+		$page = $repository->getByUrl($url, $this->locale->name);
 		if ($page !== null && $page !== $this) {
 			throw new UniqueConstraintViolationException("Page with '$url' exists");
 		}
 		$this->url = $url;
+	}
+
+	/**
+	 * @param Image[] $images
+	 */
+	public function addImages(array $images)
+	{
+		$counter = 1;
+		foreach ($images as $image) {
+			$pageGallery = new PageGallery;
+			$pageGallery->name = $image->name;
+			$pageGallery->position = $counter++;
+			$this->images->add($pageGallery);
+		}
 	}
 
 	protected function onBeforeInsert()

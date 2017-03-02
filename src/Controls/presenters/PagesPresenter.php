@@ -87,7 +87,7 @@ class PagesPresenter extends BasePresenter
 	 * @param int $next_id
 	 * @param int $parent_id
 	 */
-	public function handleSort(int $item_id, int $prev_id, int $next_id, int $parent_id)
+	public function handleSort(int $item_id = null, int $prev_id = null, int $next_id = null, int $parent_id = null)
 	{
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($item_id);
@@ -108,14 +108,14 @@ class PagesPresenter extends BasePresenter
 		$session = $this->getSession('cms/web-manager/pages');
 		$gallery = $this['gallery'];
 		$gallery->setStorage($session);
-		$gallery->setNamespace('product');
+		$gallery->setNamespace('page');
 	}
 
 	/**
 	 * Pridani stranky
 	 * @param int $id
 	 */
-	public function renderAdd(int $id)
+	public function renderAdd(int $id = null)
 	{
 		$this['editForm']->setDefaults([
 			'locale' => $this->localeService->defaultLocaleId,
@@ -210,9 +210,11 @@ class PagesPresenter extends BasePresenter
 	{
 		if ($this->page) {
 			$page = $this->page;
+			$isNew = false;
 		} else {
 			$page = new Page;
 			$this->orm->pages->attach($page);
+			$isNew = true;
 		}
 
 		$page->locale = $values->locale;
@@ -234,6 +236,13 @@ class PagesPresenter extends BasePresenter
 		$page->description = $values->description;
 		$page->content = $values->content;
 		$page->views->set($values->views);
+
+		if ($isNew) {
+			$gallery = $this['gallery'];
+			$gallery->changeNamespace('page/' . $page->url);
+			$page->addImages($gallery->getImages());
+			$gallery->clearTemp();
+		}
 
 		$this->orm->persistAndFlush($page);
 		$this->restoreBacklink();

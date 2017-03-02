@@ -24,7 +24,7 @@ class HooksPresenter extends BasePresenter
 		$this->hookService = $hookService;
 	}
 
-	public function renderDefault(string $tab)
+	public function renderDefault(string $tab = null)
 	{
 		$this->template->tab = $tab ?: $this->hookService->firstHookName;
 		$this->template->hooks = $this->hookService->hooks;

@@ -103,7 +103,7 @@ class PagesMapper extends Mapper
 	 * @param string $url
 	 * @return bool
 	 */
-	public function exists(string $url): bool
+	public function exists(string $url = null): bool
 	{
 		$urls = $this->getPageList();
 		if (isset($urls[$url])) {
