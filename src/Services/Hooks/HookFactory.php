@@ -73,9 +73,9 @@ abstract class HookFactory
 	}
 
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	protected function getLatte(): string
+	protected function getLatte()
 	{
 		return $this->latte;
 	}
