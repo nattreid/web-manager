@@ -5,7 +5,6 @@ declare(strict_types = 1);
 namespace NAttreid\WebManager\Services;
 
 use Kdyby\Translation\Translator;
-use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Content\Content;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
@@ -87,8 +86,7 @@ class PageService
 	 */
 	public function getPage(string $url): Page
 	{
-		Strings::ifEmpty($url, '');
-		$page = $this->orm->pages->getByUrl($url, $this->translator->getLocale());
+		$page = $this->orm->pages->getByUrl($url ?? '', $this->translator->getLocale());
 		if (!$page) {
 			throw new BadRequestException(null, IResponse::S404_NOT_FOUND);
 		}
