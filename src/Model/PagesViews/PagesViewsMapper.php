@@ -27,7 +27,7 @@ class PagesViewsMapper extends Mapper
 		$table->addColumn('name')
 			->varChar(50);
 
-		$this->afterCreateTable[] = function () {
+		$this->onCreateTable[] = function () {
 			$this->insert([
 				[
 					'id' => self::MENU,
