@@ -3,7 +3,7 @@
   "description": "Web Manager for CMS",
   "type": "library",
   "license": [
-    "Unlicense"
+    "MIT"
   ],
   "authors": [
     {
@@ -11,21 +11,15 @@
       "email": "attreid@gmail.com"
     }
   ],
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://packages.newtravel.cz"
-    }
-  ],
   "require": {
     "php": ">= 7.0",
     "nattreid/cms": "~1.0",
-    "nattreid/cookiepolicy": "~1.0",
+    "nattreid/cookie-policy": "~1.0",
     "nattreid/gallery": "~2.0"
   },
   "require-dev": {
     "nette/tester": "~1.7",
-    "tracy/tracy": "~1.7"
+    "tracy/tracy": "~2.3"
   },
   "autoload": {
     "classmap": [

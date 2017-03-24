@@ -1,8 +1,8 @@
 {
-  "name": "web-manager",
+  "name": "nattreid-web-manager",
   "description": "Analytics for CMS",
   "license": [
-    "Unlicense"
+    "MIT"
   ],
   "authors": [
     {
@@ -15,9 +15,9 @@
     "*.json"
   ],
   "dependencies": {
-    "cms": "git@git.newtravel.cz:nattreid/cms.git#latest",
-    "cookiepolicy": "git@git.newtravel.cz:nattreid/cookiepolicy.git#latest",
-    "gallery": "git@git.newtravel.cz:nattreid/gallery.git#latest"
+    "nattreid-cms": "~1.2",
+    "nattreid-cookie-policy": "~1.0",
+    "nattreid-gallery": "~2.0"
   },
   "resolutions": {
     "nette.ajax.js": "~2.1",
