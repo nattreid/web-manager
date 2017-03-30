@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace NAttreid\WebManager\Services;
 
@@ -84,7 +84,7 @@ class PageService
 	 * @return Page
 	 * @throws BadRequestException
 	 */
-	public function getPage(string $url): Page
+	public function getPage(string $url = null): Page
 	{
 		$page = $this->orm->pages->getByUrl($url ?? '', $this->translator->getLocale());
 		if (!$page) {
