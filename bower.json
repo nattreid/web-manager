@@ -15,12 +15,13 @@
     "*.json"
   ],
   "dependencies": {
-    "nattreid-cms": "~1.2",
-    "nattreid-cookie-policy": "~1.0",
-    "nattreid-gallery": "~2.0"
+    "nattreid-cms": "~1",
+    "nattreid-cookie-policy": "~1",
+    "nattreid-gallery": "~2"
   },
   "resolutions": {
-    "nette.ajax.js": "~2.1",
-    "nette-forms": "2.2 || 2.3"
+    "jquery": "~3",
+    "nette.ajax.js": "~2",
+    "nette-forms": "~2"
   }
 }
