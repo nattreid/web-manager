@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace NAttreid\WebManager\Presenters;
 
 use NAttreid\Cms\LocaleService;
 use NAttreid\Form\Form;
+use NAttreid\Security\Model\Acl\Acl;
 use NAttreid\WebManager\Model\Content\Content;
 use NAttreid\WebManager\Model\Orm;
 use Nette\Utils\ArrayHash;
@@ -30,11 +31,20 @@ class ContentPresenter extends BasePresenter
 	/** @var LocaleService */
 	private $localeService;
 
+	/** @var bool */
+	private $editConst;
+
 	public function __construct(Model $orm, LocaleService $localeService)
 	{
 		parent::__construct();
 		$this->orm = $orm;
 		$this->localeService = $localeService;
+	}
+
+	protected function startup()
+	{
+		parent::startup();
+		$this->editConst = $this->user->isAllowed('webManager.web.content.const', Acl::PRIVILEGE_EDIT);
 	}
 
 	public function handleBack(string $backlink = null)
@@ -49,7 +59,7 @@ class ContentPresenter extends BasePresenter
 	 */
 	public function handleDelete(int $id)
 	{
-		if ($this->isAjax()) {
+		if ($this->isAjax() && $this->editConst) {
 			$content = $this->orm->content->getById($id);
 			$this->orm->content->removeAndFlush($content);
 			$this['list']->reload();
@@ -64,7 +74,7 @@ class ContentPresenter extends BasePresenter
 	 */
 	public function deleteContent(array $ids)
 	{
-		if ($this->isAjax()) {
+		if ($this->isAjax() && $this->editConst) {
 			$pages = $this->orm->content->findById($ids);
 			foreach ($pages as $page) {
 				$this->orm->content->remove($page);
@@ -73,6 +83,13 @@ class ContentPresenter extends BasePresenter
 			$this['list']->reload();
 		} else {
 			$this->terminate();
+		}
+	}
+
+	public function actionAdd()
+	{
+		if (!$this->editConst) {
+			$this->error();
 		}
 	}
 
@@ -117,11 +134,13 @@ class ContentPresenter extends BasePresenter
 		$form->addText('name', 'default.name')
 			->setRequired();
 
-		$form->addText('const', 'webManager.web.content.const')
-			->setRequired();
+		if ($this->editConst) {
+			$form->addText('const', 'webManager.web.content.const')
+				->setRequired();
 
-		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
-			->setItems($this->localeService->allowed);
+			$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
+				->setItems($this->localeService->allowed);
+		}
 
 		$form->addText('title', 'webManager.web.content.contentTitle');
 
@@ -159,9 +178,11 @@ class ContentPresenter extends BasePresenter
 		}
 
 		try {
-			$content->locale = $values->locale;
+			if ($this->editConst) {
+				$content->locale = $values->locale;
+				$content->setConst($values->const);
+			}
 			$content->name = $values->name;
-			$content->setConst($values->const);
 			$content->title = $values->title;
 			$content->keywords = $values->keywords;
 			$content->image = $values->image;
@@ -183,10 +204,11 @@ class ContentPresenter extends BasePresenter
 	{
 		$grid = $this->dataGridFactory->create();
 		$grid->setDataSource($this->orm->content->findAll());
-
 		$grid->setDefaultSort(['name' => 'ASC']);
 
-		$grid->addToolbarButton('add', 'webManager.web.content.add');
+		if ($this->editConst) {
+			$grid->addToolbarButton('add', 'webManager.web.content.add');
+		}
 
 		$grid->addColumnText('name', 'default.name')
 			->setSortable()
@@ -206,13 +228,15 @@ class ContentPresenter extends BasePresenter
 			->setIcon('pencil')
 			->setTitle('default.edit');
 
-		$grid->addAction('delete', null, 'delete!')
-			->setIcon('trash')
-			->setTitle('default.delete')
-			->setClass('btn btn-xs btn-danger ajax')
-			->setConfirm(function (Content $content) {
-				return $this->translate('default.confirmDelete', 1, ['name' => $content->name]);
-			});
+		if ($this->editConst) {
+			$grid->addAction('delete', null, 'delete!')
+				->setIcon('trash')
+				->setTitle('default.delete')
+				->setClass('btn btn-xs btn-danger ajax')
+				->setConfirm(function (Content $content) {
+					return $this->translate('default.confirmDelete', 1, ['name' => $content->name]);
+				});
+		}
 
 		$grid->setDefaultFilter(['locale' => $this->localeService->defaultLocaleId]);
 
