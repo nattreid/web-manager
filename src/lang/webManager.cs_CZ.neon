@@ -29,6 +29,7 @@ web:
         photoDelete: "Smazat fotku"
         description: "Popisek"
         const: "Konstanta"
+        edit: "Editace konstanty"
         content: "Obsah"
         constantExists: "Konstanta již existuje"
         locale: "Jazyk"

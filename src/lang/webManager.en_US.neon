@@ -29,6 +29,7 @@ web:
         photoDelete: "Delete photo"
         description: "Description"
         const: "Constant"
+        edit: "Edit constant"
         content: "Content"
         constantExists: "Constant exists"
         locale: "Language"

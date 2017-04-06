@@ -44,7 +44,7 @@ class ContentPresenter extends BasePresenter
 	protected function startup()
 	{
 		parent::startup();
-		$this->editConst = $this->user->isAllowed('webManager.web.content.const', Acl::PRIVILEGE_EDIT);
+		$this->editConst = $this->user->isAllowed('webManager.web.content.edit', Acl::PRIVILEGE_EDIT);
 	}
 
 	public function handleBack(string $backlink = null)
