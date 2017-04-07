@@ -73,8 +73,7 @@ class SomeHook extends \NAttreid\WebManager\Services\Hooks\HookFactory
 	/** @var IConfigurator */
 	protected $configurator;
 
-	/** @return Form */
-	public function create()
+	public function create(): Component
 	{
 		$form = $this->formFactory->create();
 		$form->setAjaxRequest();
@@ -95,6 +94,30 @@ class SomeHook extends \NAttreid\WebManager\Services\Hooks\HookFactory
 
 		$this->flashNotifier->success('default.dataSaved');
 	}
+	
+	// nebo DataGrid
+	
+	public function create(): Component
+    	{
+    		$form = $this->formFactory->create();
+    		$form->setAjaxRequest();
+    
+    		$form->addText('id', 'webManager.web.hooks.some.clientId')
+    			->setDefaultValue($this->configurator->someId);
+    
+    		$form->addSubmit('save', 'form.save');
+    
+    		$form->onSuccess[] = [$this, 'someFormSucceeded'];
+    
+    		return $form;
+    	}
+    
+    	public function someFormSucceeded(Form $form, $values)
+    	{
+    		$this->configurator->someId = $values->id;
+    
+    		$this->flashNotifier->success('default.dataSaved');
+    	}
 }
 ```
 A třídu zaregistrovat jako službu a načte se automaticky do CMS

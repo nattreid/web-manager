@@ -1,11 +1,13 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace NAttreid\WebManager\Presenters;
 
 use InvalidArgumentException;
 use NAttreid\WebManager\Services\Hooks\HookService;
+use Nette\Forms\Form;
+use Ublaboo\DataGrid\DataGrid;
 
 /**
  * Class ServicesPresenter
@@ -33,15 +35,27 @@ class HooksPresenter extends BasePresenter
 	protected function createComponent($name)
 	{
 		try {
-			$form = $this->hookService->getHook($name)->create();
+			$hook = $this->hookService->getHook($name);
+			$component = $hook->create();
 
-			$form->onSuccess[] = function () use ($name) {
-				if (!$this->isAjax()) {
-					$this->redirect('this', $name);
-				}
-			};
+			if ($component instanceof Form) {
+				$component->onSuccess[] = function () use ($name) {
+					if (!$this->isAjax()) {
+						$this->redirect('this', $name);
+					}
+				};
+			} elseif ($component instanceof DataGrid) {
+				$component->getInlineAdd()->onSubmit[] = function () use ($component, $name) {
+					if ($this->isAjax()) {
+						$this[$name]->reload();
+					}
+				};
+				$hook->onDeleteEvent[] = function ($key) use ($name) {
+					$this[$name]->reload();
+				};
+			}
 
-			return $form;
+			return $component;
 		} catch (InvalidArgumentException $ex) {
 			return parent::createComponent($name);
 		}

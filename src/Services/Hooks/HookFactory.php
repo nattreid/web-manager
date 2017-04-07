@@ -1,13 +1,14 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace NAttreid\WebManager\Services\Hooks;
 
 use IPub\FlashMessages\FlashNotifier;
 use NAttreid\Cms\Configurator\Configurator;
+use NAttreid\Cms\Factories\DataGridFactory;
 use NAttreid\Cms\Factories\FormFactory;
-use NAttreid\Form\Form;
+use Nette\ComponentModel\Component;
 use Nette\Reflection\ClassType;
 use Nette\SmartObject;
 
@@ -23,8 +24,14 @@ abstract class HookFactory
 {
 	use SmartObject;
 
+	/** @var callable[] */
+	public $onDeleteEvent;
+
 	/** @var FormFactory */
 	protected $formFactory;
+
+	/** @var DataGridFactory */
+	protected $gridFactory;
 
 	/** @var Configurator */
 	protected $configurator;
@@ -38,9 +45,10 @@ abstract class HookFactory
 	/** @var string */
 	private $latte;
 
-	public function __construct(FormFactory $formFactory, Configurator $configurator, FlashNotifier $flashNotifier)
+	public function __construct(FormFactory $formFactory, DataGridFactory $gridFactory, Configurator $configurator, FlashNotifier $flashNotifier)
 	{
 		$this->formFactory = $formFactory;
+		$this->gridFactory = $gridFactory;
 		$this->configurator = $configurator;
 		$this->flashNotifier = $flashNotifier;
 
@@ -85,9 +93,9 @@ abstract class HookFactory
 	 */
 	protected function setLatte(string $latte)
 	{
-		$this->latte = (string)$latte;
+		$this->latte = (string) $latte;
 	}
 
-	/** @return Form */
-	public abstract function create(): Form;
+	/** @return Component */
+	public abstract function create(): Component;
 }
