@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace NAttreid\WebManager\Presenters;
 
-use InvalidArgumentException;
+use NAttreid\WebManager\HookNotExistsException;
 use NAttreid\WebManager\Services\Hooks\HookService;
 use Nette\Forms\Form;
 use Ublaboo\DataGrid\DataGrid;
@@ -39,24 +39,22 @@ class HooksPresenter extends BasePresenter
 			$component = $hook->create();
 
 			if ($component instanceof Form) {
-				$component->onSuccess[] = function () use ($name) {
+				$component->setAction($this->link('this', $name));
+				$hook->onDataChange[] = function () use ($name) {
 					if (!$this->isAjax()) {
 						$this->redirect('this', $name);
 					}
 				};
 			} elseif ($component instanceof DataGrid) {
-				$component->getInlineAdd()->onSubmit[] = function () use ($component, $name) {
+				$hook->onDataChange[] = function () use ($name) {
 					if ($this->isAjax()) {
 						$this[$name]->reload();
 					}
 				};
-				$hook->onDeleteEvent[] = function ($key) use ($name) {
-					$this[$name]->reload();
-				};
 			}
 
 			return $component;
-		} catch (InvalidArgumentException $ex) {
+		} catch (HookNotExistsException $ex) {
 			return parent::createComponent($name);
 		}
 	}

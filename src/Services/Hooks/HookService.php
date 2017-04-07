@@ -1,10 +1,10 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace NAttreid\WebManager\Services\Hooks;
 
-use InvalidArgumentException;
+use NAttreid\WebManager\HookNotExistsException;
 use Nette\SmartObject;
 
 /**
@@ -25,12 +25,12 @@ class HookService
 	/**
 	 * @param string $name
 	 * @return HookFactory
-	 * @throw InvalidArgumentException
+	 * @throw HookNotExistsException
 	 */
 	public function getHook(string $name): HookFactory
 	{
 		if (!isset($this->hooks[$name])) {
-			throw new InvalidArgumentException();
+			throw new HookNotExistsException;
 		}
 		return $this->hooks[$name];
 	}

@@ -17,6 +17,7 @@ use Nette\SmartObject;
  *
  * @property-read string $name
  * @property string $latte
+ * @property string $component
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -24,8 +25,11 @@ abstract class HookFactory
 {
 	use SmartObject;
 
-	/** @var callable[] */
-	public $onDeleteEvent;
+	/**
+	 * Prekresli hook pri zmene dat
+	 * @var callable[]
+	 */
+	public $onDataChange;
 
 	/** @var FormFactory */
 	protected $formFactory;
@@ -44,6 +48,9 @@ abstract class HookFactory
 
 	/** @var string */
 	private $latte;
+
+	/** @var string */
+	private $component;
 
 	public function __construct(FormFactory $formFactory, DataGridFactory $gridFactory, Configurator $configurator, FlashNotifier $flashNotifier)
 	{
@@ -94,6 +101,22 @@ abstract class HookFactory
 	protected function setLatte(string $latte)
 	{
 		$this->latte = (string) $latte;
+	}
+
+	/**
+	 * @return string|null
+	 */
+	protected function getComponent()
+	{
+		return $this->component;
+	}
+
+	/**
+	 * @param string $component
+	 */
+	protected function setComponent(string $component)
+	{
+		$this->component = (string) $component;
 	}
 
 	/** @return Component */

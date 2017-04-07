@@ -9,10 +9,14 @@
 
     <div class="tab-content">
         <div n:foreach="$hooks as $name => $hook" id="{$name}" n:class="$tab == $name ? 'in active', 'tab-pane fade'">
-            {control $name}
-            <div class n:if="$hook->latte">
+            {if $hook->component}
+                {include $hook->component, name => $name}
+            {else}
+                {control $name}
+            {/if}
+            {if $hook->latte}
                 {include $hook->latte}
-            </div>
+            {/if}
         </div>
     </div>
 {/panel}
