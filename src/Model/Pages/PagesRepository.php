@@ -22,7 +22,7 @@ class PagesRepository extends Repository
 	/** @var PagesMapper */
 	protected $mapper;
 
-	protected function init()
+	protected function init(): void
 	{
 		$this->onFlush[] = function ($persisted, $removed) {
 			if (!empty($persisted) || !empty($removed)) {
@@ -31,7 +31,7 @@ class PagesRepository extends Repository
 		};
 	}
 
-	public static function getEntityClassNames()
+	public static function getEntityClassNames(): array
 	{
 		return [Page::class];
 	}
@@ -121,7 +121,7 @@ class PagesRepository extends Repository
 	 * @param int $prevId
 	 * @param int $nextId
 	 */
-	public function changeSort(int $id, int $prevId, int $nextId)
+	public function changeSort(int $id, int $prevId, int $nextId): void
 	{
 		$this->mapper->changeSort('position', $id, $prevId, $nextId);
 	}
@@ -129,7 +129,7 @@ class PagesRepository extends Repository
 	/**
 	 * Smaze cache
 	 */
-	public function cleanCache()
+	public function cleanCache(): void
 	{
 		$this->mapper->cleanCache();
 	}

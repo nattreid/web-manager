@@ -15,6 +15,7 @@ use NAttreid\WebManager\Model\Pages\Page;
 use NAttreid\WebManager\Services\PageService;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
+use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -54,7 +55,7 @@ class PagesPresenter extends BasePresenter
 		$this->galleryFactory = $galleryFactory;
 	}
 
-	public function handleBack(string $backlink = null)
+	public function handleBack(string $backlink = null): void
 	{
 		$this->redirect('default');
 	}
@@ -64,7 +65,7 @@ class PagesPresenter extends BasePresenter
 	 * @param int $id
 	 * @secured
 	 */
-	public function handleDelete(int $id)
+	public function handleDelete(int $id): void
 	{
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($id);
@@ -87,7 +88,7 @@ class PagesPresenter extends BasePresenter
 	 * @param int $next_id
 	 * @param int $parent_id
 	 */
-	public function handleSort(int $item_id = null, int $prev_id = null, int $next_id = null, int $parent_id = null)
+	public function handleSort(int $item_id = null, int $prev_id = null, int $next_id = null, int $parent_id = null): void
 	{
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($item_id);
@@ -103,7 +104,7 @@ class PagesPresenter extends BasePresenter
 	/**
 	 * Pridani stranky
 	 */
-	public function actionAdd()
+	public function actionAdd(): void
 	{
 		$session = $this->getSession('cms/web-manager/pages');
 		$gallery = $this['gallery'];
@@ -115,7 +116,7 @@ class PagesPresenter extends BasePresenter
 	 * Pridani stranky
 	 * @param int $id
 	 */
-	public function renderAdd(int $id = null)
+	public function renderAdd(int $id = null): void
 	{
 		$this['editForm']->setDefaults([
 			'locale' => $this->localeService->defaultLocaleId,
@@ -128,7 +129,7 @@ class PagesPresenter extends BasePresenter
 	 * Editace stranky
 	 * @param int $id
 	 */
-	public function actionEdit(int $id)
+	public function actionEdit(int $id): void
 	{
 		$this->page = $this->orm->pages->getById($id);
 		if (!$this->page) {
@@ -141,7 +142,7 @@ class PagesPresenter extends BasePresenter
 		$gallery->setNamespace('page/' . $this->page->url);
 	}
 
-	public function renderEdit()
+	public function renderEdit(): void
 	{
 		$page = $this->page;
 		$this->addBreadcrumbLinkUntranslated($page->name);
@@ -206,7 +207,7 @@ class PagesPresenter extends BasePresenter
 	 * @param Form $form
 	 * @param ArrayHash $values
 	 */
-	public function editFormSucceeded(Form $form, ArrayHash $values)
+	public function editFormSucceeded(Form $form, ArrayHash $values): void
 	{
 		if ($this->page) {
 			$page = $this->page;
@@ -302,7 +303,7 @@ class PagesPresenter extends BasePresenter
 		return $grid;
 	}
 
-	public function getChildren(int $id)
+	public function getChildren(int $id): ICollection
 	{
 		$page = $this->orm->pages->getById($id);
 		return $page->children->get();

@@ -23,17 +23,17 @@ class PageGallery extends Entity
 	/** @var AbstractStorage */
 	private $storage;
 
-	public function injectStorage(AbstractStorage $storage)
+	public function injectStorage(AbstractStorage $storage): void
 	{
 		$this->storage = $storage;
 	}
 
-	protected function onBeforeRemove()
+	protected function onBeforeRemove(): void
 	{
 		$this->storage->delete($this->name);
 	}
 
-	protected function onBeforeInsert()
+	protected function onBeforeInsert(): void
 	{
 		if (!isset($this->position)) {
 			/* @var $repo PagesGalleriesRepository */

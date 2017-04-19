@@ -19,7 +19,7 @@ class PagesViewsMapper extends Mapper
 		MENU = 1,
 		FOOTER = 2;
 
-	protected function createTable(Table $table)
+	protected function createTable(Table $table): void
 	{
 		$table->addPrimaryKey('id')
 			->int()

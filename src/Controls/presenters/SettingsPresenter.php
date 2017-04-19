@@ -18,7 +18,7 @@ class SettingsPresenter extends BasePresenter
 	/**
 	 * Zobrazeni nastaveni
 	 */
-	public function renderDefault()
+	public function renderDefault(): void
 	{
 		$this['settingsForm']->setDefaults($this->configurator->fetchConfigurations());
 	}
@@ -55,7 +55,7 @@ class SettingsPresenter extends BasePresenter
 	 * @param Form $form
 	 * @param array $values
 	 */
-	public function settingsFormSucceeded(Form $form, ArrayHash $values)
+	public function settingsFormSucceeded(Form $form, ArrayHash $values): void
 	{
 		foreach ($values as $name => $value) {
 			$this->configurator->$name = $value;

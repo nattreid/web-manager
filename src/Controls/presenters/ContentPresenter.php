@@ -41,13 +41,13 @@ class ContentPresenter extends BasePresenter
 		$this->localeService = $localeService;
 	}
 
-	protected function startup()
+	protected function startup(): void
 	{
 		parent::startup();
 		$this->editConst = $this->user->isAllowed('webManager.web.content.edit', Acl::PRIVILEGE_EDIT);
 	}
 
-	public function handleBack(string $backlink = null)
+	public function handleBack(string $backlink = null): void
 	{
 		$this->redirect('default');
 	}
@@ -57,7 +57,7 @@ class ContentPresenter extends BasePresenter
 	 * @param int $id
 	 * @secured
 	 */
-	public function handleDelete(int $id)
+	public function handleDelete(int $id): void
 	{
 		if ($this->isAjax() && $this->editConst) {
 			$content = $this->orm->content->getById($id);
@@ -72,7 +72,7 @@ class ContentPresenter extends BasePresenter
 	 * Smaze obsahy
 	 * @param array $ids
 	 */
-	public function deleteContent(array $ids)
+	public function deleteContent(array $ids): void
 	{
 		if ($this->isAjax() && $this->editConst) {
 			$pages = $this->orm->content->findById($ids);
@@ -86,7 +86,7 @@ class ContentPresenter extends BasePresenter
 		}
 	}
 
-	public function actionAdd()
+	public function actionAdd(): void
 	{
 		if (!$this->editConst) {
 			$this->error();
@@ -96,7 +96,7 @@ class ContentPresenter extends BasePresenter
 	/**
 	 * Pridani obsahu
 	 */
-	public function renderAdd()
+	public function renderAdd(): void
 	{
 		$this['editForm']->setDefaults([
 			'locale' => $this->localeService->currentLocaleId
@@ -108,7 +108,7 @@ class ContentPresenter extends BasePresenter
 	 * Editace obsahu
 	 * @param int $id
 	 */
-	public function actionEdit(int $id)
+	public function actionEdit(int $id): void
 	{
 		$this->content = $this->orm->content->getById($id);
 		if (!$this->content) {
@@ -116,7 +116,7 @@ class ContentPresenter extends BasePresenter
 		}
 	}
 
-	public function renderEdit()
+	public function renderEdit(): void
 	{
 		$content = $this->content;
 		$this->addBreadcrumbLink($content->name);
@@ -168,7 +168,7 @@ class ContentPresenter extends BasePresenter
 	 * @param Form $form
 	 * @param ArrayHash $values
 	 */
-	public function editFormSucceeded(Form $form, ArrayHash $values)
+	public function editFormSucceeded(Form $form, ArrayHash $values): void
 	{
 		if ($this->content) {
 			$content = $this->content;

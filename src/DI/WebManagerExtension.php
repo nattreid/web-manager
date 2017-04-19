@@ -27,7 +27,7 @@ class WebManagerExtension extends ModuleExtension
 	protected $dir = __DIR__;
 	protected $package = 'NAttreid\\';
 
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->loadFromFile($this->dir . '/default.neon'), $this->config);
@@ -54,7 +54,7 @@ class WebManagerExtension extends ModuleExtension
 		$gallery->loadConfiguration();
 	}
 
-	public function beforeCompile()
+	public function beforeCompile(): void
 	{
 		parent::beforeCompile();
 		$builder = $this->getContainerBuilder();

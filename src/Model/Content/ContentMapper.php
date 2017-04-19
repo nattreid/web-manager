@@ -16,7 +16,7 @@ use NAttreid\WebManager\Model\Mapper;
 class ContentMapper extends Mapper
 {
 
-	protected function createTable(Table $table)
+	protected function createTable(Table $table): void
 	{
 		$table->addPrimaryKey('id')
 			->int()

@@ -6,6 +6,7 @@ namespace NAttreid\WebManager\Presenters;
 
 use NAttreid\WebManager\HookNotExistsException;
 use NAttreid\WebManager\Services\Hooks\HookService;
+use Nette\ComponentModel\IComponent;
 use Nette\Forms\Form;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -26,13 +27,13 @@ class HooksPresenter extends BasePresenter
 		$this->hookService = $hookService;
 	}
 
-	public function renderDefault(string $tab = null)
+	public function renderDefault(string $tab = null): void
 	{
 		$this->template->tab = $tab ?: $this->hookService->firstHookName;
 		$this->template->hooks = $this->hookService->hooks;
 	}
 
-	protected function createComponent($name)
+	protected function createComponent($name): IComponent
 	{
 		try {
 			$hook = $this->hookService->getHook($name);

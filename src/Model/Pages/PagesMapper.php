@@ -26,7 +26,7 @@ class PagesMapper extends Mapper
 	/** @var string[] */
 	private $pageList;
 
-	protected function createTable(Table $table)
+	protected function createTable(Table $table): void
 	{
 		$table->addPrimaryKey('id')
 			->int()
@@ -65,7 +65,7 @@ class PagesMapper extends Mapper
 	/**
 	 * Smaze cache
 	 */
-	public function cleanCache()
+	public function cleanCache(): void
 	{
 		$this->cache->clean([
 			Cache::TAGS => [$this->tag]
@@ -76,9 +76,9 @@ class PagesMapper extends Mapper
 	 * Vrati stranku podle url
 	 * @param string $url
 	 * @param string|Locale $locale
-	 * @return IEntity|null
+	 * @return IEntity|Page|null
 	 */
-	public function getByUrl(string $url, string $locale)
+	public function getByUrl(string $url, string $locale): ?Page
 	{
 		/* @var $orm Orm */
 		$orm = $this->getRepository()->getModel();

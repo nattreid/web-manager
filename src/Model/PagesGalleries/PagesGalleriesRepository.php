@@ -17,7 +17,7 @@ class PagesGalleriesRepository extends Repository
 	/** @var PagesGalleriesMapper */
 	protected $mapper;
 
-	public static function getEntityClassNames()
+	public static function getEntityClassNames(): array
 	{
 		return [PageGallery::class];
 	}

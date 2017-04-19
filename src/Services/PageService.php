@@ -56,7 +56,7 @@ class PageService
 	 * @param IRouter $routes
 	 * @param string $url
 	 */
-	public function createRoute(IRouter $routes, string $url)
+	public function createRoute(IRouter $routes, string $url): void
 	{
 		list($presenter, $action) = explode(':', $this->pageLink);
 
@@ -133,7 +133,7 @@ class PageService
 	 * @param string $const
 	 * @return Content|null
 	 */
-	public function getContent(string $const)
+	public function getContent(string $const): ?Content
 	{
 		return $this->orm->content->getByConst($const, $this->translator->getLocale());
 	}

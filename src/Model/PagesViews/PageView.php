@@ -25,7 +25,7 @@ class PageView extends Entity
 	/** @var Translator */
 	private $translator;
 
-	public function injectTranslator(Translator $translator)
+	public function injectTranslator(Translator $translator): void
 	{
 		$this->translator = $translator;
 	}

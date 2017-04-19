@@ -20,7 +20,7 @@ class PagesViewsRepository extends Repository
 	/** @var PagesViewsMapper */
 	protected $mapper;
 
-	public static function getEntityClassNames()
+	public static function getEntityClassNames(): array
 	{
 		return [PageView::class];
 	}

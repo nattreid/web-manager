@@ -56,7 +56,7 @@ class HookService
 	 * Prida formular do nastaveni
 	 * @param HookFactory $hook
 	 */
-	public function addHook(HookFactory $hook)
+	public function addHook(HookFactory $hook): void
 	{
 		$this->hooks[$hook->name] = $hook;
 	}

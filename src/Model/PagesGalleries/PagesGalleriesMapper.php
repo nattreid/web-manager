@@ -21,7 +21,7 @@ class PagesGalleriesMapper extends Mapper
 	 * Nastavi strukturu tabulky
 	 * @param Table $table
 	 */
-	protected function createTable(Table $table)
+	protected function createTable(Table $table): void
 	{
 		$table->addPrimaryKey('id')
 			->int()

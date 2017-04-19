@@ -59,7 +59,7 @@ class Page extends Entity
 	 * @throws InvalidArgumentException
 	 * @throws UniqueConstraintViolationException
 	 */
-	public function setUrl(string $url)
+	public function setUrl(string $url): void
 	{
 		if (!$this->locale) {
 			throw new InvalidArgumentException('Locale must be set before calling setUrl');
@@ -80,7 +80,7 @@ class Page extends Entity
 	/**
 	 * @param Image[] $images
 	 */
-	public function addImages(array $images)
+	public function addImages(array $images): void
 	{
 		$counter = 1;
 		foreach ($images as $image) {
@@ -91,7 +91,7 @@ class Page extends Entity
 		}
 	}
 
-	protected function onBeforeInsert()
+	protected function onBeforeInsert(): void
 	{
 		if (!isset($this->position)) {
 			/* @var $repo PagesRepository */
@@ -103,7 +103,7 @@ class Page extends Entity
 	/**
 	 * @return string
 	 */
-	protected function getterCompleteUrl()
+	protected function getterCompleteUrl(): string
 	{
 		$url = $this->url;
 		if ($this->parent) {
@@ -115,7 +115,7 @@ class Page extends Entity
 	/**
 	 * @return bool
 	 */
-	protected function getterHasChildren()
+	protected function getterHasChildren(): bool
 	{
 		return !empty($this->children->count());
 	}

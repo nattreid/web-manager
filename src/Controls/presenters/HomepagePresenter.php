@@ -12,7 +12,7 @@ namespace NAttreid\WebManager\Presenters;
 class HomepagePresenter extends BasePresenter
 {
 
-	public function actionDefault()
+	public function actionDefault(): void
 	{
 		$this->viewMobileMenu();
 	}

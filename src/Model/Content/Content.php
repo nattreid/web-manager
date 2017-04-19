@@ -34,7 +34,7 @@ class Content extends Entity
 	 * @throws InvalidArgumentException
 	 * @throws UniqueConstraintViolationException
 	 */
-	public function setConst(string $const)
+	public function setConst(string $const): void
 	{
 		if (!$this->locale) {
 			throw new InvalidArgumentException('Locale must be set before calling setConst');

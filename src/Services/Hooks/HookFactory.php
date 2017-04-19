@@ -64,7 +64,7 @@ abstract class HookFactory
 		$this->init();
 	}
 
-	public function init()
+	public function init(): void
 	{
 
 	}
@@ -90,7 +90,7 @@ abstract class HookFactory
 	/**
 	 * @return string|null
 	 */
-	protected function getLatte()
+	protected function getLatte(): ?string
 	{
 		return $this->latte;
 	}
@@ -98,7 +98,7 @@ abstract class HookFactory
 	/**
 	 * @param string $latte
 	 */
-	protected function setLatte(string $latte)
+	protected function setLatte(string $latte): void
 	{
 		$this->latte = (string) $latte;
 	}
@@ -106,7 +106,7 @@ abstract class HookFactory
 	/**
 	 * @return string|null
 	 */
-	protected function getComponent()
+	protected function getComponent(): ?string
 	{
 		return $this->component;
 	}
@@ -114,7 +114,7 @@ abstract class HookFactory
 	/**
 	 * @param string $component
 	 */
-	protected function setComponent(string $component)
+	protected function setComponent(string $component): void
 	{
 		$this->component = (string) $component;
 	}

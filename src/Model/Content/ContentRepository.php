@@ -14,7 +14,7 @@ use NAttreid\Orm\Repository;
 class ContentRepository extends Repository
 {
 
-	public static function getEntityClassNames()
+	public static function getEntityClassNames(): array
 	{
 		return [Content::class];
 	}
@@ -25,7 +25,7 @@ class ContentRepository extends Repository
 	 * @param string $locale
 	 * @return Content|null
 	 */
-	public function getByConst(string $const, string $locale)
+	public function getByConst(string $const, string $locale): ?Content
 	{
 		return $this->getBy([
 			'const' => $const,
