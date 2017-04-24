@@ -5,6 +5,7 @@ web:
     pages:
         title: "Pages"
         name: "Page"
+        homePage: "Home page"
         add: "Add page"
         pageTitle: "Title"
         keywords: "Keywords"

@@ -10,6 +10,7 @@ use NAttreid\Form\Form;
 use NAttreid\Gallery\Control\Gallery;
 use NAttreid\Gallery\Control\IGalleryFactory;
 use NAttreid\Routing\RouterFactory;
+use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
 use NAttreid\WebManager\Services\PageService;
@@ -146,7 +147,12 @@ class PagesPresenter extends BasePresenter
 	{
 		$page = $this->page;
 		$this->addBreadcrumbLinkUntranslated($page->name);
-		$this['editForm']->setDefaults($page->toArray($page::TO_ARRAY_RELATIONSHIP_AS_ID));
+
+		$form = $this['editForm'];
+		$form->setDefaults($page->toArray($page::TO_ARRAY_RELATIONSHIP_AS_ID));
+		if ($page->url === '') {
+			$form['homePage']->setDefaultValue(true);
+		}
 	}
 
 	/**
@@ -169,16 +175,26 @@ class PagesPresenter extends BasePresenter
 
 		$form->addHidden('parent');
 
+		$form->addCheckbox('homePage', 'webManager.web.pages.homePage')
+			->addCondition($form::EQUAL, false)
+			->toggle('page-name')
+			->toggle('page-url')
+			->toggle('page-views');
+
 		$form->addText('name', 'webManager.web.pages.name')
+			->setOption('id', 'page-name')
+			->addConditionOn($form['homePage'], $form::EQUAL, false)
 			->setRequired();
 
-		$form->addText('url', 'default.url');
+		$form->addText('url', 'default.url')
+			->setOption('id', 'page-url');
 
 		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
 			->setItems($this->localeService->allowed);
 
 		$form->addCheckboxListUntranslated('views', 'webManager.web.pages.views.title')
-			->setItems($this->orm->pagesViews->fetchPairsById());
+			->setItems($this->orm->pagesViews->fetchPairsById())
+			->setOption('id', 'page-views');
 
 		$form->addText('title', 'webManager.web.pages.pageTitle')
 			->setRequired();
@@ -216,6 +232,14 @@ class PagesPresenter extends BasePresenter
 			$page = new Page;
 			$this->orm->pages->attach($page);
 			$isNew = true;
+		}
+
+		if ($values->homePage) {
+			$values->url = '';
+			$values->views = [];
+			$values->name = $this->translate('webManager.web.pages.homePage');
+		} else {
+			$values->url = $values->url ?: Strings::webalize($values->name);
 		}
 
 		$page->locale = $values->locale;

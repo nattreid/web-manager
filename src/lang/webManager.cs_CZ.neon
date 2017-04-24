@@ -5,6 +5,7 @@ web:
     pages:
         title: "Stránky"
         name: "Stránka"
+        homePage: "Domovská stránka"
         add: "Přidat stránku"
         pageTitle: "Titulek"
         keywords: "Klíčová slova"
