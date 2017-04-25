@@ -24,11 +24,11 @@ class PagesGalleriesRepository extends Repository
 
 	/**
 	 * Vrati nejvetsi pozici
-	 * @param Page $page
+	 * @param int $page
 	 * @return int
 	 */
-	public function getMaxPosition(Page $page): int
+	public function getMaxPosition(int $pageId): int
 	{
-		return $this->mapper->getMaxPagePosition($page);
+		return $this->mapper->getMaxPosition($pageId);
 	}
 }

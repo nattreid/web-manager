@@ -6,7 +6,6 @@ namespace NAttreid\WebManager\Model\PagesGalleries;
 
 use NAttreid\Orm\Structure\Table;
 use NAttreid\WebManager\Model\Mapper;
-use NAttreid\WebManager\Model\Pages\Page;
 use NAttreid\WebManager\Model\Pages\PagesMapper;
 
 /**
@@ -35,11 +34,11 @@ class PagesGalleriesMapper extends Mapper
 
 	/**
 	 * Vrati nejvetsi pozici
-	 * @param Page $page
+	 * @param int $page
 	 * @return int
 	 */
-	public function getMaxPagePosition(Page $page): int
+	public function getMaxPosition(int $pageId): int
 	{
-		return $this->connection->query('SELECT IFnull(MAX([position]), 0) position FROM %table WHERE [pageId] = %i', $this->getTableName(), $page->id)->fetch()->position;
+		return $this->connection->query('SELECT IFnull(MAX([position]), 0) position FROM %table WHERE [pageId] = %i', $this->getTableName(), $pageId)->fetch()->position;
 	}
 }

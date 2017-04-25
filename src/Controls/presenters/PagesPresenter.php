@@ -10,6 +10,7 @@ use NAttreid\Form\Form;
 use NAttreid\Gallery\Control\Gallery;
 use NAttreid\Gallery\Control\IGalleryFactory;
 use NAttreid\Routing\RouterFactory;
+use NAttreid\Security\Model\Acl\Acl;
 use NAttreid\Utils\Strings;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
@@ -46,6 +47,9 @@ class PagesPresenter extends BasePresenter
 	/** @var IGalleryFactory */
 	private $galleryFactory;
 
+	/** @var bool */
+	private $editHomePage;
+
 	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService, RouterFactory $routerFactory, IGalleryFactory $galleryFactory)
 	{
 		parent::__construct();
@@ -54,6 +58,12 @@ class PagesPresenter extends BasePresenter
 		$this->pageService = $pageService;
 		$this->routerFactory = $routerFactory;
 		$this->galleryFactory = $galleryFactory;
+	}
+
+	protected function startup(): void
+	{
+		parent::startup();
+		$this->editHomePage = $this->user->isAllowed('webManager.web.page.homePage', Acl::PRIVILEGE_EDIT);
 	}
 
 	public function handleBack(string $backlink = null): void
@@ -89,14 +99,16 @@ class PagesPresenter extends BasePresenter
 	 * @param int $next_id
 	 * @param int $parent_id
 	 */
-	public function handleSort(int $item_id = null, int $prev_id = null, int $next_id = null, int $parent_id = null): void
+	public function handleSort(int $item_id = null, $prev_id = null, $next_id = null, $parent_id = null): void
 	{
 		if ($this->isAjax()) {
 			$page = $this->orm->pages->getById($item_id);
-			$page->parent = $parent_id;
-			$this->orm->persistAndFlush($page);
+			if (!$page->isHomePage) {
+				$page->parent = $parent_id;
+				$this->orm->persistAndFlush($page);
 
-			$this->orm->pages->changeSort($item_id, $prev_id, $next_id);
+				$this->orm->pages->changeSort($item_id, $prev_id, $next_id, $this->locale);
+			}
 		} else {
 			$this->terminate();
 		}
@@ -150,7 +162,7 @@ class PagesPresenter extends BasePresenter
 
 		$form = $this['editForm'];
 		$form->setDefaults($page->toArray($page::TO_ARRAY_RELATIONSHIP_AS_ID));
-		if ($page->url === '') {
+		if ($page->isHomePage) {
 			$form['homePage']->setDefaultValue(true);
 		}
 	}
@@ -175,11 +187,15 @@ class PagesPresenter extends BasePresenter
 
 		$form->addHidden('parent');
 
-		$form->addCheckbox('homePage', 'webManager.web.pages.homePage')
-			->addCondition($form::EQUAL, false)
+		$homePage = $form->addCheckbox('homePage', 'webManager.web.pages.homePage')
+			->setDisabled(!$this->editHomePage);
+		$homePage->addCondition($form::EQUAL, false)
 			->toggle('page-name')
 			->toggle('page-url')
 			->toggle('page-views');
+		if ($homePage->isDisabled()) {
+			$homePage->setOption('class', 'hidden');
+		}
 
 		$form->addText('name', 'webManager.web.pages.name')
 			->setOption('id', 'page-name')
@@ -234,15 +250,18 @@ class PagesPresenter extends BasePresenter
 			$isNew = true;
 		}
 
-		if ($values->homePage) {
-			$values->url = '';
+		if (($this->editHomePage ? $values->homePage : $page->isHomePage)) {
+			$page->parent = null;
+			$values->url = null;
 			$values->views = [];
 			$values->name = $this->translate('webManager.web.pages.homePage');
 		} else {
+			$page->parent = $values->parent;
 			$values->url = $values->url ?: Strings::webalize($values->name);
 		}
 
 		$page->locale = $values->locale;
+
 		try {
 			$page->setUrl($values->url);
 		} catch (UniqueConstraintViolationException $ex) {
@@ -254,7 +273,6 @@ class PagesPresenter extends BasePresenter
 		}
 
 		$page->name = $values->name;
-		$page->parent = $values->parent;
 		$page->title = $values->title;
 		$page->keywords = $values->keywords;
 		$page->image = $values->image;
@@ -271,8 +289,6 @@ class PagesPresenter extends BasePresenter
 
 		$this->orm->persistAndFlush($page);
 		$this->restoreBacklink();
-
-
 	}
 
 	/**
@@ -323,6 +339,10 @@ class PagesPresenter extends BasePresenter
 			});
 
 		$grid->setDefaultFilter(['locale' => $this->localeService->defaultLocaleId]);
+
+		$grid->allowRowsAction('add', function (Page $page) {
+			return !$page->isHomePage;
+		});
 
 		return $grid;
 	}

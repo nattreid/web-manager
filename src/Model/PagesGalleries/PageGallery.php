@@ -38,7 +38,7 @@ class PageGallery extends Entity
 		if (!isset($this->position)) {
 			/* @var $repo PagesGalleriesRepository */
 			$repo = $this->getRepository();
-			$this->position = $repo->getMaxPosition($this->page) + 1;
+			$this->position = $repo->getMaxPosition($this->page->id) + 1;
 		}
 	}
 

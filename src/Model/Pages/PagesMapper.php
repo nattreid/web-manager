@@ -34,7 +34,8 @@ class PagesMapper extends Mapper
 		$table->addColumn('name')
 			->varChar(100);
 		$table->addColumn('url')
-			->varChar(100);
+			->varChar(100)
+			->setDefault(null);
 		$table->addForeignKey('localeId', LocalesMapper::class);
 		$table->addForeignKey('parentId', $table, null);
 		$table->addColumn('title')
@@ -54,7 +55,7 @@ class PagesMapper extends Mapper
 		$table->addColumn('position')
 			->int()
 			->setKey();
-		$table->addUnique('url', 'localeId');
+		$table->addUnique('url', 'localeId', 'parentId');
 
 		$relationTable = $table->createRelationTable(PagesViewsMapper::class);
 		$relationTable->addForeignKey('pageId', $table);
@@ -74,11 +75,11 @@ class PagesMapper extends Mapper
 
 	/**
 	 * Vrati stranku podle url
-	 * @param string $url
+	 * @param string|null $url
 	 * @param string|Locale $locale
 	 * @return IEntity|Page|null
 	 */
-	public function getByUrl(string $url, string $locale): ?Page
+	public function getByUrl(?string $url, string $locale): ?Page
 	{
 		/* @var $orm Orm */
 		$orm = $this->getRepository()->getModel();
@@ -100,7 +101,7 @@ class PagesMapper extends Mapper
 
 	/**
 	 * Je URL v databazi
-	 * @param string $url
+	 * @param string|null $url
 	 * @return bool
 	 */
 	public function exists(string $url = null): bool

@@ -86,7 +86,7 @@ class PageService
 	 */
 	public function getPage(string $url = null): Page
 	{
-		$page = $this->orm->pages->getByUrl($url ?? '', $this->translator->getLocale());
+		$page = $this->orm->pages->getByUrl($url, $this->translator->getLocale());
 		if (!$page) {
 			throw new BadRequestException(null, IResponse::S404_NOT_FOUND);
 		}

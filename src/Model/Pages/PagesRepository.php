@@ -11,7 +11,7 @@ use Nextras\Orm\Collection\ICollection;
 /**
  * Pages Repository
  *
- * @method Page getByUrl($url, $locale) Vrati stranku podle url
+ * @method Page getByUrl(?string $url, string $locale) Vrati stranku podle url
  * @method Page getById($id)
  *
  * @author Attreid <attreid@gmail.com>
@@ -63,7 +63,7 @@ class PagesRepository extends Repository
 	{
 		return $this->findAll()
 			->findBy([
-				'url!=' => '',
+				'url IS NOT NULL',
 				'this->locale->name' => $locale
 			]);
 	}
@@ -112,7 +112,16 @@ class PagesRepository extends Repository
 	 */
 	public function getMaxPosition(): int
 	{
-		return $this->mapper->getMaxPosition('position');
+		return $this->mapper->getMax('position');
+	}
+
+	/**
+	 * Vrati nejmensi pozici
+	 * @return int
+	 */
+	public function getMinPosition(): int
+	{
+		return $this->mapper->getMin('position');
 	}
 
 	/**
@@ -121,9 +130,12 @@ class PagesRepository extends Repository
 	 * @param int $prevId
 	 * @param int $nextId
 	 */
-	public function changeSort(int $id, int $prevId, int $nextId): void
+	public function changeSort(int $id, $prevId, $nextId, string $locale): void
 	{
 		$this->mapper->changeSort('position', $id, $prevId, $nextId);
+		$main = $this->getByUrl(null, $locale);
+		$main->position = 0;
+		$this->persistAndFlush($main);
 	}
 
 	/**

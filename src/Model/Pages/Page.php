@@ -20,8 +20,9 @@ use Nextras\Orm\Relationships\OneHasMany;
  *
  * @property int $id {primary}
  * @property string $name
- * @property string $url
- * @property string $completeUrl {virtual}
+ * @property string|null $url
+ * @property string|null $completeUrl {virtual}
+ * @property bool $isHomePage {virtual}
  * @property Page|null $parent {m:1 Page::$children}
  * @property OneHasMany|Page[] $children {1:m Page::$parent}
  * @property bool $hasChildren {virtual}
@@ -59,7 +60,7 @@ class Page extends Entity
 	 * @throws InvalidArgumentException
 	 * @throws UniqueConstraintViolationException
 	 */
-	public function setUrl(string $url): void
+	public function setUrl(?string $url): void
 	{
 		if (!$this->locale) {
 			throw new InvalidArgumentException('Locale must be set before calling setUrl');
@@ -68,9 +69,13 @@ class Page extends Entity
 			throw new InvalidArgumentException('URL contains invalid characters');
 		}
 
+		$completeUrl = $this->parent && $url !== null ?
+			$this->parent->completeUrl . '/' . $url
+			: $url;
+
 		/* @var $repository PagesRepository */
 		$repository = $this->getRepository();
-		$page = $repository->getByUrl($url, $this->locale->name);
+		$page = $repository->getByUrl($completeUrl, $this->locale->name);
 		if ($page !== null && $page !== $this) {
 			throw new UniqueConstraintViolationException("Page with '$url' exists");
 		}
@@ -93,17 +98,28 @@ class Page extends Entity
 
 	protected function onBeforeInsert(): void
 	{
-		if (!isset($this->position)) {
-			/* @var $repo PagesRepository */
-			$repo = $this->getRepository();
+		/* @var $repo PagesRepository */
+		$repo = $this->getRepository();
+		if ($this->isHomePage) {
+			$this->position = $repo->getMinPosition() - 1;
+		} elseif (!isset($this->position)) {
 			$this->position = $repo->getMaxPosition() + 1;
 		}
 	}
 
+	protected function onBeforeUpdate()
+	{
+		/* @var $repo PagesRepository */
+		$repo = $this->getRepository();
+		if ($this->isHomePage) {
+			$this->position = $repo->getMinPosition() - 1;
+		}
+	}
+
 	/**
-	 * @return string
+	 * @return string|null
 	 */
-	protected function getterCompleteUrl(): string
+	protected function getterCompleteUrl(): ?string
 	{
 		$url = $this->url;
 		if ($this->parent) {
@@ -118,5 +134,13 @@ class Page extends Entity
 	protected function getterHasChildren(): bool
 	{
 		return !empty($this->children->count());
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function getterIsHomePage(): bool
+	{
+		return $this->url === null;
 	}
 }
