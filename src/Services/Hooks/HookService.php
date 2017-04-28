@@ -25,7 +25,7 @@ class HookService
 	/**
 	 * @param string $name
 	 * @return HookFactory
-	 * @throw HookNotExistsException
+	 * @throws HookNotExistsException
 	 */
 	public function getHook(string $name): HookFactory
 	{
