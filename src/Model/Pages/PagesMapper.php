@@ -11,6 +11,7 @@ use NAttreid\Orm\Structure\Table;
 use NAttreid\WebManager\Model\Mapper;
 use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use Nette\Caching\Cache;
+use Nextras\Dbal\QueryBuilder\QueryBuilder;
 use Nextras\Orm\Entity\IEntity;
 
 /**
@@ -71,6 +72,19 @@ class PagesMapper extends Mapper
 		$this->cache->clean([
 			Cache::TAGS => [$this->tag]
 		]);
+	}
+
+	/**
+	 * Vrati lokalizovane stranky bez HP
+	 * @param string $locale
+	 * @return QueryBuilder
+	 */
+	public function findByLocale(string $locale): QueryBuilder
+	{
+		return $this->builder()
+			->innerJoin('_pages', '[_locales]', 'l', '_pages.localeId = l.id')
+			->andWhere('[url] IS NOT NULL')
+			->andWhere('[l.name] = %s', $locale);
 	}
 
 	/**

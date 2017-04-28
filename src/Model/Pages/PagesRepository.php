@@ -13,6 +13,7 @@ use Nextras\Orm\Collection\ICollection;
  *
  * @method Page getByUrl(?string $url, string $locale) Vrati stranku podle url
  * @method Page getById($id)
+ * @method ICollection|Page[] findByLocale(string $locale): ICollection
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -51,21 +52,6 @@ class PagesRepository extends Repository
 	public function findMain(): ICollection
 	{
 		return $this->findAll()->findBy(['parent' => null]);
-	}
-
-
-	/**
-	 * Vrati lokalizovane stranky bez HP
-	 * @param string $locale
-	 * @return Page[]|ICollection
-	 */
-	public function findByLocale(string $locale): ICollection
-	{
-		return $this->findAll()
-			->findBy([
-				'url IS NOT NULL',
-				'this->locale->name' => $locale
-			]);
 	}
 
 	/**
