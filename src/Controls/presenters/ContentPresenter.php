@@ -119,7 +119,7 @@ class ContentPresenter extends BasePresenter
 	public function renderEdit(): void
 	{
 		$content = $this->content;
-		$this->addBreadcrumbLink($content->name);
+		$this->addBreadcrumbLinkUntranslated($content->name);
 		$this['editForm']->setDefaults($content->toArray($content::TO_ARRAY_RELATIONSHIP_AS_ID));
 	}
 
