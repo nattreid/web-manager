@@ -214,9 +214,11 @@ class ContentPresenter extends BasePresenter
 			->setSortable()
 			->setFilterText();
 
-		$grid->addColumnText('const', 'webManager.web.content.const')
-			->setSortable()
-			->setFilterText();
+		if ($this->editConst) {
+			$grid->addColumnText('const', 'webManager.web.content.const')
+				->setSortable()
+				->setFilterText();
+		}
 
 		$grid->addColumnText('locale', 'webManager.web.content.locale')
 			->setRenderer(function (Content $content) {
