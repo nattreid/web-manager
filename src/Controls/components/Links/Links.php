@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace NAttreid\WebManager\Components;
 
+use IPub\FlashMessages\FlashNotifier;
 use Kdyby\Translation\Translator;
 use NAttreid\Cms\Factories\DataGridFactory;
 use NAttreid\Cms\Factories\FormFactory;
@@ -27,6 +28,11 @@ class Links extends Control
 {
 	use SecuredLinksControlTrait;
 
+	private const DEFAULT_QUANTITY = 3;
+
+	/** @var string @persistent */
+	public $groupId;
+
 	/** @var Orm */
 	private $orm;
 
@@ -39,22 +45,23 @@ class Links extends Control
 	/** @var Translator */
 	private $translator;
 
+	/** @var FlashNotifier */
+	private $flashNotifier;
+
 	/** @var string */
 	private $latte = 'default';
 
 	/** @var Page */
 	private $page;
 
-	/** @var string @persistent */
-	public $groupId;
-
-	public function __construct(Model $orm, DataGridFactory $gridFactory, FormFactory $formFactory, Translator $translator)
+	public function __construct(Model $orm, DataGridFactory $gridFactory, FormFactory $formFactory, Translator $translator, FlashNotifier $flashNotifier)
 	{
 		parent::__construct();
 		$this->orm = $orm;
 		$this->gridFactory = $gridFactory;
 		$this->formFactory = $formFactory;
 		$this->translator = $translator;
+		$this->flashNotifier = $flashNotifier;
 	}
 
 	public function setPage(Page $page)
@@ -105,6 +112,8 @@ class Links extends Control
 			$this->orm->remove($group);
 		}
 		$this->orm->flush();
+
+		$this->flashNotifier->success('default.dataDeleted');
 		$this['linkGroups']->reload();
 	}
 
@@ -130,6 +139,7 @@ class Links extends Control
 	{
 		$this->checkAjax();
 		$this->latte = 'default';
+		$this->groupId = null;
 		$this->redrawControl();
 	}
 
@@ -143,6 +153,14 @@ class Links extends Control
 		$form->addTextArea('name', 'webManager.web.pages.linkGroup.name')
 			->setRequired()
 			->setAttribute('class', 'lineCKedit');
+
+		$quantity = [];
+		for ($i = 1; $i <= 20; $i++) {
+			$quantity[$i] = $i;
+		}
+		$form->addSelectUntranslated('quantity', 'webManager.web.pages.linkGroup.quantity', $quantity)
+			->setRequired()
+			->setDefaultValue(self::DEFAULT_QUANTITY);
 
 		$form->addSubmit('save', 'form.save');
 		$form->addLink('back', 'form.back', $this->link('back'))
@@ -170,10 +188,12 @@ class Links extends Control
 		}
 		$group->name = $values->name;
 		$group->page = $this->page;
+		$group->quantity = $values->quantity;
 
 		$this->orm->persistAndFlush($group);
 
-		$this->handleBack();
+		$this->flashNotifier->success('default.dataSaved');
+		$this->handleLinkGroupEdit($group->id);
 	}
 
 	protected function createComponentLinkGroups(): DataGrid
@@ -223,6 +243,7 @@ class Links extends Control
 	{
 		$this->checkAjax();
 		$this->latte = 'link';
+
 		$this->redrawControl();
 	}
 
@@ -251,6 +272,8 @@ class Links extends Control
 			$this->orm->remove($link);
 		}
 		$this->orm->flush();
+
+		$this->flashNotifier->success('default.dataDeleted');
 		$this['links']->reload();
 	}
 
@@ -327,7 +350,8 @@ class Links extends Control
 
 		$this->orm->persistAndFlush($link);
 
-		$this->handleLinkGroupEdit((int) $values->group);
+		$this->flashNotifier->success('default.dataSaved');
+		$this->handleLinkEdit($link->id);
 	}
 
 	protected function createComponentLinks(): DataGrid

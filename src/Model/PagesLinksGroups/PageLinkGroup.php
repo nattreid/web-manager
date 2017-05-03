@@ -18,6 +18,7 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property OneHasMany|PageLink[] $links {1:m PageLink::$group, orderBy=position, cascade=[persist, remove]}
  * @property int|null $position
  * @property bool $visible {default 1}
+ * @property int $quantity
  *
  * @author Attreid <attreid@gmail.com>
  */

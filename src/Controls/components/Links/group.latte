@@ -1,4 +1,6 @@
 {extends layout.latte}
 {block content}
 {control linkGroupForm}
-{control links}
+{ifset $control->groupId}
+    {control links}
+{/ifset}

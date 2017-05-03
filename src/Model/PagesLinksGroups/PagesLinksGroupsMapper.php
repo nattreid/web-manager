@@ -27,6 +27,9 @@ class PagesLinksGroupsMapper extends Mapper
 		$table->addForeignKey('pageId', PagesMapper::class);
 		$table->addColumn('name')
 			->varChar();
+		$table->addColumn('quantity')
+			->tinyint(2)
+			->setDefault(null);
 		$table->addColumn('position')
 			->int(3);
 		$table->addColumn('visible')
