@@ -7,6 +7,7 @@ namespace NAttreid\WebManager\Model\Pages;
 use NAttreid\Cms\Model\Locale\Locale;
 use NAttreid\Gallery\Control\Image;
 use NAttreid\WebManager\Model\PagesGalleries\PageGallery;
+use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
 use NAttreid\WebManager\Model\PagesViews\PageView;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
@@ -35,6 +36,7 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property ManyHasMany|PageView[] $views {m:n PageView::$pages, isMain=true}
  * @property int $position
  * @property OneHasMany|PageGallery[] $images {1:m PageGallery::$page, orderBy=position, cascade=[persist, remove]}
+ * @property OneHasMany|PageLinkGroup[] $linkGroups {1:m PageLinkGroup::$page, orderBy=position, cascade=[persist, remove]}
  *
  * @author Attreid <attreid@gmail.com>
  */

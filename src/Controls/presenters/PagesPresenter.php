@@ -12,6 +12,8 @@ use NAttreid\Gallery\Control\IGalleryFactory;
 use NAttreid\Routing\RouterFactory;
 use NAttreid\Security\Model\Acl\Acl;
 use NAttreid\Utils\Strings;
+use NAttreid\WebManager\Components\ILinksFactory;
+use NAttreid\WebManager\Components\Links;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
 use NAttreid\WebManager\Services\PageService;
@@ -47,10 +49,19 @@ class PagesPresenter extends BasePresenter
 	/** @var IGalleryFactory */
 	private $galleryFactory;
 
+	/** @var ILinksFactory */
+	private $linksFactory;
+
 	/** @var bool */
 	private $editHomePage;
 
-	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService, RouterFactory $routerFactory, IGalleryFactory $galleryFactory)
+	/** @var bool */
+	private $viewGallery;
+
+	/** @var bool */
+	private $viewLinks;
+
+	public function __construct(Model $orm, LocaleService $localeService, PageService $pageService, RouterFactory $routerFactory, IGalleryFactory $galleryFactory, ILinksFactory $linksFactory)
 	{
 		parent::__construct();
 		$this->orm = $orm;
@@ -58,12 +69,15 @@ class PagesPresenter extends BasePresenter
 		$this->pageService = $pageService;
 		$this->routerFactory = $routerFactory;
 		$this->galleryFactory = $galleryFactory;
+		$this->linksFactory = $linksFactory;
 	}
 
 	protected function startup(): void
 	{
 		parent::startup();
-		$this->editHomePage = $this->user->isAllowed('webManager.web.page.homePage', Acl::PRIVILEGE_EDIT);
+		$this->editHomePage = $this->user->isAllowed('webManager.web.pages.homePage', Acl::PRIVILEGE_EDIT);
+		$this->viewGallery = $this->user->isAllowed('webManager.web.pages.gallery', Acl::PRIVILEGE_VIEW);
+		$this->viewLinks = $this->user->isAllowed('webManager.web.pages.links', Acl::PRIVILEGE_VIEW);
 	}
 
 	public function handleBack(string $backlink = null): void
@@ -155,7 +169,7 @@ class PagesPresenter extends BasePresenter
 		$gallery->setNamespace('page/' . $this->page->url);
 	}
 
-	public function renderEdit(): void
+	public function renderEdit(string $tab = 'page'): void
 	{
 		$page = $this->page;
 		$this->addBreadcrumbLinkUntranslated($page->name);
@@ -165,6 +179,10 @@ class PagesPresenter extends BasePresenter
 		if ($page->isHomePage) {
 			$form['homePage']->setDefaultValue(true);
 		}
+
+		$this->template->viewGallery = $this->viewGallery;
+		$this->template->viewLinks = $this->viewLinks;
+		$this->template->tab = $tab;
 	}
 
 	/**
@@ -175,6 +193,13 @@ class PagesPresenter extends BasePresenter
 		$gallery = $this->galleryFactory->create();
 		$gallery->getTranslator()->setLang($this->locale);
 		return $gallery;
+	}
+
+	protected function createComponentLinks(): Links
+	{
+		$control = $this->linksFactory->create();
+		$control->setPage($this->page);
+		return $control;
 	}
 
 	/**

@@ -1,0 +1,28 @@
+<div n:snippet="links">
+    <script type="text/javascript">
+        {var $componentId = $control->getUniqueId()}
+        function lineCKedit{$componentId|noescape}() {
+            $('.lineCKedit').ckeditor({
+                height: '80px',
+                toolbarGroups: [
+                    { name: 'basicstyles', groups: ['basicstyles']},
+                    { name: 'paragraph', groups: ['align']},
+                    { name: 'styles', groups: ['styles']},
+                    { name: 'colors', groups: ['colors']}
+                ],
+                enterMode: CKEDITOR.ENTER_BR,
+                removeButtons: 'BGColor,Styles,Format,Underline,Strike,Subscript,Superscript,RemoveFormat',
+                removePlugins: 'elementspath',
+                resize_enabled: false,
+                on: {
+                    change: function (evt) {
+                        this.updateElement();
+                    }
+                }
+            });
+        }
+
+        {onLoad lineCKedit$componentId}
+    </script>
+    {include content}
+</div>

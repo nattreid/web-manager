@@ -7,6 +7,8 @@ namespace NAttreid\WebManager\DI;
 use NAttreid\AppManager\AppManager;
 use NAttreid\Cms\DI\ModuleExtension;
 use NAttreid\Gallery\DI\GalleryExtension;
+use NAttreid\WebManager\Components\ILinksFactory;
+use NAttreid\WebManager\Components\Links;
 use NAttreid\WebManager\Services\Hooks\HookFactory;
 use NAttreid\WebManager\Services\Hooks\HookService;
 use NAttreid\WebManager\Services\PageService;
@@ -45,6 +47,10 @@ class WebManagerExtension extends ModuleExtension
 		$builder->addDefinition($this->prefix('pageService'))
 			->setClass(PageService::class)
 			->setArguments([$config['homepage'], $config['page'], $config['module']]);
+
+		$builder->addDefinition($this->prefix('links'))
+			->setImplement(ILinksFactory::class)
+			->setFactory(Links::class);
 
 		$builder->addDefinition($this->prefix('hookService'))
 			->setClass(HookService::class);

@@ -2,20 +2,28 @@
 {block content}
 {panel}
     <ul class="nav nav-tabs">
-        <li class="active">
+        <li n:class="$tab === 'page' ? active">
             <a data-toggle="tab" href="#page">{_'webManager.web.pages.name'}</a>
         </li>
-        <li>
+        <li n:class="$tab === 'gallery' ? active" n:if="$viewGallery">
             <a data-toggle="tab" href="#gallery">{_'webManager.web.pages.gallery'}</a>
+        </li>
+        <li n:class="$tab === 'links' ? active" n:if="$viewLinks">
+            <a data-toggle="tab" href="#links">{_'webManager.web.pages.links'}</a>
         </li>
     </ul>
 
     <div class="tab-content">
-        <div id="page" class="tab-pane fade in active">
+        <div id="page" n:class="tab-pane, fade, $tab === 'page' ? 'in active'">
             {control editForm}
         </div>
-        <div id="gallery" class="tab-pane fade">
+        <div id="gallery" n:if="$viewGallery" n:class="tab-pane, fade, $tab === 'gallery' ? 'in active'">
             {control gallery}
+        </div>
+        <div id="links" n:if="$viewLinks" n:class="tab-pane, fade, $tab === 'links' ? 'in active'">
+            {snippet links}
+                {control links}
+            {/snippet}
         </div>
     </div>
 {/panel}
