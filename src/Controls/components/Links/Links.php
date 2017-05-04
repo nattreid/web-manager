@@ -311,6 +311,8 @@ class Links extends Control
 			->addRule($form::URL)
 			->setRequired();
 
+		$form->addCheckbox('openNewWindow', 'webManager.web.pages.link.openNewWindow');
+
 		$form->addImageUpload('image', 'webManager.web.pages.link.image', 'default.delete')
 			->setPreview('300x200')
 			->setRequired()
@@ -347,6 +349,7 @@ class Links extends Control
 		$link->image = $values->image;
 		$link->content = $values->content;
 		$link->group = $values->group;
+		$link->openNewWindow = $values->openNewWindow;
 
 		$this->orm->persistAndFlush($link);
 

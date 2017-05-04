@@ -32,6 +32,7 @@ web:
 			url: "URL"
 			image: "Obrázek"
 			content: "Obsah"
+			openNewWindow: "Otevřít do nového okna"
 	content:
 		title: "Obsah"
 		add: "Přidat obsah"

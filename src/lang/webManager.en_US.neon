@@ -32,6 +32,7 @@ web:
 			url: "URL"
 			image: "Image"
 			content: "Content"
+			openNewWindow: "Open to new window"
 	content:
 		title: "Content"
 		add: "Add Content"

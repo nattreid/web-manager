@@ -17,6 +17,7 @@ use WebChemistry\Images\AbstractStorage;
  * @property string|null $image
  * @property string|null $content
  * @property int|null $position
+ * @property bool $openNewWindow {default false}
  * @property bool $visible {default 1}
  * @property PageLinkGroup $group {m:1 PageLinkGroup::$links}
  *

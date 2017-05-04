@@ -40,5 +40,8 @@ class PagesLinksMapper extends Mapper
 		$table->addColumn('visible')
 			->bool()
 			->setDefault(1);
+		$table->addColumn('openNewWindow')
+			->bool()
+			->setDefault(0);
 	}
 }
