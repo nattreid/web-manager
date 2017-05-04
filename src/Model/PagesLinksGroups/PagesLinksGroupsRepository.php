@@ -48,9 +48,13 @@ class PagesLinksGroupsRepository extends Repository
 	/**
 	 * @return ICollection|PageLinkGroup[]
 	 */
-	public function findVisible(): ICollection
+	public function findVisible(int $pageId = null): ICollection
 	{
-		return $this->findAll()->findBy(['visible' => 1]);
+		$result = $this->findAll()->findBy(['visible' => 1]);
+		if ($pageId !== null) {
+			$result = $result->findBy(['page' => $pageId]);
+		}
+		return $result;
 	}
 
 	/**

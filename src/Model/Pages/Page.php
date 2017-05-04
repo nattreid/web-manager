@@ -6,12 +6,14 @@ namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Cms\Model\Locale\Locale;
 use NAttreid\Gallery\Control\Image;
+use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\PagesGalleries\PageGallery;
 use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
 use NAttreid\WebManager\Model\PagesViews\PageView;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nextras\Dbal\UniqueConstraintViolationException;
+use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Entity\Entity;
 use Nextras\Orm\Relationships\ManyHasMany;
 use Nextras\Orm\Relationships\OneHasMany;
@@ -37,6 +39,7 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property int $position
  * @property OneHasMany|PageGallery[] $images {1:m PageGallery::$page, orderBy=position, cascade=[persist, remove]}
  * @property OneHasMany|PageLinkGroup[] $linkGroups {1:m PageLinkGroup::$page, orderBy=position, cascade=[persist, remove]}
+ * @property PageLinkGroup[] $visibleLinkGroups {virtual}
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -144,5 +147,15 @@ class Page extends Entity
 	protected function getterIsHomePage(): bool
 	{
 		return $this->url === null;
+	}
+
+	/**
+	 * @return ICollection|PageLinkGroup[]
+	 */
+	protected function getterVisibleLinkGroups(): ICollection
+	{
+		/* @var $orm Orm */
+		$orm = $this->getModel();
+		return $orm->pagesLinksGroups->findVisible($this->id);
 	}
 }
