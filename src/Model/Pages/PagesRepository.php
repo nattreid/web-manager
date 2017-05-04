@@ -120,8 +120,10 @@ class PagesRepository extends Repository
 	{
 		$this->mapper->changeSort('position', $id, $prevId, $nextId);
 		$main = $this->getByUrl(null, $locale);
-		$main->position = 0;
-		$this->persistAndFlush($main);
+		if ($main) {
+			$main->position = 0;
+			$this->persistAndFlush($main);
+		}
 	}
 
 	/**

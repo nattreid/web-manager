@@ -130,6 +130,14 @@ class PagesPresenter extends BasePresenter
 		}
 	}
 
+	protected function beforeRender(): void
+	{
+		parent::beforeRender();
+		$this->template->viewGallery = $this->viewGallery;
+		$this->template->viewLinks = $this->viewLinks;
+		$this->template->tab = self::DEFAULT_TAB;
+	}
+
 	/**
 	 * Pridani stranky
 	 */
@@ -152,7 +160,7 @@ class PagesPresenter extends BasePresenter
 			'parent' => $id
 		]);
 		$this->setView('edit');
-		$this->template->tab = self::DEFAULT_TAB;
+		$this->template->viewLinks = false;
 	}
 
 	/**
@@ -172,7 +180,7 @@ class PagesPresenter extends BasePresenter
 		$gallery->setNamespace('page/' . $this->page->url);
 	}
 
-	public function renderEdit(string $tab = self::DEFAULT_TAB): void
+	public function renderEdit(string $tab = null): void
 	{
 		$page = $this->page;
 		$this->addBreadcrumbLinkUntranslated($page->name);
@@ -183,9 +191,9 @@ class PagesPresenter extends BasePresenter
 			$form['homePage']->setDefaultValue(true);
 		}
 
-		$this->template->viewGallery = $this->viewGallery;
-		$this->template->viewLinks = $this->viewLinks;
-		$this->template->tab = $tab;
+		if ($tab !== null) {
+			$this->template->tab = $tab;
+		}
 	}
 
 	/**
@@ -277,7 +285,10 @@ class PagesPresenter extends BasePresenter
 			$isNew = true;
 		}
 
-		if (($this->editHomePage ? $values->homePage : $page->isHomePage)) {
+		if (($this->editHomePage ?
+			$values->homePage
+			: ($isNew ? false : $page->isHomePage))
+		) {
 			$page->parent = null;
 			$values->url = null;
 			$values->views = [];
