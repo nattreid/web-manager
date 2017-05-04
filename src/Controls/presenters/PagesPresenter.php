@@ -31,6 +31,8 @@ use Ublaboo\DataGrid\DataGrid;
 class PagesPresenter extends BasePresenter
 {
 
+	private const DEFAULT_TAB = 'page';
+
 	/** @var Orm */
 	private $orm;
 
@@ -150,6 +152,7 @@ class PagesPresenter extends BasePresenter
 			'parent' => $id
 		]);
 		$this->setView('edit');
+		$this->template->tab = self::DEFAULT_TAB;
 	}
 
 	/**
@@ -169,7 +172,7 @@ class PagesPresenter extends BasePresenter
 		$gallery->setNamespace('page/' . $this->page->url);
 	}
 
-	public function renderEdit(string $tab = 'page'): void
+	public function renderEdit(string $tab = self::DEFAULT_TAB): void
 	{
 		$page = $this->page;
 		$this->addBreadcrumbLinkUntranslated($page->name);
