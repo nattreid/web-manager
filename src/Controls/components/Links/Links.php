@@ -152,7 +152,7 @@ class Links extends Control
 
 		$form->addTextArea('name', 'webManager.web.pages.linkGroup.name')
 			->setRequired()
-			->setAttribute('class', 'lineCKedit');
+			->setAttribute('class', 'ckEditorLine');
 
 		$quantity = [];
 		for ($i = 1; $i <= 20; $i++) {
@@ -305,7 +305,7 @@ class Links extends Control
 
 		$form->addTextArea('name', 'webManager.web.pages.link.name')
 			->setRequired()
-			->setAttribute('class', 'lineCKedit');
+			->setAttribute('class', 'ckEditorLine');
 
 		$form->addText('url', 'webManager.web.pages.link.url')
 			->addRule($form::URL)
@@ -319,7 +319,7 @@ class Links extends Control
 			->setNamespace('web-manager-links');
 
 		$form->addTextArea('content', 'webManager.web.pages.link.content')
-			->setAttribute('class', 'lineCKedit');
+			->setAttribute('class', 'ckEditorLine');
 
 		$form->addSubmit('save', 'form.save');
 		$form->addLink('back', 'form.back', $this->link('linkGroupEdit', [$this->groupId]))
