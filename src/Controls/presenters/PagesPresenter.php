@@ -237,8 +237,7 @@ class PagesPresenter extends BasePresenter
 			->setItems($this->orm->pagesViews->fetchPairsById())
 			->setOption('id', 'page-views');
 
-		$form->addText('title', 'webManager.web.pages.pageTitle')
-			->setRequired();
+		$form->addText('title', 'webManager.web.pages.pageTitle');
 
 		$form->addTextArea('keywords', 'webManager.web.pages.keywords');
 

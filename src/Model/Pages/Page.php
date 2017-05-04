@@ -30,7 +30,7 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property OneHasMany|Page[] $children {1:m Page::$parent}
  * @property bool $hasChildren {virtual}
  * @property Locale $locale {m:1 Locale, oneSided=true}
- * @property string $title
+ * @property string|null $title
  * @property string|null $image
  * @property string|null $keywords
  * @property string|null $description

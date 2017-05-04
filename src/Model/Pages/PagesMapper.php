@@ -40,7 +40,8 @@ class PagesMapper extends Mapper
 		$table->addForeignKey('localeId', LocalesMapper::class);
 		$table->addForeignKey('parentId', $table, null);
 		$table->addColumn('title')
-			->varChar(150);
+			->varChar(150)
+			->setDefault(null);
 		$table->addColumn('image')
 			->varChar(150)
 			->setDefault(null);
