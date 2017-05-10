@@ -67,4 +67,13 @@ class PagesLinksGroupsRepository extends Repository
 	{
 		$this->mapper->changeSort('position', $id, $prevId, $nextId);
 	}
+
+	/**
+	 * @param int $pageId
+	 * @return ICollection|PageLinkGroup[]
+	 */
+	public function findByPage(int $pageId):ICollection
+	{
+		return $this->findBy(['page' => $pageId]);
+	}
 }

@@ -199,7 +199,7 @@ class Links extends Control
 	protected function createComponentLinkGroups(): DataGrid
 	{
 		$grid = $this->gridFactory->create();
-		$grid->setDataSource($this->orm->pagesLinksGroups->findAll());
+		$grid->setDataSource($this->orm->pagesLinksGroups->findByPage($this->page->id));
 		$grid->setSortable();
 		$grid->setSortableHandler('links-linkGroupSort!');
 		$grid->setRefreshUrl(false);
