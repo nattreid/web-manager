@@ -51,7 +51,8 @@ class PagesRepository extends Repository
 	 */
 	public function findMain(): ICollection
 	{
-		return $this->findAll()->findBy(['parent' => null]);
+		return $this->findAll()
+			->findBy(['parent' => null]);
 	}
 
 	/**
@@ -75,7 +76,7 @@ class PagesRepository extends Repository
 	 */
 	public function findFooter(string $locale): ICollection
 	{
-		return $this->findAll()
+		return $this->findMain()
 			->findBy([
 				'this->views->id' => PagesViewsMapper::FOOTER,
 				'this->locale->name' => $locale
