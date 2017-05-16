@@ -74,8 +74,8 @@ class PageService
 		]);
 
 		$routes[] = new Route($url, $this->defaultLink);
-		$routes[] = new Route($url . 'index.php', $this->pageLink, Route::ONE_WAY);
-		$routes[] = new Route($url . '<presenter>[/<action>]', $this->pageLink);
+		$routes[] = new Route($url . 'index.php', $this->defaultLink, Route::ONE_WAY);
+		$routes[] = new Route($url . '<presenter>[/<action>]', $this->defaultLink);
 	}
 
 	/**
