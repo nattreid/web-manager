@@ -151,7 +151,6 @@ class Links extends Control
 		$form->addHidden('id');
 
 		$form->addTextArea('name', 'webManager.web.pages.linkGroup.name')
-			->setRequired()
 			->setAttribute('class', 'ckEditorLine');
 
 		$quantity = [];
