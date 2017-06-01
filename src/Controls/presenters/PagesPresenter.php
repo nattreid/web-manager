@@ -130,6 +130,24 @@ class PagesPresenter extends BasePresenter
 		}
 	}
 
+	/**
+	 * Nastavi viditelnost
+	 * @param int $id
+	 * @secured
+	 */
+	public function handleVisibility(int $id)
+	{
+		if ($this->isAjax()) {
+			$page = $this->orm->pages->getById($id);
+			$page->visible = !$page->visible;
+			$this->orm->persistAndFlush($page);
+
+			$this['list']->redrawItem($id);
+		} else {
+			$this->terminate();
+		}
+	}
+
 	protected function beforeRender(): void
 	{
 		parent::beforeRender();
@@ -359,6 +377,15 @@ class PagesPresenter extends BasePresenter
 			})
 			->setFilterSelect(['' => 'form.none'] + $this->orm->pagesViews->fetchUntranslatedPairsById(), 'views.id')
 			->setTranslateOptions();
+
+		$grid->addAction('visibility', null, 'visibility!')
+			->setTitle('webManager.web.pages.visibility')
+			->setClass(function (Page $page) {
+				return $page->visible ? 'btn btn-xs btn-success ajax' : 'btn btn-xs btn-default ajax';
+			})
+			->setIcon(function (Page $page) {
+				return $page->visible ? 'eye' : 'eye-slash';
+			});
 
 		$grid->addAction('add', null)
 			->setIcon('plus')

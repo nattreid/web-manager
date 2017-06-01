@@ -46,13 +46,22 @@ class PagesRepository extends Repository
 	}
 
 	/**
+	 * @return ICollection|Page[]
+	 */
+	public function findVisible(): ICollection
+	{
+		return $this->findAll()->findBy(['visible' => 1]);
+	}
+
+	/**
 	 * Vrati hlavni stranky
 	 * @return ICollection|Page[]
 	 */
-	public function findMain(): ICollection
+	public function findMain(bool $onlyVisible = false): ICollection
 	{
-		return $this->findAll()
+		$result = ($onlyVisible ? $this->findVisible() : $this->findAll())
 			->findBy(['parent' => null]);
+		return $result;
 	}
 
 	/**
@@ -62,7 +71,7 @@ class PagesRepository extends Repository
 	 */
 	public function findMenu(string $locale): ICollection
 	{
-		return $this->findMain()
+		return $this->findMain(true)
 			->findBy([
 				'this->views->id' => PagesViewsMapper::MENU,
 				'this->locale->name' => $locale
@@ -76,7 +85,7 @@ class PagesRepository extends Repository
 	 */
 	public function findFooter(string $locale): ICollection
 	{
-		return $this->findMain()
+		return $this->findMain(true)
 			->findBy([
 				'this->views->id' => PagesViewsMapper::FOOTER,
 				'this->locale->name' => $locale

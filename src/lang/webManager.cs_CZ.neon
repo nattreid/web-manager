@@ -18,6 +18,7 @@ web:
 		locale: "Jazyk"
 		gallery: "Galerie"
 		links: "Odkazy"
+		visibility: "Viditelnost"
 		views:
 			title: "Zobrazení"
 			menu: "Menu"

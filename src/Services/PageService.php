@@ -15,6 +15,7 @@ use Nette\Http\IResponse;
 use Nette\SmartObject;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
+use Tracy\Debugger;
 
 /**
  * Sluzba obsahu manageru
@@ -87,7 +88,7 @@ class PageService
 	public function getPage(string $url = null): Page
 	{
 		$page = $this->orm->pages->getByUrl($url, $this->translator->getLocale());
-		if (!$page) {
+		if (!$page || !$page->visible) {
 			throw new BadRequestException(null, IResponse::S404_NOT_FOUND);
 		}
 		return $page;
