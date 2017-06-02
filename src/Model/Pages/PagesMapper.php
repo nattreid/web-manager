@@ -89,6 +89,7 @@ class PagesMapper extends Mapper
 		return $this->builder()
 			->innerJoin('_pages', '[_locales]', 'l', '_pages.localeId = l.id')
 			->andWhere('[url] IS NOT NULL')
+			->andWhere('[visible] = %i', 1)
 			->andWhere('[l.name] = %s', $locale);
 	}
 
