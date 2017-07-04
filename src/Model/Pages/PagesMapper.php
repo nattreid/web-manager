@@ -65,8 +65,8 @@ class PagesMapper extends Mapper
 
 		$relationTable = $table->createRelationTable(PagesViewsMapper::class);
 		$relationTable->addForeignKey('pageId', $table);
-		$relationTable->addForeignKey('pageGroupId', PagesViewsMapper::class);
-		$relationTable->setPrimaryKey('pageId', 'pageGroupId');
+		$relationTable->addForeignKey('pageViewId', PagesViewsMapper::class);
+		$relationTable->setPrimaryKey('pageId', 'pageViewId');
 	}
 
 	/**
