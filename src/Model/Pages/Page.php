@@ -9,6 +9,7 @@ use NAttreid\Gallery\Control\Image;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\PagesGalleries\PageGallery;
 use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
+use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use NAttreid\WebManager\Model\PagesViews\PageView;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
@@ -27,8 +28,12 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property string|null $completeUrl {virtual}
  * @property bool $isHomePage {virtual}
  * @property Page|null $parent {m:1 Page::$children}
- * @property OneHasMany|Page[] $children {1:m Page::$parent}
+ * @property OneHasMany|Page[] $children {1:m Page::$parent, orderBy=[position=ASC]}
  * @property bool $hasChildren {virtual}
+ * @property ICollection|Page[] $menuChildren {virtual}
+ * @property bool $hasMenuChildren {virtual}
+ * @property ICollection|Page[] $footerChildren {virtual}
+ * @property bool $hasFooterChildren {virtual}
  * @property Locale $locale {m:1 Locale, oneSided=true}
  * @property string|null $title
  * @property string|null $image
@@ -140,6 +145,50 @@ class Page extends Entity
 	protected function getterHasChildren(): bool
 	{
 		return !empty($this->children->count());
+	}
+
+	/**
+	 * @return ICollection|Page[]
+	 */
+	protected function getterMenuChildren(): ICollection
+	{
+		/* @var $repository PagesRepository */
+		$repository = $this->getRepository();
+		return $repository->findBy([
+			'parent' => $this->id,
+			'this->views->id' => PagesViewsMapper::MENU,
+		])
+			->orderBy('position');
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function getterHasMenuChildren(): bool
+	{
+		return !empty($this->menuChildren->count());
+	}
+
+	/**
+	 * @return ICollection|Page[]
+	 */
+	protected function getterFooterChildren(): ICollection
+	{
+		/* @var $repository PagesRepository */
+		$repository = $this->getRepository();
+		return $repository->findBy([
+			'parent' => $this->id,
+			'this->views->id' => PagesViewsMapper::FOOTER,
+		])
+			->orderBy('position');
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function getterHasFooterChildren(): bool
+	{
+		return !empty($this->footerChildren->count());
 	}
 
 	/**
