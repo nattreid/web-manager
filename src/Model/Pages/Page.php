@@ -13,7 +13,7 @@ use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
 use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use NAttreid\WebManager\Model\PagesViews\PageView;
 use NAttreid\WebManager\Services\PageService;
-use Nette\Application\LinkGenerator;
+use Nette\Application\Application;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nextras\Dbal\UniqueConstraintViolationException;
@@ -30,6 +30,7 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property string|null $url
  * @property string|null $completeUrl {virtual}
  * @property string $link {virtual}
+ * @property string $absoluteLink {virtual}
  * @property bool $isLink {default 0}
  * @property bool $isHomePage {virtual}
  * @property Page|null $parent {m:1 Page::$children}
@@ -63,14 +64,14 @@ class Page extends Entity
 	/** @var RouterFactory */
 	private $routerFactory;
 
-	/** @var LinkGenerator */
-	private $linkGenerator;
+	/** @var Application */
+	private $application;
 
-	public function injectPageServices(PageService $pageService, RouterFactory $routerFactory, LinkGenerator $linkGenerator)
+	public function injectPageServices(PageService $pageService, RouterFactory $routerFactory, Application $application)
 	{
 		$this->pageService = $pageService;
 		$this->routerFactory = $routerFactory;
-		$this->linkGenerator = $linkGenerator;
+		$this->application = $application;
 	}
 
 	/**
@@ -171,7 +172,22 @@ class Page extends Entity
 	{
 		$url = $this->completeUrl;
 		if (!$this->isLink) {
-			$url = $this->linkGenerator->link($this->pageService->pageLink, [
+			$url = $this->application->getPresenter()->link($this->pageService->pageLink, [
+				'url' => $url,
+				$this->routerFactory->variable => $this->locale->name
+			]);
+		}
+		return $url;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getterAbsoluteLink(): string
+	{
+		$url = $this->completeUrl;
+		if (!$this->isLink) {
+			$url = $this->application->getPresenter()->link('//' . $this->pageService->pageLink, [
 				'url' => $url,
 				$this->routerFactory->variable => $this->locale->name
 			]);

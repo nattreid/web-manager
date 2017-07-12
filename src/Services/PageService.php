@@ -98,7 +98,7 @@ class PageService
 	 */
 	protected function getPageLink(): string
 	{
-		return $this->module . ':' . $this->pageLink;
+		return ':' . $this->module . ':' . $this->pageLink;
 	}
 
 	/**
