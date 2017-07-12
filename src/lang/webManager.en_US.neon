@@ -6,6 +6,7 @@ web:
 		title: "Pages"
 		name: "Page"
 		homePage: "Home page"
+		isLink: "Direct link"
 		add: "Add page"
 		pageTitle: "Title"
 		keywords: "Keywords"

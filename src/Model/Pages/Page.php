@@ -6,11 +6,14 @@ namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Cms\Model\Locale\Locale;
 use NAttreid\Gallery\Control\Image;
+use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\PagesGalleries\PageGallery;
 use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
 use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use NAttreid\WebManager\Model\PagesViews\PageView;
+use NAttreid\WebManager\Services\PageService;
+use Nette\Application\LinkGenerator;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nextras\Dbal\UniqueConstraintViolationException;
@@ -26,6 +29,8 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property string $name
  * @property string|null $url
  * @property string|null $completeUrl {virtual}
+ * @property string $link {virtual}
+ * @property bool $isLink {default 0}
  * @property bool $isHomePage {virtual}
  * @property Page|null $parent {m:1 Page::$children}
  * @property OneHasMany|Page[] $children {1:m Page::$parent, orderBy=[position=ASC]}
@@ -51,6 +56,23 @@ use Nextras\Orm\Relationships\OneHasMany;
  */
 class Page extends Entity
 {
+
+	/** @var PageService */
+	private $pageService;
+
+	/** @var RouterFactory */
+	private $routerFactory;
+
+	/** @var LinkGenerator */
+	private $linkGenerator;
+
+	public function injectPageServices(PageService $pageService, RouterFactory $routerFactory, LinkGenerator $linkGenerator)
+	{
+		$this->pageService = $pageService;
+		$this->routerFactory = $routerFactory;
+		$this->linkGenerator = $linkGenerator;
+	}
+
 	/**
 	 * Vrati nazvy zobarazeni
 	 * @return string[]
@@ -73,14 +95,17 @@ class Page extends Entity
 	 */
 	public function setUrl(?string $url): void
 	{
-		if (!$this->locale) {
+		if ($this->locale === null) {
 			throw new InvalidArgumentException('Locale must be set before calling setUrl');
 		}
-		if (Strings::match($url, '/[^A-Za-z0-9_-]/')) {
+		if ($this->isLink === null) {
+			throw new InvalidArgumentException("'isLink' must be set before calling setUrl");
+		}
+		if (!$this->isLink && Strings::match($url, '/[^A-Za-z0-9_-]/')) {
 			throw new InvalidArgumentException('URL contains invalid characters');
 		}
 
-		$completeUrl = $this->parent && $url !== null ?
+		$completeUrl = !$this->isLink && $this->parent && $url !== null ?
 			$this->parent->completeUrl . '/' . $url
 			: $url;
 
@@ -133,8 +158,23 @@ class Page extends Entity
 	protected function getterCompleteUrl(): ?string
 	{
 		$url = $this->url;
-		if ($this->parent) {
+		if (!$this->isLink && $this->parent) {
 			$url = $this->parent->completeUrl . '/' . $url;
+		}
+		return $url;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getterLink(): string
+	{
+		$url = $this->completeUrl;
+		if (!$this->isLink) {
+			$url = $this->linkGenerator->link($this->pageService->pageLink, [
+				'url' => $url,
+				$this->routerFactory->variable => $this->locale->name
+			]);
 		}
 		return $url;
 	}

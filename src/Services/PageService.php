@@ -15,7 +15,6 @@ use Nette\Http\IResponse;
 use Nette\SmartObject;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
-use Tracy\Debugger;
 
 /**
  * Sluzba obsahu manageru
@@ -97,9 +96,9 @@ class PageService
 	/**
 	 * @return string
 	 */
-	public function getPageLink(): string
+	protected function getPageLink(): string
 	{
-		return ':' . $this->module . ':' . $this->pageLink;
+		return $this->module . ':' . $this->pageLink;
 	}
 
 	/**

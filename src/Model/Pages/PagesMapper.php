@@ -61,6 +61,9 @@ class PagesMapper extends Mapper
 			->bool()
 			->setDefault(1)
 			->setKey();
+		$table->addColumn('isLink')
+			->bool()
+			->setDefault(0);
 		$table->addUnique('url', 'localeId', 'parentId');
 
 		$relationTable = $table->createRelationTable(PagesViewsMapper::class);

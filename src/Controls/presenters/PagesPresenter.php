@@ -241,12 +241,24 @@ class PagesPresenter extends BasePresenter
 
 		$form->addHidden('parent');
 
+		$form->addCheckbox('isLink', 'webManager.web.pages.isLink')
+			->setOption('id', 'page-isLink')
+			->addCondition($form::EQUAL, false)
+			->toggle('page-title')
+			->toggle('page-keywords')
+			->toggle('page-image')
+			->toggle('page-description')
+			->toggle('page-content')
+			->toggle('page-homePage');
+
 		$homePage = $form->addCheckbox('homePage', 'webManager.web.pages.homePage')
+			->setOption('id', 'page-homePage')
 			->setDisabled(!$this->editHomePage);
 		$homePage->addCondition($form::EQUAL, false)
 			->toggle('page-name')
 			->toggle('page-url')
-			->toggle('page-views');
+			->toggle('page-views')
+			->toggle('page-isLink');
 		if ($homePage->isDisabled()) {
 			$homePage->setOption('class', 'hidden');
 		}
@@ -257,26 +269,33 @@ class PagesPresenter extends BasePresenter
 			->setRequired();
 
 		$form->addText('url', 'default.url')
-			->setOption('id', 'page-url');
+			->setOption('id', 'page-url')
+			->addConditionOn($form['isLink'], $form::EQUAL, true)
+			->setRequired();
 
 		$form->addSelectUntranslated('locale', 'webManager.web.pages.locale')
 			->setItems($this->localeService->allowed);
 
 		$form->addCheckboxListUntranslated('views', 'webManager.web.pages.views.title')
-			->setItems($this->orm->pagesViews->fetchPairsById())
-			->setOption('id', 'page-views');
+			->setOption('id', 'page-views')
+			->setItems($this->orm->pagesViews->fetchPairsById());
 
-		$form->addText('title', 'webManager.web.pages.pageTitle');
+		$form->addText('title', 'webManager.web.pages.pageTitle')
+			->setOption('id', 'page-title');
 
-		$form->addTextArea('keywords', 'webManager.web.pages.keywords');
+		$form->addTextArea('keywords', 'webManager.web.pages.keywords')
+			->setOption('id', 'page-keywords');
 
 		$form->addImageUpload('image', 'webManager.web.pages.photo', 'webManager.web.pages.photoDelete')
 			->setNamespace('pages')
-			->setPreview('300x100');
+			->setPreview('300x100')
+			->setOption('id', 'page-image');
 
-		$form->addTextArea('description', 'webManager.web.pages.description');
+		$form->addTextArea('description', 'webManager.web.pages.description')
+			->setOption('id', 'page-description');
 
-		$form->addTextEditor('content', 'webManager.web.pages.content');
+		$form->addTextEditor('content', 'webManager.web.pages.content')
+			->setOption('id', 'page-content');
 
 		$form->addSubmit('save', 'form.save');
 
@@ -308,11 +327,13 @@ class PagesPresenter extends BasePresenter
 			: ($isNew ? false : $page->isHomePage))
 		) {
 			$page->parent = null;
+			$page->isLink = false;
 			$values->url = null;
 			$values->views = [];
 			$values->name = $this->translate('webManager.web.pages.homePage');
 		} else {
 			$page->parent = $values->parent;
+			$page->isLink = $values->isLink;
 			$values->url = $values->url ?: Strings::webalize($values->name);
 		}
 
@@ -357,9 +378,14 @@ class PagesPresenter extends BasePresenter
 		$grid->setDataSource($this->orm->pages->findMain());
 		$grid->setSortable();
 		$grid->setTreeView([$this, 'getChildren'], 'hasChildren');
+		$grid->setOuterFilterRendering();
+		$grid->onFiltersAssembled[] = function () use ($grid) {
+			if ($this->isAjax())
+				$grid->redrawControl('grid');
+		};
 
-		$grid->addColumnLink('name', 'webManager.web.pages.name', $this->pageService->pageLink, null, ['url' => 'completeUrl', $this->routerFactory->variable => 'locale.name'])
-			->setOpenInNewTab()
+		$grid->addColumnText('name', 'webManager.web.pages.name')
+			->setTemplate(__DIR__ . '/templates/Pages/name.latte')
 			->setFilterText();
 
 		$grid->addColumnText('url', 'default.url')
