@@ -379,8 +379,8 @@ class PagesPresenter extends BasePresenter
 		$grid->setSortable();
 		$grid->setTreeView([$this, 'getChildren'], 'hasChildren');
 		$grid->setOuterFilterRendering();
-		$grid->onFiltersAssembled[] = function () use ($grid) {
-			if ($this->isAjax())
+		$grid->onRedraw[] = function () use ($grid) {
+			if ($this->isAjax() && $grid['filter']->isSubmitted())
 				$grid->redrawControl('grid');
 		};
 

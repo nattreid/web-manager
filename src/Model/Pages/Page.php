@@ -154,13 +154,14 @@ class Page extends Entity
 	}
 
 	/**
+	 * @param bool $webalize
 	 * @return string|null
 	 */
-	protected function getterCompleteUrl(): ?string
+	protected function getterCompleteUrl(?bool $fromChildren = false): ?string
 	{
-		$url = $this->url;
+		$url = $fromChildren ? Strings::webalize($this->url) : $this->url;
 		if (!$this->isLink && $this->parent) {
-			$url = $this->parent->completeUrl . '/' . $url;
+			$url = $this->parent->getterCompleteUrl(true) . '/' . $url;
 		}
 		return $url;
 	}
