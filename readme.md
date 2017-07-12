@@ -45,6 +45,14 @@ class FrontRouter extends Router {
         $routes = $this->getRouter('Front');
 
         $this->pageService->createRoute($routes, $this->getUrl());
+        
+        // nebo pokud je treba vlozit route mezi routy stranky a defaultni strankou
+        
+        $this->pageService->createPageRoute($routes, $this->getUrl());
+        
+        $routes[] = new Route(...);
+        
+        $this->pageService->createDefaultPageRoutes($routes, $this->getUrl());
     }
 
 }

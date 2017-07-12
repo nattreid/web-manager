@@ -58,6 +58,17 @@ class PageService
 	 */
 	public function createRoute(IRouter $routes, string $url): void
 	{
+		$this->createPageRoute($routes, $url);
+		$this->createDefaultPageRoutes($routes, $url);
+	}
+
+	/**
+	 * Vytvori routy stranek
+	 * @param IRouter $routes
+	 * @param string $url
+	 */
+	public function createPageRoute(IRouter $routes, string $url): void
+	{
 		list($presenter, $action) = explode(':', $this->pageLink);
 
 		$routes[] = new Route($url . '[<url .*>]', [
@@ -72,7 +83,15 @@ class PageService
 				}
 			],
 		]);
+	}
 
+	/**
+	 * Vytvori routy defaultni stranky
+	 * @param IRouter $routes
+	 * @param string $url
+	 */
+	public function createDefaultPageRoutes(IRouter $routes, string $url): void
+	{
 		$routes[] = new Route($url, $this->defaultLink);
 		$routes[] = new Route($url . 'index.php', $this->defaultLink, Route::ONE_WAY);
 		$routes[] = new Route($url . '<presenter>[/<action>]', $this->defaultLink);
