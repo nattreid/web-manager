@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NAttreid\WebManager\Model\PagesGalleries;
 
+use NAttreid\ImageStorage\ImageStorage;
 use NAttreid\WebManager\Model\Pages\Page;
 use Nextras\Orm\Entity\Entity;
-use WebChemistry\Images\AbstractStorage;
 
 /**
  * Class PageGallery
@@ -20,10 +20,10 @@ use WebChemistry\Images\AbstractStorage;
  */
 class PageGallery extends Entity
 {
-	/** @var AbstractStorage */
+	/** @var ImageStorage */
 	private $storage;
 
-	public function injectStorage(AbstractStorage $storage): void
+	public function injectStorage(ImageStorage $storage): void
 	{
 		$this->storage = $storage;
 	}

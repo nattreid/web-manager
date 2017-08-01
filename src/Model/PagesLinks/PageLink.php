@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace NAttreid\WebManager\Model\PagesLinks;
 
+use NAttreid\ImageStorage\ImageStorage;
 use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
 use Nextras\Orm\Entity\Entity;
-use WebChemistry\Images\AbstractStorage;
 
 /**
  * Class PageLink
@@ -25,10 +25,10 @@ use WebChemistry\Images\AbstractStorage;
  */
 class PageLink extends Entity
 {
-	/** @var AbstractStorage */
+	/** @var ImageStorage */
 	private $storage;
 
-	public function injectStorage(AbstractStorage $storage)
+	public function injectStorage(ImageStorage $storage)
 	{
 		$this->storage = $storage;
 	}
