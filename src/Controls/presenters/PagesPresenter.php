@@ -384,7 +384,7 @@ class PagesPresenter extends BasePresenter
 				$grid->redrawControl('grid');
 		};
 
-		$grid->addColumnText('name', 'webManager.web.pages.name')
+		$grid->addColumnText('name', 'webManager.web.pages.name' , '_pages.name')
 			->setTemplate(__DIR__ . '/templates/Pages/name.latte')
 			->setFilterText();
 
