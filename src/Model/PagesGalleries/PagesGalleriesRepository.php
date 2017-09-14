@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace NAttreid\WebManager\Model\PagesGalleries;
 
 use NAttreid\Orm\Repository;
-use NAttreid\WebManager\Model\Pages\Page;
 
 /**
  * Class PagesGalleriesRepository

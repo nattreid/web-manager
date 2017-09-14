@@ -39,6 +39,6 @@ class PagesGalleriesMapper extends Mapper
 	 */
 	public function getMaxPosition(int $pageId): int
 	{
-		return $this->connection->query('SELECT IFnull(MAX([position]), 0) position FROM %table WHERE [pageId] = %i', $this->getTableName(), $pageId)->fetch()->position;
+		return $this->connection->query('SELECT IFNULL(MAX([position]), 0) position FROM %table WHERE [pageId] = %i', $this->getTableName(), $pageId)->fetch()->position;
 	}
 }
