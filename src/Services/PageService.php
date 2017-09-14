@@ -150,10 +150,23 @@ class PageService
 	/**
 	 * Vrati text
 	 * @param string $const
-	 * @return Content|null
+	 * @return Content
 	 */
-	public function getContent(string $const): ?Content
+	public function getContent(string $const): Content
 	{
-		return $this->orm->content->getByConst($const, $this->translator->getLocale());
+		$locale = $this->translator->getLocale();
+		$content = $this->orm->content->getByConst($const, $locale);
+		if (!$content) {
+			$content = new Content;
+			$this->orm->content->attach($content);
+
+			$content->name = $const;
+			$content->setLocale($locale);
+			$content->setConst($const);
+			$content->content = '';
+
+			$this->orm->content->persistAndFlush($content);
+		}
+		return $content;
 	}
 }

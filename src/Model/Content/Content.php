@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NAttreid\WebManager\Model\Content;
 
 use NAttreid\Cms\Model\Locale\Locale;
+use NAttreid\Cms\Model\Orm;
 use Nette\Utils\Strings;
 use Nextras\Dbal\InvalidArgumentException;
 use Nextras\Dbal\UniqueConstraintViolationException;
@@ -50,6 +51,13 @@ class Content extends Entity
 			throw new UniqueConstraintViolationException("Content with '$const' exists");
 		}
 		$this->const = $const;
+	}
+
+	public function setLocale(string $locale): void
+	{
+		/* @var $orm Orm */
+		$orm = $this->getModel();
+		$this->locale = $orm->locales->getByLocale($locale);
 	}
 
 }
