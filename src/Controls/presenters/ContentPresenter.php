@@ -142,7 +142,8 @@ class ContentPresenter extends BasePresenter
 				->setItems($this->localeService->allowed);
 		}
 
-		$form->addText('title', 'webManager.web.content.contentTitle');
+		$form->addText('title', 'webManager.web.content.contentTitle')
+			->addRule(Form::MAX_LENGTH, null, 150);
 
 		$form->addTextArea('keywords', 'webManager.web.content.keywords');
 

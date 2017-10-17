@@ -281,10 +281,14 @@ class PagesPresenter extends BasePresenter
 			->setItems($this->orm->pagesViews->fetchPairsById());
 
 		$form->addText('title', 'webManager.web.pages.pageTitle')
-			->setOption('id', 'page-title');
+			->setOption('id', 'page-title')
+			->setRequired(false)
+			->addRule(Form::MAX_LENGTH, null, 150);
 
 		$form->addTextArea('keywords', 'webManager.web.pages.keywords')
-			->setOption('id', 'page-keywords');
+			->setOption('id', 'page-keywords')
+			->setRequired(false)
+			->addRule(Form::MAX_LENGTH, null, 255);
 
 		$form->addImageUpload('image', 'webManager.web.pages.photo', 'webManager.web.pages.photoDelete')
 			->setNamespace('pages')
@@ -292,7 +296,9 @@ class PagesPresenter extends BasePresenter
 			->setOption('id', 'page-image');
 
 		$form->addTextArea('description', 'webManager.web.pages.description')
-			->setOption('id', 'page-description');
+			->setOption('id', 'page-description')
+			->setRequired(false)
+			->addRule(Form::MAX_LENGTH, null, 255);
 
 		$form->addTextEditor('content', 'webManager.web.pages.content')
 			->setOption('id', 'page-content');
@@ -384,7 +390,7 @@ class PagesPresenter extends BasePresenter
 				$grid->redrawControl('grid');
 		};
 
-		$grid->addColumnText('name', 'webManager.web.pages.name' , '_pages.name')
+		$grid->addColumnText('name', 'webManager.web.pages.name', '_pages.name')
 			->setTemplate(__DIR__ . '/templates/Pages/name.latte')
 			->setFilterText();
 
