@@ -143,7 +143,8 @@ class ContentPresenter extends BasePresenter
 		}
 
 		$form->addText('title', 'webManager.web.content.contentTitle')
-			->addRule(Form::MAX_LENGTH, null, 150);
+			->addRule(Form::MAX_LENGTH, null, 150)
+			->setRequired(false);
 
 		$form->addTextArea('keywords', 'webManager.web.content.keywords');
 
