@@ -60,8 +60,6 @@ abstract class HookFactory
 		$this->flashNotifier = $flashNotifier;
 
 		$this->name = $this->createName();
-
-		$this->init();
 	}
 
 	public function init(): void

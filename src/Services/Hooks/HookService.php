@@ -58,6 +58,7 @@ class HookService
 	 */
 	public function addHook(HookFactory $hook): void
 	{
+		$hook->init();
 		$this->hooks[$hook->name] = $hook;
 	}
 }
