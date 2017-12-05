@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NAttreid\WebManager\Model\PagesGalleries;
 
 use NAttreid\Orm\Repository;
+use Nextras\Dbal\QueryException;
 
 /**
  * Class PagesGalleriesRepository
@@ -23,8 +24,9 @@ class PagesGalleriesRepository extends Repository
 
 	/**
 	 * Vrati nejvetsi pozici
-	 * @param int $page
+	 * @param int $pageId
 	 * @return int
+	 * @throws QueryException
 	 */
 	public function getMaxPosition(int $pageId): int
 	{

@@ -13,6 +13,7 @@ use Nette\Application\IRouter;
 use Nette\Application\Routers\Route;
 use Nette\Http\IResponse;
 use Nette\SmartObject;
+use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
 
@@ -151,6 +152,7 @@ class PageService
 	 * Vrati text
 	 * @param string $const
 	 * @return Content
+	 * @throws UniqueConstraintViolationException
 	 */
 	public function getContent(string $const): Content
 	{

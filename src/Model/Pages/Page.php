@@ -14,8 +14,11 @@ use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use NAttreid\WebManager\Model\PagesViews\PageView;
 use NAttreid\WebManager\Services\PageService;
 use Nette\Application\Application;
+use Nette\Application\UI\InvalidLinkException;
+use Nette\Application\UI\Presenter;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
+use Nextras\Dbal\QueryException;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Entity\Entity;
@@ -133,6 +136,9 @@ class Page extends Entity
 		}
 	}
 
+	/**
+	 * @throws QueryException
+	 */
 	protected function onBeforeInsert(): void
 	{
 		/* @var $repo PagesRepository */
@@ -144,6 +150,9 @@ class Page extends Entity
 		}
 	}
 
+	/**
+	 * @throws QueryException
+	 */
 	protected function onBeforeUpdate()
 	{
 		/* @var $repo PagesRepository */
@@ -154,7 +163,7 @@ class Page extends Entity
 	}
 
 	/**
-	 * @param bool $webalize
+	 * @param bool|null $fromChildren
 	 * @return string|null
 	 */
 	protected function getterCompleteUrl(?bool $fromChildren = false): ?string
@@ -168,12 +177,15 @@ class Page extends Entity
 
 	/**
 	 * @return string
+	 * @throws InvalidLinkException
 	 */
 	protected function getterLink(): string
 	{
 		$url = $this->completeUrl;
 		if (!$this->isLink) {
-			$url = $this->application->getPresenter()->link($this->pageService->pageLink, [
+			/* @var $presenter Presenter */
+			$presenter = $this->application->getPresenter();
+			$url = $presenter->link($this->pageService->pageLink, [
 				'url' => $url,
 				$this->routerFactory->variable => $this->locale->name
 			]);
@@ -183,12 +195,15 @@ class Page extends Entity
 
 	/**
 	 * @return string
+	 * @throws InvalidLinkException
 	 */
 	protected function getterAbsoluteLink(): string
 	{
 		$url = $this->completeUrl;
 		if (!$this->isLink) {
-			$url = $this->application->getPresenter()->link('//' . $this->pageService->pageLink, [
+			/* @var $presenter Presenter */
+			$presenter = $this->application->getPresenter();
+			$url = $presenter->link('//' . $this->pageService->pageLink, [
 				'url' => $url,
 				$this->routerFactory->variable => $this->locale->name
 			]);

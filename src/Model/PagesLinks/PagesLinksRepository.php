@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace NAttreid\WebManager\Model\PagesLinks;
 
 use NAttreid\Orm\Repository;
+use Nextras\Dbal\DriverException;
+use Nextras\Dbal\QueryException;
 use Nextras\Orm\Collection\ICollection;
 
 /**
@@ -31,6 +33,7 @@ class PagesLinksRepository extends Repository
 	/**
 	 * Vrati nejvetsi pozici
 	 * @return int
+	 * @throws QueryException
 	 */
 	public function getMaxPosition()
 	{
@@ -46,6 +49,7 @@ class PagesLinksRepository extends Repository
 	}
 
 	/**
+	 * @param int $groupId
 	 * @return ICollection|PageLink[]
 	 */
 	public function findByGroup(int $groupId): ICollection
@@ -54,6 +58,7 @@ class PagesLinksRepository extends Repository
 	}
 
 	/**
+	 * @param int|null $groupId
 	 * @return ICollection|PageLink[]
 	 */
 	public function findVisible(int $groupId = null): ICollection
@@ -68,10 +73,12 @@ class PagesLinksRepository extends Repository
 	/**
 	 * Zmeni razeni
 	 * @param int $id
-	 * @param int $prevId
-	 * @param int $nextId
+	 * @param int|null $prevId
+	 * @param int|null $nextId
+	 * @throws QueryException
+	 * @throws DriverException
 	 */
-	public function changeSort($id, $prevId, $nextId)
+	public function changeSort(int $id, ?int $prevId, ?int $nextId)
 	{
 		$this->mapper->changeSort('position', $id, $prevId, $nextId);
 	}

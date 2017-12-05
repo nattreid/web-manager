@@ -6,6 +6,8 @@ namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Orm\Repository;
 use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
+use Nextras\Dbal\DriverException;
+use Nextras\Dbal\QueryException;
 use Nextras\Orm\Collection\ICollection;
 
 /**
@@ -55,6 +57,7 @@ class PagesRepository extends Repository
 
 	/**
 	 * Vrati hlavni stranky
+	 * @param bool $onlyVisible
 	 * @return ICollection|Page[]
 	 */
 	public function findMain(bool $onlyVisible = false): ICollection
@@ -105,6 +108,7 @@ class PagesRepository extends Repository
 	/**
 	 * Vrati nejvetsi pozici
 	 * @return int
+	 * @throws QueryException
 	 */
 	public function getMaxPosition(): int
 	{
@@ -114,6 +118,7 @@ class PagesRepository extends Repository
 	/**
 	 * Vrati nejmensi pozici
 	 * @return int
+	 * @throws QueryException
 	 */
 	public function getMinPosition(): int
 	{
@@ -123,10 +128,13 @@ class PagesRepository extends Repository
 	/**
 	 * Zmeni razeni
 	 * @param int $id
-	 * @param int $prevId
-	 * @param int $nextId
+	 * @param int|null $prevId
+	 * @param int|null $nextId
+	 * @param string $locale
+	 * @throws QueryException
+	 * @throws DriverException
 	 */
-	public function changeSort(int $id, $prevId, $nextId, string $locale): void
+	public function changeSort(int $id, ?int $prevId, ?int $nextId, string $locale): void
 	{
 		$this->mapper->changeSort('position', $id, $prevId, $nextId);
 		$main = $this->getByUrl(null, $locale);

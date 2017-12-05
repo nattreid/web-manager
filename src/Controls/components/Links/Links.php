@@ -13,6 +13,8 @@ use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
 use NAttreid\WebManager\Model\PagesLinks\PageLink;
 use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
+use Nette\Application\AbortException;
+use Nette\Application\BadRequestException;
 use Nette\Application\UI\Control;
 use Nette\Utils\ArrayHash;
 use Nextras\Application\UI\SecuredLinksControlTrait;
@@ -69,6 +71,9 @@ class Links extends Control
 		$this->page = $page;
 	}
 
+	/**
+	 * @throws AbortException
+	 */
 	private function checkAjax()
 	{
 		if (!$this->presenter->isAjax()) {
@@ -79,7 +84,9 @@ class Links extends Control
 	/* ********************************************************************************************* */
 	/* ****************************************** Groups ******************************************* */
 
-	/** @secured */
+	/** @secured
+	 * @throws AbortException
+	 */
 	public function handleLinkGroupAdd()
 	{
 		$this->checkAjax();
@@ -87,7 +94,11 @@ class Links extends Control
 		$this->redrawControl();
 	}
 
-	/** @secured */
+	/** @secured
+	 * @param int $id
+	 * @throws AbortException
+	 * @throws BadRequestException
+	 */
 	public function handleLinkGroupEdit(int $id)
 	{
 		$this->checkAjax();
@@ -103,7 +114,10 @@ class Links extends Control
 		$this->redrawControl();
 	}
 
-	/** @secured */
+	/** @secured
+	 * @param int|int[] $id
+	 * @throws AbortException
+	 */
 	public function handleLinkGroupDelete($id)
 	{
 		$this->checkAjax();
@@ -117,14 +131,24 @@ class Links extends Control
 		$this['linkGroups']->reload();
 	}
 
-	/** @secured */
+	/** @secured
+	 * @param int|null $item_id
+	 * @param int|null $prev_id
+	 * @param int|null $next_id
+	 * @throws AbortException
+	 * @throws \Nextras\Dbal\DriverException
+	 * @throws \Nextras\Dbal\QueryException
+	 */
 	public function handleLinkGroupSort(int $item_id = null, $prev_id = null, $next_id = null): void
 	{
 		$this->checkAjax();
-		$this->orm->pagesLinksGroups->changeSort($item_id, $prev_id, $next_id);
+		$this->orm->pagesLinksGroups->changeSort((int) $item_id, (int) $prev_id, (int) $next_id);
 	}
 
-	/** @secured */
+	/** @secured
+	 * @param int $id
+	 * @throws AbortException
+	 */
 	public function handleLinkGroupVisibility(int $id)
 	{
 		$this->checkAjax();
@@ -134,7 +158,9 @@ class Links extends Control
 		$this['linkGroups']->redrawItem($id);
 	}
 
-	/** @secured */
+	/** @secured
+	 * @throws AbortException
+	 */
 	public function handleBack()
 	{
 		$this->checkAjax();
@@ -175,6 +201,12 @@ class Links extends Control
 		return $form;
 	}
 
+	/**
+	 * @param Form $form
+	 * @param ArrayHash $values
+	 * @throws AbortException
+	 * @throws BadRequestException
+	 */
 	public function saveLinkGroup(Form $form, ArrayHash $values)
 	{
 		$this->checkAjax();
@@ -195,6 +227,10 @@ class Links extends Control
 		$this->handleLinkGroupEdit($group->id);
 	}
 
+	/**
+	 * @return DataGrid
+	 * @throws \Ublaboo\DataGrid\Exception\DataGridException
+	 */
 	protected function createComponentLinkGroups(): DataGrid
 	{
 		$grid = $this->gridFactory->create();
@@ -237,7 +273,9 @@ class Links extends Control
 	/* ********************************************************************************************* */
 	/* ******************************************* Links ******************************************* */
 
-	/** @secured */
+	/** @secured
+	 * @throws AbortException
+	 */
 	public function handleLinkAdd()
 	{
 		$this->checkAjax();
@@ -246,7 +284,11 @@ class Links extends Control
 		$this->redrawControl();
 	}
 
-	/** @secured */
+	/** @secured
+	 * @param int $id
+	 * @throws AbortException
+	 * @throws BadRequestException
+	 */
 	public function handleLinkEdit(int $id)
 	{
 		$this->checkAjax();
@@ -262,7 +304,10 @@ class Links extends Control
 		$this->redrawControl();
 	}
 
-	/** @secured */
+	/** @secured
+	 * @param int|int[] $id
+	 * @throws AbortException
+	 */
 	public function handleLinkDelete($id)
 	{
 		$this->checkAjax();
@@ -276,14 +321,24 @@ class Links extends Control
 		$this['links']->reload();
 	}
 
-	/** @secured */
+	/** @secured
+	 * @param int|null $item_id
+	 * @param int|null $prev_id
+	 * @param int|null $next_id
+	 * @throws AbortException
+	 * @throws \Nextras\Dbal\DriverException
+	 * @throws \Nextras\Dbal\QueryException
+	 */
 	public function handleLinkSort(int $item_id = null, $prev_id = null, $next_id = null): void
 	{
 		$this->checkAjax();
-		$this->orm->pagesLinks->changeSort($item_id, $prev_id, $next_id);
+		$this->orm->pagesLinks->changeSort((int) $item_id, (int) $prev_id, (int) $next_id);
 	}
 
-	/** @secured */
+	/** @secured
+	 * @param int $id
+	 * @throws AbortException
+	 */
 	public function handleLinkVisibility(int $id)
 	{
 		$this->checkAjax();
@@ -334,6 +389,12 @@ class Links extends Control
 		return $form;
 	}
 
+	/**
+	 * @param Form $form
+	 * @param ArrayHash $values
+	 * @throws AbortException
+	 * @throws BadRequestException
+	 */
 	public function saveLink(Form $form, ArrayHash $values)
 	{
 		$this->checkAjax();
@@ -356,6 +417,10 @@ class Links extends Control
 		$this->handleLinkEdit($link->id);
 	}
 
+	/**
+	 * @return DataGrid
+	 * @throws \Ublaboo\DataGrid\Exception\DataGridException
+	 */
 	protected function createComponentLinks(): DataGrid
 	{
 		$grid = $this->gridFactory->create();

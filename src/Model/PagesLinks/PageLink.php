@@ -6,6 +6,7 @@ namespace NAttreid\WebManager\Model\PagesLinks;
 
 use NAttreid\ImageStorage\ImageStorage;
 use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
+use Nextras\Dbal\QueryException;
 use Nextras\Orm\Entity\Entity;
 
 /**
@@ -38,6 +39,9 @@ class PageLink extends Entity
 		$this->storage->delete($this->image);
 	}
 
+	/**
+	 * @throws QueryException
+	 */
 	protected function onBeforeInsert()
 	{
 		if (!isset($this->position)) {

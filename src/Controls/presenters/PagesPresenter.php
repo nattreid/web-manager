@@ -17,7 +17,10 @@ use NAttreid\WebManager\Components\Links;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
 use NAttreid\WebManager\Services\PageService;
+use Nette\Application\AbortException;
 use Nette\Utils\ArrayHash;
+use Nextras\Dbal\DriverException;
+use Nextras\Dbal\QueryException;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Model\Model;
@@ -74,6 +77,9 @@ class PagesPresenter extends BasePresenter
 		$this->linksFactory = $linksFactory;
 	}
 
+	/**
+	 * @throws AbortException
+	 */
 	protected function startup(): void
 	{
 		parent::startup();
@@ -82,6 +88,10 @@ class PagesPresenter extends BasePresenter
 		$this->viewLinks = $this->user->isAllowed('webManager.web.pages.links', Acl::PRIVILEGE_VIEW);
 	}
 
+	/**
+	 * @param string|null $backlink
+	 * @throws AbortException
+	 */
 	public function handleBack(string $backlink = null): void
 	{
 		$this->redirect('default');
@@ -91,6 +101,7 @@ class PagesPresenter extends BasePresenter
 	 * Smazani stranky
 	 * @param int $id
 	 * @secured
+	 * @throws AbortException
 	 */
 	public function handleDelete(int $id): void
 	{
@@ -110,10 +121,13 @@ class PagesPresenter extends BasePresenter
 
 	/**
 	 * Serazeni
-	 * @param int $item_id
-	 * @param int $prev_id
-	 * @param int $next_id
-	 * @param int $parent_id
+	 * @param int|null $item_id
+	 * @param int|null $prev_id
+	 * @param int|null $next_id
+	 * @param int|null $parent_id
+	 * @throws AbortException
+	 * @throws DriverException
+	 * @throws QueryException
 	 */
 	public function handleSort(int $item_id = null, $prev_id = null, $next_id = null, $parent_id = null): void
 	{
@@ -123,7 +137,7 @@ class PagesPresenter extends BasePresenter
 				$page->parent = $parent_id;
 				$this->orm->persistAndFlush($page);
 
-				$this->orm->pages->changeSort($item_id, $prev_id, $next_id, $this->locale);
+				$this->orm->pages->changeSort((int) $item_id, (int) $prev_id, (int) $next_id, $this->locale);
 			}
 		} else {
 			$this->terminate();
@@ -134,6 +148,7 @@ class PagesPresenter extends BasePresenter
 	 * Nastavi viditelnost
 	 * @param int $id
 	 * @secured
+	 * @throws AbortException
 	 */
 	public function handleVisibility(int $id)
 	{
@@ -184,6 +199,7 @@ class PagesPresenter extends BasePresenter
 	/**
 	 * Editace stranky
 	 * @param int $id
+	 * @throws \Nette\Application\BadRequestException
 	 */
 	public function actionEdit(int $id): void
 	{
@@ -198,6 +214,9 @@ class PagesPresenter extends BasePresenter
 		$gallery->setNamespace('page/' . $this->page->url);
 	}
 
+	/**
+	 * @param string|null $tab
+	 */
 	public function renderEdit(string $tab = null): void
 	{
 		$page = $this->page;
@@ -377,6 +396,7 @@ class PagesPresenter extends BasePresenter
 	/**
 	 * Seznam stranek
 	 * @return DataGrid
+	 * @throws \Ublaboo\DataGrid\Exception\DataGridException
 	 */
 	protected function createComponentList(): DataGrid
 	{

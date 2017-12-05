@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NAttreid\WebManager\Presenters;
 
 use NAttreid\Form\Form;
+use Nette\Application\AbortException;
 use Nette\Utils\ArrayHash;
 
 /**
@@ -54,6 +55,7 @@ class SettingsPresenter extends BasePresenter
 	 * Ulozeni hlavniho nastaveni
 	 * @param Form $form
 	 * @param array $values
+	 * @throws AbortException
 	 */
 	public function settingsFormSucceeded(Form $form, ArrayHash $values): void
 	{

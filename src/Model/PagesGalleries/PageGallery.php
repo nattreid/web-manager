@@ -6,6 +6,7 @@ namespace NAttreid\WebManager\Model\PagesGalleries;
 
 use NAttreid\ImageStorage\ImageStorage;
 use NAttreid\WebManager\Model\Pages\Page;
+use Nextras\Dbal\QueryException;
 use Nextras\Orm\Entity\Entity;
 
 /**
@@ -33,6 +34,9 @@ class PageGallery extends Entity
 		$this->storage->delete($this->name);
 	}
 
+	/**
+	 * @throws QueryException
+	 */
 	protected function onBeforeInsert(): void
 	{
 		if (!isset($this->position)) {

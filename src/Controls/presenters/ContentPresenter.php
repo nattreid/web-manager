@@ -9,6 +9,8 @@ use NAttreid\Form\Form;
 use NAttreid\Security\Model\Acl\Acl;
 use NAttreid\WebManager\Model\Content\Content;
 use NAttreid\WebManager\Model\Orm;
+use Nette\Application\AbortException;
+use Nette\Application\BadRequestException;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Model\Model;
@@ -41,12 +43,19 @@ class ContentPresenter extends BasePresenter
 		$this->localeService = $localeService;
 	}
 
+	/**
+	 * @throws AbortException
+	 */
 	protected function startup(): void
 	{
 		parent::startup();
 		$this->editConst = $this->user->isAllowed('webManager.web.content.edit', Acl::PRIVILEGE_EDIT);
 	}
 
+	/**
+	 * @param string|null $backlink
+	 * @throws AbortException
+	 */
 	public function handleBack(string $backlink = null): void
 	{
 		$this->redirect('default');
@@ -56,6 +65,7 @@ class ContentPresenter extends BasePresenter
 	 * Smazani obsahu
 	 * @param int $id
 	 * @secured
+	 * @throws AbortException
 	 */
 	public function handleDelete(int $id): void
 	{
@@ -71,6 +81,7 @@ class ContentPresenter extends BasePresenter
 	/**
 	 * Smaze obsahy
 	 * @param array $ids
+	 * @throws AbortException
 	 */
 	public function deleteContent(array $ids): void
 	{
@@ -86,6 +97,9 @@ class ContentPresenter extends BasePresenter
 		}
 	}
 
+	/**
+	 * @throws BadRequestException
+	 */
 	public function actionAdd(): void
 	{
 		if (!$this->editConst) {
@@ -107,6 +121,7 @@ class ContentPresenter extends BasePresenter
 	/**
 	 * Editace obsahu
 	 * @param int $id
+	 * @throws BadRequestException
 	 */
 	public function actionEdit(int $id): void
 	{
@@ -201,6 +216,7 @@ class ContentPresenter extends BasePresenter
 	/**
 	 * Seznam obsahu
 	 * @return DataGrid
+	 * @throws \Ublaboo\DataGrid\Exception\DataGridException
 	 */
 	protected function createComponentList(): DataGrid
 	{

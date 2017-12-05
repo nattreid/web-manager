@@ -7,6 +7,7 @@ namespace NAttreid\WebManager\Model\PagesGalleries;
 use NAttreid\Orm\Structure\Table;
 use NAttreid\WebManager\Model\Mapper;
 use NAttreid\WebManager\Model\Pages\PagesMapper;
+use Nextras\Dbal\QueryException;
 
 /**
  * Class PagesGalleriesMapper
@@ -34,8 +35,9 @@ class PagesGalleriesMapper extends Mapper
 
 	/**
 	 * Vrati nejvetsi pozici
-	 * @param int $page
+	 * @param int $pageId
 	 * @return int
+	 * @throws QueryException
 	 */
 	public function getMaxPosition(int $pageId): int
 	{

@@ -7,6 +7,7 @@ namespace NAttreid\WebManager\Model\PagesLinksGroups;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
 use NAttreid\WebManager\Model\PagesLinks\PageLink;
+use Nextras\Dbal\QueryException;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Entity\Entity;
 use Nextras\Orm\Relationships\OneHasMany;
@@ -28,6 +29,9 @@ use Nextras\Orm\Relationships\OneHasMany;
  */
 class PageLinkGroup extends Entity
 {
+	/**
+	 * @throws QueryException
+	 */
 	protected function onBeforeInsert()
 	{
 		if (!isset($this->position)) {
