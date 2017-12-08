@@ -25,7 +25,7 @@ class TagsHook extends HookFactory
 		$form = $this->formFactory->create();
 		$form->setAjaxRequest();
 
-		$form->addTextArea('tags', 'webManager.web.hooks.tags.content')
+		$form->addTextArea('tags', 'webManager.web.hooks.tags.content', null, 20)
 			->setDefaultValue($this->configurator->tags ?: null);
 
 		$form->addSubmit('save', 'form.save');
