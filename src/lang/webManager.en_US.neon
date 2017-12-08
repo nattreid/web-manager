@@ -60,3 +60,6 @@ web:
 		deleteLogo: "Delete logo"
 	hooks:
 		title: "Hooks"
+		tags:
+			title: "Tags"
+			content: "Content"

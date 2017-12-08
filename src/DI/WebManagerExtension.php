@@ -11,6 +11,7 @@ use NAttreid\WebManager\Components\ILinksFactory;
 use NAttreid\WebManager\Components\Links;
 use NAttreid\WebManager\Services\Hooks\HookFactory;
 use NAttreid\WebManager\Services\Hooks\HookService;
+use NAttreid\WebManager\Services\Hooks\TagsHook;
 use NAttreid\WebManager\Services\PageService;
 use Nette\DI\ServiceDefinition;
 use Nette\DI\Statement;
@@ -54,6 +55,9 @@ class WebManagerExtension extends ModuleExtension
 
 		$builder->addDefinition($this->prefix('hookService'))
 			->setType(HookService::class);
+
+		$builder->addDefinition($this->prefix('hook'))
+			->setType(TagsHook::class);
 
 		$gallery = new GalleryExtension();
 		$gallery->setCompiler($this->compiler, 'webManagerGallery');

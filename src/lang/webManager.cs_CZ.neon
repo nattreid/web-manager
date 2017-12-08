@@ -60,3 +60,6 @@ web:
 		deleteLogo: "Smazat logo"
 	hooks:
 		title: "Propojení"
+		tags:
+			title: "Tagy"
+			content: "Obsah"

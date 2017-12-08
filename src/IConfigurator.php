@@ -13,6 +13,7 @@ namespace NAttreid\WebManager;
  * @property string $title nazev
  * @property string $description popis
  * @property string $logo logo
+ * @property string $tags tagy
  *
  * @author Attreid <attreid@gmail.com>
  */
