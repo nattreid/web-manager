@@ -29,12 +29,12 @@ class PageLink extends Entity
 	/** @var ImageStorage */
 	private $storage;
 
-	public function injectStorage(ImageStorage $storage)
+	public function injectStorage(ImageStorage $storage): void
 	{
 		$this->storage = $storage;
 	}
 
-	protected function onBeforeRemove()
+	public function onBeforeRemove(): void
 	{
 		$this->storage->delete($this->image);
 	}
@@ -42,7 +42,7 @@ class PageLink extends Entity
 	/**
 	 * @throws QueryException
 	 */
-	protected function onBeforeInsert()
+	public function onBeforeInsert(): void
 	{
 		if (!isset($this->position)) {
 			/* @var $repo PagesLinksRepository */

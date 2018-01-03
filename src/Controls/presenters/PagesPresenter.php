@@ -23,6 +23,7 @@ use Nextras\Dbal\DriverException;
 use Nextras\Dbal\QueryException;
 use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Collection\ICollection;
+use Nextras\Orm\Entity\ToArrayConverter;
 use Nextras\Orm\Model\Model;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -223,7 +224,7 @@ class PagesPresenter extends BasePresenter
 		$this->addBreadcrumbLinkUntranslated($page->name);
 
 		$form = $this['editForm'];
-		$form->setDefaults($page->toArray($page::TO_ARRAY_RELATIONSHIP_AS_ID));
+		$form->setDefaults($page->toArray(ToArrayConverter::RELATIONSHIP_AS_ID));
 		if ($page->isHomePage) {
 			$form['homePage']->setDefaultValue(true);
 		}

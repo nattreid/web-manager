@@ -29,7 +29,7 @@ class PageGallery extends Entity
 		$this->storage = $storage;
 	}
 
-	protected function onBeforeRemove(): void
+	public function onBeforeRemove(): void
 	{
 		$this->storage->delete($this->name);
 	}
@@ -37,7 +37,7 @@ class PageGallery extends Entity
 	/**
 	 * @throws QueryException
 	 */
-	protected function onBeforeInsert(): void
+	public function onBeforeInsert(): void
 	{
 		if (!isset($this->position)) {
 			/* @var $repo PagesGalleriesRepository */

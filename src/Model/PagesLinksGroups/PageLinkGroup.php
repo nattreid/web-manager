@@ -32,7 +32,7 @@ class PageLinkGroup extends Entity
 	/**
 	 * @throws QueryException
 	 */
-	protected function onBeforeInsert()
+	public function onBeforeInsert(): voic
 	{
 		if (!isset($this->position)) {
 			/* @var $repo PagesLinksGroupsRepository */
@@ -44,10 +44,10 @@ class PageLinkGroup extends Entity
 	/**
 	 * @return ICollection|PageLink[]
 	 */
-	protected function getterVisibleLinks(): ICollection
+	public function getterVisibleLinks(): ICollection
 	{
 		/* @var $orm Orm */
-		$orm = $this->getModel();
+		$orm = $this->getRepository()->getModel();
 		return $orm->pagesLinks->findVisible($this->id);
 	}
 

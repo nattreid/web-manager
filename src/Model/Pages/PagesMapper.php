@@ -117,7 +117,7 @@ class PagesMapper extends Mapper
 			$builder = $this->builder()
 				->andWhere('[id] = %i', $urls[$url])
 				->andWhere('[localeId] = %i', $eLocale->id);
-			return $this->fetch($builder);
+			return $this->toEntity($builder);
 		}
 		return null;
 	}

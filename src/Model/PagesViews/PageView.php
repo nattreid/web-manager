@@ -13,7 +13,7 @@ use Nextras\Orm\Relationships\ManyHasMany;
  * PageView
  *
  * @property int $id {primary}
- * @property ManyHasMany|Page[] $pages {m:n Page::$views}
+ * @property ManyHasMany|Page[] $pages {m:m Page::$views}
  * @property string $name
  * @property string $translatedName {virtual}
  * @property string $untranslatedName {virtual}

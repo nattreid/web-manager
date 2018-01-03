@@ -25,7 +25,7 @@ class PagesLinksRepository extends Repository
 	 * Returns possible entity class names for current repository.
 	 * @return string[]
 	 */
-	public static function getEntityClassNames()
+	public static function getEntityClassNames(): array
 	{
 		return [PageLink::class];
 	}
@@ -35,7 +35,7 @@ class PagesLinksRepository extends Repository
 	 * @return int
 	 * @throws QueryException
 	 */
-	public function getMaxPosition()
+	public function getMaxPosition(): int
 	{
 		return $this->mapper->getMax('position');
 	}
