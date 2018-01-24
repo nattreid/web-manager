@@ -10,6 +10,10 @@ webManager:
     homepage: 'Homepage:default'
     page: 'Homepage:page'
     module: 'Front'
+    
+    gallery: # nastaveni galerie
+        maxFileSize: 5 #MB
+        maxFiles: 20
 ```
 
 ## Pages

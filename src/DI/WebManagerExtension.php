@@ -59,8 +59,13 @@ class WebManagerExtension extends ModuleExtension
 		$builder->addDefinition($this->prefix('hook'))
 			->setType(TagsHook::class);
 
+
+		$gConfig=$config['gallery'];
+
 		$gallery = new GalleryExtension();
 		$gallery->setCompiler($this->compiler, 'webManagerGallery');
+		$gallery->setMaxFiles($gConfig['maxFiles']);
+		$gallery->setMaxFileSize($gConfig['maxFileSize']);
 		$gallery->loadConfiguration();
 	}
 
