@@ -60,7 +60,7 @@ class WebManagerExtension extends ModuleExtension
 			->setType(TagsHook::class);
 
 
-		$gConfig=$config['gallery'];
+		$gConfig = $config['gallery'];
 
 		$gallery = new GalleryExtension();
 		$gallery->setCompiler($this->compiler, 'webManagerGallery');
