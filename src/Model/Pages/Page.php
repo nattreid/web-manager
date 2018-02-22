@@ -49,7 +49,7 @@ use Nextras\Orm\Relationships\OneHasMany;
  * @property string|null $keywords
  * @property string|null $description
  * @property string|null $content
- * @property ManyHasMany|PageView[] $views {m:n PageView::$pages, isMain=true}
+ * @property ManyHasMany|PageView[] $views {m:m PageView::$pages, isMain=true}
  * @property int $position
  * @property bool $visible {default 1}
  * @property OneHasMany|PageGallery[] $images {1:m PageGallery::$page, orderBy=position, cascade=[persist, remove]}
@@ -139,7 +139,7 @@ class Page extends Entity
 	/**
 	 * @throws QueryException
 	 */
-	protected function onBeforeInsert(): void
+	public function onBeforeInsert(): void
 	{
 		/* @var $repo PagesRepository */
 		$repo = $this->getRepository();
@@ -153,7 +153,7 @@ class Page extends Entity
 	/**
 	 * @throws QueryException
 	 */
-	protected function onBeforeUpdate()
+	public function onBeforeUpdate()
 	{
 		/* @var $repo PagesRepository */
 		$repo = $this->getRepository();
@@ -277,7 +277,7 @@ class Page extends Entity
 	protected function getterVisibleLinkGroups(): ICollection
 	{
 		/* @var $orm Orm */
-		$orm = $this->getModel();
+		$orm = $this->getRepository()->getModel();
 		return $orm->pagesLinksGroups->findVisible($this->id);
 	}
 }

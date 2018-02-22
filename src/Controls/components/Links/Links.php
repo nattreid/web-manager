@@ -18,6 +18,7 @@ use Nette\Application\BadRequestException;
 use Nette\Application\UI\Control;
 use Nette\Utils\ArrayHash;
 use Nextras\Application\UI\SecuredLinksControlTrait;
+use Nextras\Orm\Entity\ToArrayConverter;
 use Nextras\Orm\Model\Model;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -110,7 +111,7 @@ class Links extends Control
 			$this->presenter->error();
 		}
 
-		$this['linkGroupForm']->setDefaults($group->toArray($group::TO_ARRAY_RELATIONSHIP_AS_ID));
+		$this['linkGroupForm']->setDefaults($group->toArray(ToArrayConverter::RELATIONSHIP_AS_ID));
 		$this->redrawControl();
 	}
 
@@ -300,7 +301,7 @@ class Links extends Control
 		}
 
 		$form = $this['linkForm'];
-		$form->setDefaults($link->toArray($link::TO_ARRAY_RELATIONSHIP_AS_ID));
+		$form->setDefaults($link->toArray(ToArrayConverter::RELATIONSHIP_AS_ID));
 		$this->redrawControl();
 	}
 

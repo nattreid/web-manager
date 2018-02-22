@@ -56,7 +56,7 @@ class Content extends Entity
 	public function setLocale(string $locale): void
 	{
 		/* @var $orm Orm */
-		$orm = $this->getModel();
+		$orm = $this->getRepository()->getModel();
 		$this->locale = $orm->locales->getByLocale($locale);
 	}
 

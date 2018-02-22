@@ -13,6 +13,7 @@ use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
 use Nette\Utils\ArrayHash;
 use Nextras\Dbal\UniqueConstraintViolationException;
+use Nextras\Orm\Entity\ToArrayConverter;
 use Nextras\Orm\Model\Model;
 use Ublaboo\DataGrid\DataGrid;
 
@@ -135,7 +136,7 @@ class ContentPresenter extends BasePresenter
 	{
 		$content = $this->content;
 		$this->addBreadcrumbLinkUntranslated($content->name);
-		$this['editForm']->setDefaults($content->toArray($content::TO_ARRAY_RELATIONSHIP_AS_ID));
+		$this['editForm']->setDefaults($content->toArray(ToArrayConverter::RELATIONSHIP_AS_ID));
 	}
 
 	/**
