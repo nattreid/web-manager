@@ -11,7 +11,7 @@ use NAttreid\Orm\Structure\Table;
 use NAttreid\WebManager\Model\Mapper;
 use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use Nette\Caching\Cache;
-use Nextras\Dbal\QueryBuilder\QueryBuilder;
+use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Entity\IEntity;
 
 /**
@@ -85,15 +85,16 @@ class PagesMapper extends Mapper
 	/**
 	 * Vrati lokalizovane stranky bez HP
 	 * @param string $locale
-	 * @return QueryBuilder
+	 * @return ICollection
 	 */
-	public function findByLocale(string $locale): QueryBuilder
+	public function findByLocale(string $locale): ICollection
 	{
-		return $this->builder()
+		$builder = $this->builder()
 			->innerJoin('_pages', '[_locales]', 'l', '_pages.localeId = l.id')
 			->andWhere('[url] IS NOT NULL')
 			->andWhere('[visible] = %i', 1)
 			->andWhere('[l.name] = %s', $locale);
+		return $this->toCollection($builder);
 	}
 
 	/**
