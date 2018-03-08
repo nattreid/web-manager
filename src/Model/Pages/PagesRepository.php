@@ -16,6 +16,8 @@ use Nextras\Orm\Collection\ICollection;
  * @method Page getByUrl(?string $url, string $locale) Vrati stranku podle url
  * @method Page getById($id)
  * @method ICollection|Page[] findByLocale(string $locale): ICollection
+ * @method void cleanCache() Smaze cache
+ * @method bool exists(string $url = null) Je URL v databazi
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -96,16 +98,6 @@ class PagesRepository extends Repository
 	}
 
 	/**
-	 * Je URL v databazi
-	 * @param string $url
-	 * @return bool
-	 */
-	public function exists(string $url = null): bool
-	{
-		return $this->mapper->exists($url);
-	}
-
-	/**
 	 * Vrati nejvetsi pozici
 	 * @return int
 	 * @throws QueryException
@@ -143,13 +135,4 @@ class PagesRepository extends Repository
 			$this->persistAndFlush($main);
 		}
 	}
-
-	/**
-	 * Smaze cache
-	 */
-	public function cleanCache(): void
-	{
-		$this->mapper->cleanCache();
-	}
-
 }

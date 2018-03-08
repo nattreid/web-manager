@@ -10,26 +10,15 @@ use Nextras\Dbal\QueryException;
 /**
  * Class PagesGalleriesRepository
  *
+ * @method int getMaxPosition(int $pageId) Vrati nejvetsi pozici
+ *
  * @author Attreid <attreid@gmail.com>
  */
 class PagesGalleriesRepository extends Repository
 {
-	/** @var PagesGalleriesMapper */
-	protected $mapper;
 
 	public static function getEntityClassNames(): array
 	{
 		return [PageGallery::class];
-	}
-
-	/**
-	 * Vrati nejvetsi pozici
-	 * @param int $pageId
-	 * @return int
-	 * @throws QueryException
-	 */
-	public function getMaxPosition(int $pageId): int
-	{
-		return $this->mapper->getMaxPosition($pageId);
 	}
 }
