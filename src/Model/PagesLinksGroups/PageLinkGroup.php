@@ -32,7 +32,7 @@ class PageLinkGroup extends Entity
 	/**
 	 * @throws QueryException
 	 */
-	public function onBeforeInsert(): voic
+	public function onBeforeInsert(): void
 	{
 		if (!isset($this->position)) {
 			/* @var $repo PagesLinksGroupsRepository */
