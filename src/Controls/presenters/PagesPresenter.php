@@ -111,6 +111,7 @@ class PagesPresenter extends BasePresenter
 			$parent = $page->parent;
 			$this->orm->pages->removeAndFlush($page);
 			if ($parent !== null) {
+				$this['list']->setDataSource($this->orm->pages->findById($parent->id));
 				$this['list']->redrawItem($parent->id);
 			} else {
 				$this['list']->redrawControl();
@@ -158,6 +159,7 @@ class PagesPresenter extends BasePresenter
 			$page->visible = !$page->visible;
 			$this->orm->persistAndFlush($page);
 
+			$this['list']->setDataSource($this->orm->pages->findById($id));
 			$this['list']->redrawItem($id);
 		} else {
 			$this->terminate();
