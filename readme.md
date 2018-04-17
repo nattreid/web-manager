@@ -9,6 +9,7 @@ extensions:
 webManager:
     homepage: 'Homepage:default'
     page: 'Homepage:page'
+    onePage: 'Homepage:onePage'
     module: 'Front'
     
     gallery: # nastaveni galerie
