@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace NAttreid\WebManager\Services;
 
 use Kdyby\Translation\Translator;
+use NAttreid\Cms\Configurator\Configurator;
+use NAttreid\WebManager\IConfigurator;
 use NAttreid\WebManager\Model\Content\Content;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
@@ -21,6 +23,7 @@ use Nextras\Orm\Model\Model;
  * Sluzba obsahu manageru
  *
  * @property-read string $pageLink
+ * @property-read string $onePageLink
  *
  * @author Attreid <attreid@gmail.com>
  */
@@ -38,18 +41,26 @@ class PageService
 	private $pageLink;
 
 	/** @var string */
+	private $onePageLink;
+
+	/** @var string */
 	private $module;
 
 	/** @var Translator */
 	private $translator;
 
-	public function __construct(string $defaultLink, string $pageLink, string $module, Model $orm, Translator $translator)
+	/** @var IConfigurator */
+	private $configurator;
+
+	public function __construct(string $defaultLink, string $pageLink, string $onePageLink, string $module, Model $orm, Translator $translator, Configurator $configurator)
 	{
 		$this->defaultLink = $defaultLink;
 		$this->pageLink = $pageLink;
+		$this->onePageLink = $onePageLink;
 		$this->module = $module;
 		$this->orm = $orm;
 		$this->translator = $translator;
+		$this->configurator = $configurator;
 	}
 
 	/**
@@ -93,9 +104,16 @@ class PageService
 	 */
 	public function createDefaultPageRoutes(IRouter $routes, string $url): void
 	{
-		$routes[] = new Route($url, $this->defaultLink);
-		$routes[] = new Route($url . 'index.php', $this->defaultLink, Route::ONE_WAY);
-		$routes[] = new Route($url . '<presenter>[/<action>]', $this->defaultLink);
+		if ($this->configurator->onePage) {
+			$routes[] = new Route($url, $this->onePageLink);
+			$routes[] = new Route($url . 'index.php', $this->onePageLink, Route::ONE_WAY);
+			$routes[] = new Route($url . '<presenter>[/<action>]', $this->defaultLink);
+
+		} else {
+			$routes[] = new Route($url, $this->defaultLink);
+			$routes[] = new Route($url . 'index.php', $this->defaultLink, Route::ONE_WAY);
+			$routes[] = new Route($url . '<presenter>[/<action>]', $this->defaultLink);
+		}
 	}
 
 	/**

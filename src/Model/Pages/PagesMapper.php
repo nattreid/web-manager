@@ -13,6 +13,7 @@ use NAttreid\WebManager\Model\PagesViews\PagesViewsMapper;
 use Nette\Caching\Cache;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Entity\IEntity;
+use Throwable;
 
 /**
  * Pages Mapper
@@ -102,8 +103,9 @@ class PagesMapper extends Mapper
 	 * @param string|null $url
 	 * @param string|Locale $locale
 	 * @return IEntity|Page|null
+	 * @throws Throwable
 	 */
-	public function getByUrl(?string $url, string $locale): ?Page
+	public function getByUrl(?string $url, $locale): ?Page
 	{
 		/* @var $orm Orm */
 		$orm = $this->getRepository()->getModel();
@@ -127,6 +129,7 @@ class PagesMapper extends Mapper
 	 * Je URL v databazi
 	 * @param string|null $url
 	 * @return bool
+	 * @throws Throwable
 	 */
 	public function exists(string $url = null): bool
 	{
@@ -140,6 +143,7 @@ class PagesMapper extends Mapper
 
 	/**
 	 * @return string[]
+	 * @throws Throwable
 	 */
 	private function getPageList(): array
 	{

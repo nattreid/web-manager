@@ -25,7 +25,9 @@ use Nextras\Dbal\UniqueConstraintViolationException;
 use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Entity\ToArrayConverter;
 use Nextras\Orm\Model\Model;
+use Tracy\Debugger;
 use Ublaboo\DataGrid\DataGrid;
+use Ublaboo\DataGrid\Exception\DataGridException;
 
 /**
  * Stranky
@@ -396,10 +398,37 @@ class PagesPresenter extends BasePresenter
 		$this->restoreBacklink();
 	}
 
+	protected function createComponentSetting(): Form
+	{
+		$form = $this->formFactory->create();
+		$form->setAjaxRequest();
+
+		$form->addRadioList('onePage', 'webManager.web.pages.pageView', [
+			0 => 'webManager.web.pages.separatelyPage',
+			1 => 'webManager.web.pages.onePage'
+		])->setDefaultValue($this->configurator->onePage ? 1 : 0);
+
+		$form->addSubmit('save', 'form.save');
+
+		$form->onSuccess[] = [$this, 'saveSetting'];
+
+		return $form;
+	}
+
+	public function saveSetting(Form $form, ArrayHash $values): void
+	{
+		if ($this->isAjax()) {
+			$this->configurator->onePage = $values->onePage;
+			$this->flashNotifier->success('default.dataSaved');
+		} else {
+			$this->terminate();
+		}
+	}
+
 	/**
 	 * Seznam stranek
 	 * @return DataGrid
-	 * @throws \Ublaboo\DataGrid\Exception\DataGridException
+	 * @throws DataGridException
 	 */
 	protected function createComponentList(): DataGrid
 	{

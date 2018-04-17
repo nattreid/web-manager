@@ -14,6 +14,7 @@ namespace NAttreid\WebManager;
  * @property string $description popis
  * @property string $logo logo
  * @property string $tags tagy
+ * @property bool $onePage vsechny stranky do jedne
  *
  * @author Attreid <attreid@gmail.com>
  */

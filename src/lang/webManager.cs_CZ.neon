@@ -20,6 +20,9 @@ web:
 		gallery: "Galerie"
 		links: "Odkazy"
 		visibility: "Viditelnost"
+		pageView: "Zobrazení stránek"
+		onePage: "Jedna stránka"
+		separatelyPage: "Každá stránka jednotlivě"
 		views:
 			title: "Zobrazení"
 			menu: "Menu"

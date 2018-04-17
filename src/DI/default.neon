@@ -4,6 +4,7 @@ position: 0
 homepage: null
 page: null
 module: null
+onePage: null
 
 gallery:
 	maxFileSize: 5 #MB
