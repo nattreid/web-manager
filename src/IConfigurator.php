@@ -7,8 +7,6 @@ namespace NAttreid\WebManager;
 /**
  * Interface IConfigurator
  *
- * @property bool $cookiePolicy potvrzeni pouzivani cookie
- * @property string $cookiePolicyLink link pro informace o pouzivani cookie
  * @property string $keywords klicova slova
  * @property string $title nazev
  * @property string $description popis

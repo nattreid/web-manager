@@ -16,7 +16,6 @@
   ],
   "dependencies": {
     "nattreid-cms": "~1",
-    "nattreid-cookie-policy": "~1",
     "nattreid-gallery": "~2"
   },
   "resolutions": {

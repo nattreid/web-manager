@@ -53,8 +53,6 @@ web:
 		locale: "Language"
 	settings:
 		title: "Settings"
-		cookiePolicy: "Show cookie policy bar"
-		cookiePolicyLink: "Link for cookie policy information"
 		pagesTitle: "Pages title"
 		keywords: "Key words"
 		description: "Description"

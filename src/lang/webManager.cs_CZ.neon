@@ -53,8 +53,6 @@ web:
 		locale: "Jazyk"
 	settings:
 		title: "Nastavení"
-		cookiePolicy: "Zobrazit potvrzeni používání cookies"
-		cookiePolicyLink: "Link pro informace o používání cookies"
 		pagesTitle: "Název stránek"
 		keywords: "Klíčová slova"
 		description: "Popisek"

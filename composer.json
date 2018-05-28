@@ -14,7 +14,6 @@
   "require": {
     "php": ">= 7.1",
     "nattreid/cms": "~1.0",
-    "nattreid/cookie-policy": "~1.0",
     "nattreid/gallery": "~2.0"
   },
   "require-dev": {
