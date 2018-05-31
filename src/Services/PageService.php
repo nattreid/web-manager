@@ -22,6 +22,7 @@ use Nextras\Orm\Model\Model;
 /**
  * Sluzba obsahu manageru
  *
+ * @property-read string $defaultLink
  * @property-read string $pageLink
  * @property-read string $onePageLink
  *
@@ -134,9 +135,25 @@ class PageService
 	/**
 	 * @return string
 	 */
+	protected function getDefaultLink(): string
+	{
+		return ':' . $this->module . ':' . $this->defaultLink;
+	}
+
+	/**
+	 * @return string
+	 */
 	protected function getPageLink(): string
 	{
 		return ':' . $this->module . ':' . $this->pageLink;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getOnePageLink(): string
+	{
+		return ':' . $this->module . ':' . $this->onePageLink;
 	}
 
 	/**

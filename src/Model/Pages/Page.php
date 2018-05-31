@@ -16,6 +16,7 @@ use NAttreid\WebManager\Services\PageService;
 use Nette\Application\Application;
 use Nette\Application\UI\InvalidLinkException;
 use Nette\Application\UI\Presenter;
+use Nette\Http\Url;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nextras\Dbal\QueryException;
@@ -199,10 +200,16 @@ class Page extends Entity
 	 */
 	protected function getterAbsoluteLink(): string
 	{
+		/* @var $presenter Presenter */
+		$presenter = $this->application->getPresenter();
+
 		$url = $this->completeUrl;
-		if (!$this->isLink) {
-			/* @var $presenter Presenter */
-			$presenter = $this->application->getPresenter();
+		if ($this->isLink) {
+			$u = new Url($url);
+			if (!$u->host) {
+				$url = $presenter->link('//' . $this->pageService->defaultLink) . $url;
+			}
+		} else {
 			$url = $presenter->link('//' . $this->pageService->pageLink, [
 				'url' => $url,
 				$this->routerFactory->variable => $this->locale->name
