@@ -177,8 +177,8 @@ class Links extends Control
 
 		$form->addHidden('id');
 
-		$form->addTextArea('name', 'webManager.web.pages.linkGroup.name')
-			->setAttribute('class', 'ckEditorLine');
+		$form->addTextEditor('name', 'webManager.web.pages.linkGroup.name')
+			->setInline();
 
 		$quantity = [];
 		for ($i = 1; $i <= 20; $i++) {
@@ -358,9 +358,9 @@ class Links extends Control
 		$form->addHidden('id');
 		$form->addHidden('group', $this->groupId);
 
-		$form->addTextArea('name', 'webManager.web.pages.link.name')
-			->setRequired()
-			->setAttribute('class', 'ckEditorLine');
+		$form->addTextEditor('name', 'webManager.web.pages.link.name')
+			->setInline()
+			->setRequired();
 
 		$form->addText('url', 'webManager.web.pages.link.url')
 			->addRule($form::URL)
@@ -373,8 +373,8 @@ class Links extends Control
 			->setRequired()
 			->setNamespace('web-manager-links');
 
-		$form->addTextArea('content', 'webManager.web.pages.link.content')
-			->setAttribute('class', 'ckEditorLine');
+		$form->addTextEditor('content', 'webManager.web.pages.link.content')
+			->setInline();
 
 		$form->addSubmit('save', 'form.save');
 		$form->addLink('back', 'form.back', $this->link('linkGroupEdit', [$this->groupId]))
