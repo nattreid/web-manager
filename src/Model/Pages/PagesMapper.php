@@ -155,7 +155,10 @@ class PagesMapper extends Mapper
 					/* @var $repo PagesRepository */
 					$repo = $this->getRepository();
 					$result = [];
-					$rows = $repo->findAll()->findBy(['isLink' => 0]);
+					$rows = $repo->findAll()->findBy([
+						'isLink' => 0,
+						'visible' => 1
+					]);
 					foreach ($rows as $page) {
 						$result[$page->completeUrl] = $page->id;
 					}
