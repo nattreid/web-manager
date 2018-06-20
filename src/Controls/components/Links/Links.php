@@ -363,7 +363,6 @@ class Links extends Control
 			->setRequired();
 
 		$form->addText('url', 'webManager.web.pages.link.url')
-			->addRule($form::URL)
 			->setRequired();
 
 		$form->addCheckbox('openNewWindow', 'webManager.web.pages.link.openNewWindow');
