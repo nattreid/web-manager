@@ -16,7 +16,9 @@ use NAttreid\WebManager\Services\PageService;
 use Nette\Application\Application;
 use Nette\Application\UI\InvalidLinkException;
 use Nette\Application\UI\Presenter;
+use Nette\Http\Request;
 use Nette\Http\Url;
+use Nette\Http\UrlScript;
 use Nette\InvalidArgumentException;
 use Nette\Utils\Strings;
 use Nextras\Dbal\QueryException;
@@ -25,6 +27,8 @@ use Nextras\Orm\Collection\ICollection;
 use Nextras\Orm\Entity\Entity;
 use Nextras\Orm\Relationships\ManyHasMany;
 use Nextras\Orm\Relationships\OneHasMany;
+use Symfony\Component\Debug\Debug;
+use Tracy\Debugger;
 
 /**
  * Page
@@ -182,16 +186,42 @@ class Page extends Entity
 	 */
 	protected function getterLink(): string
 	{
+		/* @var $presenter Presenter */
+		$presenter = $this->application->getPresenter();
 		$url = $this->completeUrl;
+
 		if (!$this->isLink) {
-			/* @var $presenter Presenter */
-			$presenter = $this->application->getPresenter();
 			$url = $presenter->link($this->pageService->pageLink, [
 				'url' => $url,
 				$this->routerFactory->variable => $this->locale->name
 			]);
+		} else {
+			$httpRequest = $this->createRequest($url);
+			$request = $this->application->getRouter()->match($httpRequest);
+			if ($request) {
+				try {
+					$iMode = $presenter->invalidLinkMode;
+					$presenter->invalidLinkMode = $presenter::INVALID_LINK_EXCEPTION;
+					$url = $presenter->link(':' . $request->presenterName . ':' . $request->parameters['action'], $request->parameters);
+					$presenter->invalidLinkMode = $iMode;
+				} catch (InvalidLinkException $ex) {
+				}
+			}
 		}
 		return $url;
+	}
+
+	private function createRequest(string $url): Request
+	{
+		/* @var $presenter Presenter */
+		$presenter = $this->application->getPresenter();
+		$u = $presenter->getHttpRequest()->getUrl();
+		$urlScript = new UrlScript($url);
+		$urlScript->host = $urlScript->host ?: $u->host;
+		$urlScript->port = $urlScript->port ?: $u->port;
+		$urlScript->scheme = $urlScript->scheme ?: $u->scheme;
+
+		return new Request($urlScript);
 	}
 
 	/**
