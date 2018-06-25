@@ -20,6 +20,7 @@ use Nextras\Orm\Entity\Entity;
  * @property Locale $locale {m:1 Locale, oneSided=true}
  * @property string|null $title
  * @property string|null $image
+ * @property string|null $background
  * @property string|null $keywords
  * @property string|null $description
  * @property string|null $content

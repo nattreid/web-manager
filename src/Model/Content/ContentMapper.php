@@ -32,6 +32,9 @@ class ContentMapper extends Mapper
 		$table->addColumn('image')
 			->varChar(150)
 			->setDefault(null);
+		$table->addColumn('background')
+			->varChar(10)
+			->setDefault(null);
 		$table->addColumn('keywords')
 			->varChar()
 			->setDefault(null);

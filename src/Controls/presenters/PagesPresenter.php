@@ -271,6 +271,7 @@ class PagesPresenter extends BasePresenter
 			->toggle('page-title')
 			->toggle('page-keywords')
 			->toggle('page-image')
+			->toggle('page-background')
 			->toggle('page-description')
 			->toggle('page-content')
 			->toggle('page-homePage');
@@ -318,6 +319,9 @@ class PagesPresenter extends BasePresenter
 			->setNamespace('pages')
 			->setPreview('300x100')
 			->setOption('id', 'page-image');
+
+		$form->addColor('background', 'webManager.web.pages.background')
+			->setOption('id', 'page-background');
 
 		$form->addTextArea('description', 'webManager.web.pages.description')
 			->setOption('id', 'page-description')
@@ -383,6 +387,7 @@ class PagesPresenter extends BasePresenter
 		$page->title = $values->title;
 		$page->keywords = $values->keywords;
 		$page->image = $values->image;
+		$page->background = $values->background;
 		$page->description = $values->description;
 		$page->content = $values->content;
 		$page->views->set($values->views);

@@ -168,6 +168,8 @@ class ContentPresenter extends BasePresenter
 			->setNamespace('content')
 			->setPreview('300x100');
 
+		$form->addColor('background', 'webManager.web.content.background');
+
 		$form->addTextArea('description', 'webManager.web.content.description');
 
 		$form->addTextEditor('content', 'webManager.web.content.content');
@@ -204,6 +206,7 @@ class ContentPresenter extends BasePresenter
 			$content->title = $values->title;
 			$content->keywords = $values->keywords;
 			$content->image = $values->image;
+			$content->background = $values->background;
 			$content->description = $values->description;
 			$content->content = $values->content;
 
