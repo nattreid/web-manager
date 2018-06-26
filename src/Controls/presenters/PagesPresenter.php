@@ -6,6 +6,7 @@ namespace NAttreid\WebManager\Presenters;
 
 use InvalidArgumentException;
 use NAttreid\Cms\LocaleService;
+use NAttreid\Form\Control\Spectrum\Color;
 use NAttreid\Form\Form;
 use NAttreid\Gallery\Control\Gallery;
 use NAttreid\Gallery\Control\IGalleryFactory;
@@ -231,6 +232,10 @@ class PagesPresenter extends BasePresenter
 		$form->setDefaults($page->toArray(ToArrayConverter::RELATIONSHIP_AS_ID));
 		if ($page->isHomePage) {
 			$form['homePage']->setDefaultValue(true);
+		}
+
+		if ($page->background) {
+			$form['background']->setDefaultValue((new Color($page->background))->rgb);
 		}
 
 		if ($tab !== null) {

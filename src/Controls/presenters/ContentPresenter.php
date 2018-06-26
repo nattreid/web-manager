@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NAttreid\WebManager\Presenters;
 
 use NAttreid\Cms\LocaleService;
+use NAttreid\Form\Control\Spectrum\Color;
 use NAttreid\Form\Form;
 use NAttreid\Security\Model\Acl\Acl;
 use NAttreid\WebManager\Model\Content\Content;
@@ -136,7 +137,12 @@ class ContentPresenter extends BasePresenter
 	{
 		$content = $this->content;
 		$this->addBreadcrumbLinkUntranslated($content->name);
-		$this['editForm']->setDefaults($content->toArray(ToArrayConverter::RELATIONSHIP_AS_ID));
+
+		$form = $this['editForm'];
+		$form->setDefaults($content->toArray(ToArrayConverter::RELATIONSHIP_AS_ID));
+		if ($content->background) {
+			$form['background']->setDefaultValue((new Color($content->background))->rgb);
+		}
 	}
 
 	/**
