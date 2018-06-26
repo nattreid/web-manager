@@ -84,6 +84,17 @@ class PagesRepository extends Repository
 	}
 
 	/**
+	 * Vrati stranky pro onePage
+	 * @param $locale
+	 * @return Page[]|ICollection
+	 */
+	public function findOnePage(string $locale): ICollection
+	{
+		return $this->findMenu($locale)
+			->findBy(['isLink' => 0]);
+	}
+
+	/**
 	 * Vrati stranky v paticce
 	 * @param $locale
 	 * @return Page[]|ICollection

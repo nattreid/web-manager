@@ -175,6 +175,15 @@ class PageService
 	}
 
 	/**
+	 * Vrati stranky pro onePage
+	 * @return Page[]|ICollection
+	 */
+	public function findOnePages(): ICollection
+	{
+		return $this->orm->pages->findOnePage($this->translator->getLocale());
+	}
+
+	/**
 	 * Vrati stranky v paticce
 	 * @return Page[]|ICollection
 	 */
