@@ -1,14 +1,15 @@
 {
- "name": "nattreid-web-manager",
- "description": "Web Manager for CMS",
- "repository": {
-  "type": "git",
-  "url": "git@github.com:nattreid/web-manager.git"
- },
- "author": "Attreid",
- "license": "MIT",
- "dependencies": {
-  "nattreid-cms": "~1.6",
-  "nattreid-gallery": "~2.4"
- }
+  "name": "nattreid-web-manager",
+  "description": "Web Manager for CMS",
+  "version": "1.7.3",
+  "repository": {
+	"type": "git",
+	"url": "git@github.com:nattreid/web-manager.git"
+  },
+  "author": "Attreid",
+  "license": "MIT",
+  "dependencies": {
+	"nattreid-cms": "~1.6",
+	"nattreid-gallery": "~2.4"
+  }
 }
