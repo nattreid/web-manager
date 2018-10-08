@@ -8,7 +8,7 @@
  "author": "Attreid",
  "license": "MIT",
  "dependencies": {
-  "nattreid-cms": "~1",
-  "nattreid-gallery": "~2"
+  "nattreid-cms": "~1.6",
+  "nattreid-gallery": "~2.4"
  }
 }
