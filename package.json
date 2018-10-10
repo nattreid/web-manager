@@ -6,7 +6,10 @@
 	"type": "git",
 	"url": "git@github.com:nattreid/web-manager.git"
   },
-  "author": "Attreid",
+  "author": {
+	"name": "Attreid",
+	"email": "attreid@gmail.com"
+  },
   "license": "MIT",
   "dependencies": {
 	"nattreid-cms": "~1.6",
