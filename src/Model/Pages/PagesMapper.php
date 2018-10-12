@@ -151,7 +151,7 @@ class PagesMapper extends Mapper
 	private function getPageList(): array
 	{
 		if ($this->pageList === null) {
-			$key = 'pagesList';
+			$key = 'nattreidWebManagerPagesList';
 			$this->pageList = $this->cache->load($key);
 			if ($this->pageList === null) {
 				$this->pageList = $this->cache->save($key, function () {

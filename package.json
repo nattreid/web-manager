@@ -1,7 +1,7 @@
 {
   "name": "nattreid-web-manager",
   "description": "Web Manager for CMS",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "repository": {
 	"type": "git",
 	"url": "git@github.com:nattreid/web-manager.git"
