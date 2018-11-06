@@ -31,7 +31,9 @@ class Links extends Control
 {
 	use SecuredLinksControlTrait;
 
-	private const DEFAULT_QUANTITY = 3;
+	private const
+		DEFAULT_QUANTITY = 3,
+		MAX_QUANTITY = 10;
 
 	/** @var string @persistent */
 	public $groupId;
@@ -181,7 +183,7 @@ class Links extends Control
 			->setInline();
 
 		$quantity = [];
-		for ($i = 1; $i <= 20; $i++) {
+		for ($i = 1; $i <= self::MAX_QUANTITY; $i++) {
 			$quantity[$i] = $i;
 		}
 		$form->addSelectUntranslated('quantity', 'webManager.web.pages.linkGroup.quantity', $quantity)
