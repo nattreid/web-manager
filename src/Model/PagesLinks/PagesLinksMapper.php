@@ -26,7 +26,7 @@ class PagesLinksMapper extends Mapper
 			->setAutoIncrement();
 		$table->addForeignKey('groupId', PagesLinksGroupsMapper::class);
 		$table->addColumn('name')
-			->varChar();
+			->text();
 		$table->addColumn('url')
 			->varChar();
 		$table->addColumn('content')
