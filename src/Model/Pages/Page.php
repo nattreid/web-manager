@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NAttreid\WebManager\Model\Pages;
 
 use NAttreid\Cms\Model\Locale\Locale;
+use NAttreid\Form\Control\Spectrum\Color;
 use NAttreid\Gallery\Control\Image;
 use NAttreid\Routing\RouterFactory;
 use NAttreid\WebManager\Model\Orm;
@@ -52,6 +53,7 @@ use Tracy\Debugger;
  * @property string|null $title
  * @property string|null $image
  * @property string|null $background
+ * @property Color|null $backgroundColor {virtual}
  * @property string|null $keywords
  * @property string|null $description
  * @property string|null $content
@@ -317,5 +319,16 @@ class Page extends Entity
 		/* @var $orm Orm */
 		$orm = $this->getRepository()->getModel();
 		return $orm->pagesLinksGroups->findVisible($this->id);
+	}
+
+	/**
+	 * @return Color|null
+	 */
+	protected function getterBackgroundColor(): ?Color
+	{
+		if ($this->background === null) {
+			return null;
+		}
+		return new Color($this->background);
 	}
 }
