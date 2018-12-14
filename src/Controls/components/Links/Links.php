@@ -374,8 +374,10 @@ class Links extends Control
 			->setRequired()
 			->setNamespace('web-manager-links');
 
-		$form->addTextEditor('content', 'webManager.web.pages.link.content')
+		$form->addTextEditor('description', 'webManager.web.pages.link.description')
 			->setInline();
+
+		$form->addTextEditor('content', 'webManager.web.pages.link.content');
 
 		$form->addSubmit('save', 'form.save');
 		$form->addLink('back', 'form.back', $this->link('linkGroupEdit', [$this->groupId]))
@@ -410,6 +412,7 @@ class Links extends Control
 		$link->url = $values->url;
 		$link->image = $values->image;
 		$link->content = $values->content;
+		$link->description = $values->description;
 		$link->group = $values->group;
 		$link->openNewWindow = $values->openNewWindow;
 

@@ -32,6 +32,9 @@ class PagesLinksMapper extends Mapper
 		$table->addColumn('content')
 			->text()
 			->setDefault(null);
+		$table->addColumn('description')
+			->text()
+			->setDefault(null);
 		$table->addColumn('image')
 			->varChar()
 			->setDefault(null);

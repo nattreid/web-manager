@@ -17,6 +17,7 @@ use Nextras\Orm\Entity\Entity;
  * @property string $url
  * @property string|null $image
  * @property string|null $content
+ * @property string|null $description
  * @property int|null $position
  * @property bool $openNewWindow {default false}
  * @property bool $visible {default 1}
