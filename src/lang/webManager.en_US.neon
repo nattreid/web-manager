@@ -38,6 +38,7 @@ web:
 			url: "URL"
 			image: "Image"
 			content: "Content"
+			description: "Description"
 			openNewWindow: "Open to new window"
 	content:
 		title: "Content"

@@ -38,6 +38,7 @@ web:
 			url: "URL"
 			image: "Obrázek"
 			content: "Obsah"
+			description: "Popisek"
 			openNewWindow: "Otevřít do nového okna"
 	content:
 		title: "Obsah"
