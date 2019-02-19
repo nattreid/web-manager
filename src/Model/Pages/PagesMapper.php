@@ -56,7 +56,7 @@ class PagesMapper extends Mapper
 			->varChar()
 			->setDefault(null);
 		$table->addColumn('content')
-			->text()
+			->longtext()
 			->setDefault(null);
 		$table->addColumn('position')
 			->int()

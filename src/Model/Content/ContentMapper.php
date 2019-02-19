@@ -42,7 +42,7 @@ class ContentMapper extends Mapper
 			->varChar()
 			->setDefault(null);
 		$table->addColumn('content')
-			->text();
+			->longtext();
 		$table->addUnique('const', 'localeId');
 	}
 
