@@ -17,8 +17,8 @@
     "nattreid/gallery": "~2.0"
   },
   "require-dev": {
-    "nette/tester": "~1.7",
-    "tracy/tracy": "~2.3"
+    "nette/tester": "~2.2",
+    "tracy/tracy": "~2.6"
   },
   "autoload": {
     "classmap": [
