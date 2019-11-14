@@ -17,9 +17,13 @@ use NAttreid\WebManager\Components\ILinksFactory;
 use NAttreid\WebManager\Components\Links;
 use NAttreid\WebManager\Model\Orm;
 use NAttreid\WebManager\Model\Pages\Page;
+use NAttreid\WebManager\Model\PagesGalleries\PageGallery;
+use NAttreid\WebManager\Model\PagesLinks\PageLink;
+use NAttreid\WebManager\Model\PagesLinksGroups\PageLinkGroup;
 use NAttreid\WebManager\Services\PageService;
 use Nette\Application\AbortException;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\Random;
 use Nextras\Dbal\DriverException;
 use Nextras\Dbal\QueryException;
 use Nextras\Dbal\UniqueConstraintViolationException;
@@ -243,6 +247,73 @@ class PagesPresenter extends BasePresenter
 		}
 	}
 
+	public function actionClone(int $id): void
+	{
+		$page = $this->orm->pages->getById($id);
+
+		$newPage = new Page();
+		$this->orm->pages->attach($newPage);
+
+		$cloneImage = function (string $image, string $namespace = null): string {
+			$resource = $this->imageStorage->getResource($image);
+			$resource->setNamespace($namespace);
+
+			$this->imageStorage->copy($resource);
+			return (string) $resource;
+		};
+
+		$newPage->visible = false;
+		$newPage->name = $page->name;
+		$newPage->url = $page->url . Random::generate(1);
+		$newPage->isLink = $page->isLink;
+		$newPage->locale = $page->locale;
+		$newPage->title = $page->title;
+		$newPage->background = $page->background;
+		$newPage->keywords = $page->keywords;
+		$newPage->description = $page->description;
+		$newPage->content = $page->content;
+		$newPage->views->set($page->views->get()->fetchPairs('id', 'id'));
+
+		$newPage->image = $cloneImage($page->image);
+
+		foreach ($page->images as $image) {
+			$newImage = new PageGallery();
+			$newImage->name = $cloneImage($image->name, $newPage->url);
+			$newImage->position = $image->position;
+			$newPage->images->add($newImage);
+		}
+
+		foreach ($page->linkGroups as $group) {
+			$newGroup = new PageLinkGroup();
+			$this->orm->pagesLinksGroups->attach($newGroup);
+
+			$newGroup->name = $group->name;
+			$newGroup->position = $group->position;
+			$newGroup->visible = $group->visible;
+			$newGroup->quantity = $group->quantity;
+
+			foreach ($group->links as $link) {
+				$newLink = new PageLink();
+				$this->orm->pagesLinks->attach($newLink);
+
+				$newLink->name = $link->name;
+				$newLink->url = $link->url;
+				$newLink->image = $cloneImage($link->image, 'web-manager-links');
+				$newLink->content = $link->content;
+				$newLink->description = $link->description;
+				$newLink->position = $link->position;
+				$newLink->openNewWindow = $link->openNewWindow;
+				$newLink->visible = $link->visible;
+
+				$newGroup->links->add($newLink);
+			}
+			$newPage->linkGroups->add($newGroup);
+		}
+
+		$this->orm->persistAndFlush($newPage);
+		$this->redirect('edit', $newPage->id);
+	}
+
 	/**
 	 * @return Gallery
 	 */
@@ -448,8 +519,9 @@ class PagesPresenter extends BasePresenter
 		$grid->setTreeView([$this, 'getChildren'], 'hasChildren');
 		$grid->setOuterFilterRendering();
 		$grid->onRedraw[] = function () use ($grid) {
-			if ($this->isAjax() && $grid['filter']->isSubmitted())
+			if ($this->isAjax() && $grid['filter']->isSubmitted()) {
 				$grid->redrawControl('grid');
+			}
 		};
 
 		$grid->addColumnText('name', 'webManager.web.pages.name', '_pages.name')
@@ -488,6 +560,10 @@ class PagesPresenter extends BasePresenter
 		$grid->addAction('edit', null)
 			->setIcon('pencil')
 			->setTitle('default.edit');
+
+		$grid->addAction('clone', null)
+			->setIcon('clone')
+			->setTitle('webManager.web.pages.clone');
 
 		$grid->addAction('delete', null, 'delete!')
 			->setIcon('trash')

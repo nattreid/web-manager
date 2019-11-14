@@ -8,6 +8,7 @@ web:
 		homePage: "Domovská stránka"
 		isLink: "Přímý odkaz"
 		add: "Přidat stránku"
+		clone: "Kopírovat stránku"
 		pageTitle: "Titulek"
 		keywords: "Klíčová slova"
 		photo: "Fotka"

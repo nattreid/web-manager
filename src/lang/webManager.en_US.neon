@@ -8,6 +8,7 @@ web:
 		homePage: "Home page"
 		isLink: "Direct link"
 		add: "Add page"
+		Clone: "Clone page"
 		pageTitle: "Title"
 		keywords: "Keywords"
 		photo: "Photo"
