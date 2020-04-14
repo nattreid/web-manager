@@ -51,6 +51,7 @@ use Tracy\Debugger;
  * @property bool $hasFooterChildren {virtual}
  * @property Locale $locale {m:1 Locale, oneSided=true}
  * @property string|null $title
+ * @property bool $showTitle {default true}
  * @property string|null $image
  * @property string|null $background
  * @property Color|null $backgroundColor {virtual}

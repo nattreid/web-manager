@@ -345,6 +345,7 @@ class PagesPresenter extends BasePresenter
 			->setOption('id', 'page-isLink')
 			->addCondition($form::EQUAL, false)
 			->toggle('page-title')
+			->toggle('page-show-title')
 			->toggle('page-keywords')
 			->toggle('page-image')
 			->toggle('page-background')
@@ -385,6 +386,10 @@ class PagesPresenter extends BasePresenter
 			->setOption('id', 'page-title')
 			->setRequired(false)
 			->addRule(Form::MAX_LENGTH, null, 150);
+
+		$form->addCheckbox('showTitle', 'webManager.web.pages.showTitle')
+			->setOption('id', 'page-show-title')
+			->setDefaultValue(true);
 
 		$form->addTextArea('keywords', 'webManager.web.pages.keywords')
 			->setOption('id', 'page-keywords')
@@ -461,6 +466,7 @@ class PagesPresenter extends BasePresenter
 
 		$page->name = $values->name;
 		$page->title = $values->title;
+		$page->showTitle = $values->showTitle;
 		$page->keywords = $values->keywords;
 		$page->image = $values->image;
 		$page->background = $values->background;

@@ -10,6 +10,7 @@ web:
 		add: "Add page"
 		Clone: "Clone page"
 		pageTitle: "Title"
+		showTitle: "Show title"
 		keywords: "Keywords"
 		photo: "Photo"
 		background: "Background"

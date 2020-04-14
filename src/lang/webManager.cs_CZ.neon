@@ -10,6 +10,7 @@ web:
 		add: "Přidat stránku"
 		clone: "Kopírovat stránku"
 		pageTitle: "Titulek"
+		showTitle: "Zobrazit titulek"
 		keywords: "Klíčová slova"
 		photo: "Fotka"
 		background: "Pozadí"

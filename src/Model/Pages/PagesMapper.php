@@ -43,6 +43,9 @@ class PagesMapper extends Mapper
 		$table->addColumn('title')
 			->varChar(150)
 			->setDefault(null);
+		$table->addColumn('showTitle')
+			->bool()
+			->setDefault(1);
 		$table->addColumn('image')
 			->varChar(150)
 			->setDefault(null);
