@@ -64,6 +64,8 @@ web:
 		saved: "Nastavení uloženo"
 		logo: "Logo"
 		deleteLogo: "Smazat logo"
+		favicon: "Ikona webu"
+		faviconDelete: "Smazat ikonu webu"
 	hooks:
 		title: "Propojení"
 		tags:

@@ -1,4 +1,5 @@
 link: 'Homepage:'
+wwwDir: %wwwDir%
 position: 0
 
 homepage: null

@@ -64,6 +64,8 @@ web:
 		saved: "Settings saved"
 		logo: "Logo"
 		deleteLogo: "Delete logo"
+		favicon: "Web icon"
+		faviconDelete: "Delete web icon"
 	hooks:
 		title: "Hooks"
 		tags:
