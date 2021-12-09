@@ -62,8 +62,9 @@ class WebManagerExtension extends ModuleExtension
 			->setType(PageService::class)
 			->setArguments([$config['homepage'], $config['page'], $config['onePage'], $config['module']]);
 
-		$builder->addDefinition($this->prefix('links'))
+		$builder->addFactoryDefinition($this->prefix('links'))
 			->setImplement(ILinksFactory::class)
+			->getResultDefinition()
 			->setFactory(Links::class);
 
 		$builder->addDefinition($this->prefix('hookService'))
@@ -91,31 +92,18 @@ class WebManagerExtension extends ModuleExtension
 		$builder->getDefinition($app)
 			->addSetup(new Statement('$service->onInvalidateCache[] = function() {?->pages->cleanCache();}', ['@' . Model::class]));
 
-		$settings = $builder->getByType(SettingsPresenter::class);
-		$builder->getDefinition($settings)
-			->addSetup('setDir', [$this->wwwDir]);
+//		$settings = $builder->getByType(SettingsPresenter::class);
+//		$builder->getDefinition($settings)
+//			->addSetup('setDir', [$this->wwwDir]);
 
 		$hook = $builder->getByType(HookService::class);
 		$hookService = $builder->getDefinition($hook);
-		foreach ($this->findByType(HookFactory::class) as $def) {
+		foreach ($this->getContainerBuilder()->findByType(HookFactory::class) as $def) {
 			$hookService->addSetup('addHook', [$def]);
 		}
 
 		$gallery = new GalleryExtension();
 		$gallery->setCompiler($this->compiler, 'gallery');
 		$gallery->beforeCompile();
-	}
-
-	/**
-	 *
-	 * @param string $type
-	 * @return ServiceDefinition[]
-	 */
-	private function findByType(string $type): array
-	{
-		$type = ltrim($type, '\\');
-		return array_filter($this->getContainerBuilder()->getDefinitions(), function (ServiceDefinition $def) use ($type) {
-			return is_a($def->getType(), $type, true) || is_a($def->getImplement(), $type, true);
-		});
 	}
 }

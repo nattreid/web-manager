@@ -29,7 +29,7 @@ class ContentRepository extends Repository
 	{
 		return $this->getBy([
 			'const' => $const,
-			'this->locale->name' => $locale
+			'locale->name' => $locale
 		]);
 	}
 

@@ -162,7 +162,7 @@ class Page extends Entity
 	/**
 	 * @throws QueryException
 	 */
-	public function onBeforeUpdate()
+	public function onBeforeUpdate(): void
 	{
 		/* @var $repo PagesRepository */
 		$repo = $this->getRepository();
@@ -269,7 +269,7 @@ class Page extends Entity
 		$repository = $this->getRepository();
 		return $repository->findBy([
 			'parent' => $this->id,
-			'this->views->id' => PagesViewsMapper::MENU,
+			'views->id' => PagesViewsMapper::MENU,
 		])
 			->orderBy('position');
 	}
@@ -291,7 +291,7 @@ class Page extends Entity
 		$repository = $this->getRepository();
 		return $repository->findBy([
 			'parent' => $this->id,
-			'this->views->id' => PagesViewsMapper::FOOTER,
+			'views->id' => PagesViewsMapper::FOOTER,
 		])
 			->orderBy('position');
 	}

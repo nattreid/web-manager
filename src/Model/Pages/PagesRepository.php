@@ -78,8 +78,8 @@ class PagesRepository extends Repository
 	{
 		return $this->findMain(true)
 			->findBy([
-				'this->views->id' => PagesViewsMapper::MENU,
-				'this->locale->name' => $locale
+				'views->id' => PagesViewsMapper::MENU,
+				'locale->name' => $locale
 			]);
 	}
 
@@ -103,8 +103,8 @@ class PagesRepository extends Repository
 	{
 		return $this->findMain(true)
 			->findBy([
-				'this->views->id' => PagesViewsMapper::FOOTER,
-				'this->locale->name' => $locale
+				'views->id' => PagesViewsMapper::FOOTER,
+				'locale->name' => $locale
 			]);
 	}
 
