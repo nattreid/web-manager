@@ -122,9 +122,9 @@ class PagesMapper extends Mapper
 		}
 
 		$urls = $this->getPageList();
-		if (isset($urls[$url])) {
+		if (isset($urls[$eLocale->name][$url])) {
 			$builder = $this->builder()
-				->andWhere('[id] = %i', $urls[$url])
+				->andWhere('[id] = %i', $urls[$eLocale->name][$url])
 				->andWhere('[localeId] = %i', $eLocale->id);
 			return $this->toEntity($builder);
 		}
@@ -134,13 +134,14 @@ class PagesMapper extends Mapper
 	/**
 	 * Je URL v databazi
 	 * @param string|null $url
+	 * @param string|null $locale
 	 * @return bool
 	 * @throws Throwable
 	 */
-	public function exists(string $url = null): bool
+	public function exists(?string $url, string $locale): bool
 	{
 		$urls = $this->getPageList();
-		if (isset($urls[$url])) {
+		if (isset($urls[$locale][$url])) {
 			return true;
 		} else {
 			return false;
@@ -166,7 +167,11 @@ class PagesMapper extends Mapper
 						'visible' => 1
 					]);
 					foreach ($rows as $page) {
-						$result[$page->completeUrl] = $page->id;
+						$locale = $page->locale->name;
+						if (!isset($result[$locale])) {
+							$result[$locale] = [];
+						}
+						$result[$locale][$page->completeUrl] = $page->id;
 					}
 					return $result;
 				}, [

@@ -89,7 +89,7 @@ class PageService
 			'action' => $action,
 			null => [
 				Route::FILTER_IN => function ($params) {
-					if ($this->orm->pages->exists($params['url'])) {
+					if ($this->orm->pages->exists($params['url'],$params['locale'])) {
 						return $params;
 					}
 					return null;

@@ -17,7 +17,7 @@ use Nextras\Orm\Collection\ICollection;
  * @method Page getById($id)
  * @method ICollection|Page[] findByLocale(string $locale): ICollection
  * @method void cleanCache() Smaze cache
- * @method bool exists(string $url = null) Je URL v databazi
+ * @method bool exists(?string $url, string $locale) Je URL v databazi
  *
  * @author Attreid <attreid@gmail.com>
  */
