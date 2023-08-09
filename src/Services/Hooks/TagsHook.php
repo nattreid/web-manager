@@ -25,7 +25,10 @@ class TagsHook extends HookFactory
 		$form = $this->formFactory->create();
 		$form->setAjaxRequest();
 
-		$form->addTextArea('tags', 'webManager.web.hooks.tags.content', null, 20)
+		$form->addTextArea('headerTags', 'webManager.web.hooks.tags.headerTags', null, 20)
+			->setDefaultValue($this->configurator->tags ?: null);
+
+		$form->addTextArea('tags', 'webManager.web.hooks.tags.tags', null, 20)
 			->setDefaultValue($this->configurator->tags ?: null);
 
 		$form->addSubmit('save', 'form.save');
@@ -37,6 +40,7 @@ class TagsHook extends HookFactory
 
 	public function tagsFormSucceeded(Form $form, ArrayHash $values)
 	{
+		$this->configurator->headerTags = $values->headerTags;
 		$this->configurator->tags = $values->tags;
 		$this->flashNotifier->success('default.dataSaved');
 	}

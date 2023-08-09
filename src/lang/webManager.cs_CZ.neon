@@ -70,4 +70,5 @@ web:
 		title: "Propojení"
 		tags:
 			title: "Tagy"
-			content: "Obsah"
+			headerTags: "Hlavička"
+			tags: "Patička"
