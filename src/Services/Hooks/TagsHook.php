@@ -26,7 +26,7 @@ class TagsHook extends HookFactory
 		$form->setAjaxRequest();
 
 		$form->addTextArea('headerTags', 'webManager.web.hooks.tags.headerTags', null, 20)
-			->setDefaultValue($this->configurator->tags ?: null);
+			->setDefaultValue($this->configurator->headerTags ?: null);
 
 		$form->addTextArea('tags', 'webManager.web.hooks.tags.tags', null, 20)
 			->setDefaultValue($this->configurator->tags ?: null);
